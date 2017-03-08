@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <title>Customers - Add</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <h1>
+        Customers
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-inbox"></i> Home</a></li>
+        <li>Customers</li>
+        <li class="active">Edit</li>
+    </ol>
+</section>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Edit</h3>
+                </div>
+
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <!--/*@thymesVar id="customer" type="avans.ivh11a1.facturatie.domain.customers.Customer"*/-->
+                    <form action="#" th:action="@{/customer/store}" th:object="${customer}" method="post">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="csn">CSN</label>
+                                    <input type="text" th:value="${customer?.csn}" class="form-control" id="csn" name="csn" value=""/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="firstName">First name</label>
+                                    <input type="text" th:value="${customer?.firstName}" class="form-control" id="firstName" name="firstName"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="lastName">Last name</label>
+                                    <input type="text" class="form-control" id="lastName" name="lastName" th:value="${customer?.lastName}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="dateofbirth">Date of Birth</label>
+                                    <input type="date" th:value="${customer?.dateOfBirth}" class="form-control" id="dateofbirth" name="dateOfBirth"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <div class="form-group">
+                                    <label for="streetName">Streetname</label>
+                                    <input type="text" class="form-control" id="streetName" name="streetName" th:value="${customer?.streetName}"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="houseNumber">Housenumber</label>
+                                    <input type="text" class="form-control" id="houseNumber" name="houseNumber" th:value="${customer?.houseNumber}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" class="form-control" id="city" name="city" th:value="${customer?.city}"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="zipcode">Zipcode</label>
+                                    <input type="text" class="form-control" id="zipcode" name="zipcode" th:value="${customer?.zipcode}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="phoneNumber">Phone number</label>
+                                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:value="${customer?.phoneNumber}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="email">E-mail</label>
+                                    <input type="email" class="form-control" id="email" name="email" th:value="${customer?.email}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="iban" class="control-label">IBAN</label>
+                                    <input type="text" class="form-control" id="iban" name="iban" th:value="${customer?.iban}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input type="submit" class="btn btn-primary" id="save" value="Save customer" name="save" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <title>Vat - Overview</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <h1>
+        Vat
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-inbox"></i> Home</a></li>
+        <li>Vat</li>
+        <li class="active">Overview</li>
+    </ol>
+</section>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Overview</h3>
+
+                    <!--<div class="box-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>-->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body table-responsive">
+
+                    <div class="flex-wrapper" style="display: flex; align-items: center;">
+                        <div class="btn-group" style="margin: 0 50px 0 20px;">
+                            <a th:href="@{/vat/new}" class="btn btn-app">
+                                <span class="fa fa-plus"></span> Add
+                            </a>
+                        </div>
+
+                        <div th:if="${success}" style="flex: 1; margin: 0 30px;">
+                            <div layout:include="fragments/alert :: alert" th:with="type='success', header='Success!'" th:remove="tag">
+                                <!--/* Implements alert summary fragment with full-blown HTML summary */-->
+                                <th:block layout:fragment="alert-content">
+                                    <p th:text="${success}">Message</p>
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table table-hover">
+                        <tbody><tr>
+                            <th>ID</th>
+                            <th>Percentage</th>
+                            <th width="4%">&nbsp;</th>
+                        </tr>
+
+                        <tr th:each="vat : ${vats}">
+                            <td th:text="${vat.id}"></td>
+                            <td th:text="${vat.percentage}"></td>
+                            <td>
+                                <div class="btn-group">
+                                    <a  th:href="@{'/vat/delete/' + ${vat.id}}" class="btn btn-xs btn-danger"><span class="fa fa-trash"></span></a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody></table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</div>
+</body>
+</html>

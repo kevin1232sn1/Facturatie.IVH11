@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <title>Policies - Edit</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <h1>
+        Policies
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-inbox"></i> Home</a></li>
+        <li>Policies</li>
+        <li class="active">Create</li>
+    </ol>
+</section>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Edit</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <!-- Form om een nieuwe policy te maken. Het object 'policy' is het object waarin de
+                    waarden uit het formulier worden ingevuld. Het is afkomstig uit de PolicyController. -->
+                    <form action="#" th:action="@{/policy/create}" th:object="${policy}" method="post">
+
+                        <input type="hidden" th:field="*{id}"/>
+
+                        <div th:if="${#fields.hasErrors('*')}">
+                            <div layout:include="views/fragments/alert :: alert" th:with="type='danger', header='Fouten in het formulier'" th:remove="tag">
+                                <!--/* Implements alert summary fragment with full-blown HTML summary */-->
+                                <th:block layout:fragment="alert-summary">
+                                    <p>Niet alle velden in het formulier zijn correct ingevuld. Corrigeer deze en verzend opnieuw.</p>
+                                    <!--<p><button type="button" class="btn btn-danger">Take this action</button></p>-->
+                                </th:block>
+                            </div>
+                        </div>
+                        <div th:if="${exception}">
+                            <div layout:include="views/fragments/alert :: alert" th:with="type='danger', header='Fouten in het formulier'" th:remove="tag">
+                                <!--/* Implements alert summary fragment with full-blown HTML summary */-->
+                                <th:block layout:fragment="alert-summary">
+                                    <p th:text="${exception}">Exception message</p>
+                                </th:block>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3"><!--was: -4" -->
+                                <div class="form-group">
+                                    <label for="customer">Customer</label>
+                                    <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'member'-->
+                                    <!--<input type="text" class="form-control" id="customer" th:field="*{customer}"/>-->
+                                    <select name="customer" id="customer" th:field="*{customer}" class="form-control">
+                                        <option th:text="${customer.getFullName()}" th:value="${customer.csn}" th:each="customer: ${customers}"></option>
+                                    </select>
+                                    <p th:if="${#fields.hasErrors('customer')}" th:errors="*{customer}">Name Error</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="insurance">Insurance</label>
+                                    <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'member'-->
+                                    <select name="insurance" id="insurance" th:field="*{insurance}" class="form-control">
+                                        <option th:text="${insurance.name}" th:value="${insurance.id}" th:each="insurance: ${insurances}"></option>
+                                    </select>
+                                    <!--<input type="text" class="form-control" id="insurance" th:field="*{insurance}"/>-->
+                                    <p th:if="${#fields.hasErrors('insurance')}" th:errors="*{insurance}">Name Error</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="contribution">Contribution</label>
+                                     <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'member'-->
+                                     <!--<input type="text" class="form-control" id="contribution" th:field="*{contribution}"/>-->
+                                     <select name="contribution" id="contribution" th:field="*{contribution}" class="form-control">
+                                        <option th:value="385">385</option>
+                                        <option th:value="485">485</option>
+                                        <option th:value="585">585</option>
+                                        <option th:value="685">685</option>
+                                        <option th:value="785">785</option>
+                                        <option th:value="885">885</option>
+                                     </select>
+                                     <p th:if="${#fields.hasErrors('contribution')}" th:errors="*{contribution}">Name Error</p>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="dateStart">Date Start</label>
+                                            <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'member'-->
+                                            <input type="date" class="form-control" id="dateStart" th:field="*{dateStart}"/>
+                                            <p th:if="${#fields.hasErrors('dateStart')}" th:errors="*{dateStart}">Name Error</p>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <label for="dateEnd">Date End</label>
+                                            <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'member'-->
+                                            <input type="date" class="form-control" id="dateEnd" th:field="*{dateEnd}"/>
+                                            <p th:if="${#fields.hasErrors('dateEnd')}" th:errors="*{dateEnd}">Name Error</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label for="active">
+                                            <input type="checkbox" id="active" th:field="*{active}"/>
+                                            Active
+                                        </label>
+                                        <p th:if="${#fields.hasErrors('active')}" th:errors="*{active}">Name Error</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="contributionUsed">Contribution Used</label>
+                                    <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'member'-->
+                                    <input type="number" class="form-control" id="contributionUsed" th:field="*{contributionUsed}"/>
+                                    <p th:if="${#fields.hasErrors('contributionUsed')}" th:errors="*{contributionUsed}">Name Error</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- De button die voor verzenden van het formulier zorgt.
+                            De name 'save' is een parameter waarmee in de MemberController de juiste
+                            save-actie wordt gestart. -->
+                        <button type="submit" class="btn btn-primary" name="save">Submit</button>
+
+                    </form>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</div>
+</body>
+</html>

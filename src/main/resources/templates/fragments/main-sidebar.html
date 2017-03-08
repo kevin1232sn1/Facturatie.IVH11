@@ -1,0 +1,65 @@
+<!-- sidebar: style can be found in sidebar.less -->
+<section xmlns:th="http://www.w3.org/1999/xhtml" class="sidebar">
+
+    <!-- /.search form -->
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+        <li class="header">MAIN NAVIGATION</li>
+
+        <li th:class="${page == 'customers'} ? 'active' : ''">
+            <a th:href="@{~/customer}">
+                <i class="fa fa-user"></i> <span>Customers</span>
+            </a>
+        </li>
+
+        <li th:class="${page == 'invoices'} ? 'active' : ''">
+            <a th:href="@{~/invoice}">
+                <i class="fa fa-file-text"></i> <span>Invoices</span>
+            </a>
+        </li>
+        <li th:class="${page == 'declarations'} ? 'active' : ''">
+            <a th:href="@{~/declaration}">
+                <i class="fa fa-inbox"></i> <span>Declarations</span>
+            </a>
+        </li>
+        <li th:class="${page == 'policies'} ? 'active' : ''">
+            <a th:href="@{~/policy}">
+                <i class="fa fa-archive"></i> <span>Policies</span>
+            </a>
+        </li>
+        <li th:class="${page == 'insurances'} ? 'active' : ''">
+            <a th:href="@{~/insurance}">
+                <i class="fa fa-heartbeat"></i> <span>Insurances</span>
+            </a>
+        </li>
+        <li class="header">ADMINISTRATION</li>
+        <li th:class="${page == 'treatments'} ? 'active' : ''">
+            <a th:href="@{~/treatments}">
+                <i class="fa fa-cubes"></i> <span>Treatments</span>
+            </a>
+        </li>
+        <li th:class="${page == 'vat'} ? 'active' : ''">
+            <a th:href="@{~/vat}">
+                <i class="fa fa-percent"></i> <span>Vat</span>
+            </a>
+        </li>
+        <li th:class="${page == 'payment-conditions'} ? 'active' : ''">
+            <a th:href="@{~/payment-condition}">
+                <i class="fa fa-bell"></i> <span>Payment Conditions</span>
+            </a>
+        </li>
+        <li th:class="${page == 'users'} ? 'active' : '' ">
+            <a th:href="@{~/user}">
+                <i class="fa fa-users"></i> <span>Users</span>
+            </a>
+        </li>
+        <li th:class="${page == 'insurance-companies'} ? 'active' : ''">
+            <a th:href="@{~/insurance_company}">
+                <i class="fa fa-gear"></i> <span>Settings</span>
+            </a>
+        </li>
+
+
+    </ul>
+</section>
+<!-- /.sidebar -->

@@ -1,0 +1,17 @@
+language: java
+jdk:
+ - oraclejdk8
+addons:
+  sonarqube:
+    token:
+      secure: $SONAR_TOKEN # encrypted value of your token
+script:  
+  #1 the following command line builds the project, runs the tests with coverage and then execute the SonarQube analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar  
+  - mvn clean install
+  - mvn package
+deploy:
+ provider: heroku
+ api-key: 
+  secure: $HEROKU_API_KEY
+ app: proftaak23ivh11a1b
