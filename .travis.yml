@@ -1,23 +1,15 @@
 language: java
 jdk:
  - oraclejdk8
- env:
-   - MAVEN_VERSION=3.2.5
-   - MAVEN_VERSION=3.3.9
- install:
-   - "mvn -N io.takari:maven:wrapper -Dmaven=${MAVEN_VERSION}"
-   - "./mvnw --show-version --errors --batch-mode test-compile dependency:go-offline"
- script: "
+install: true
 addons:
   sonarqube:
     token:
       secure: $SONAR_TOKEN # encrypted value of your token
 script:
   #1 the following command line builds the project, runs the tests with coverage and then execute the SonarQube analysis
-  - "./mvnw --show-version --errors --batch-mode -Prun-its clean verify"
+  - ./mvnw clean install
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
-  - mvn clean install
-  - mvn package
 deploy:
  provider: heroku
  api-key: 
