@@ -13,7 +13,7 @@ class DashboardController {
         return "dashboard";
     }
 
-    @RequestMapping("/") 
+    @RequestMapping("/")
     String index(Model model) {
         return "dashboard/index";
     }
