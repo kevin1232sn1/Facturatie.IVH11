@@ -17,19 +17,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = StateException.class)
 public class InsuranceCompanyServiceImpl implements InsuranceCompanyService {
 
+    private static InsuranceCompany company;
+
     @Autowired
     private InsuranceCompanyRepository insuranceCompanyRepository;
 
     @Override
-    public Iterable<InsuranceCompany> findAll() {
-        return insuranceCompanyRepository.findAll();
-    }
-
-    @Override
-    public InsuranceCompany findById(int id) {
-        InsuranceCompany company = insuranceCompanyRepository.findOne(id);
+    public InsuranceCompany getCompany() {
+        if (company == null){
+            company = insuranceCompanyRepository.findOne(1);
+            return getCompany();
+        }
         return company;
     }
+
 
     @Override
     public boolean save(InsuranceCompany insuranceCompany) {
@@ -40,12 +41,6 @@ public class InsuranceCompanyServiceImpl implements InsuranceCompanyService {
     @Override
     public boolean delete(InsuranceCompany insuranceCompany) {
         insuranceCompanyRepository.delete(insuranceCompany);
-        return true;
-    }
-
-    @Override
-    public boolean deleteById(int id) {
-        insuranceCompanyRepository.delete(id);
         return true;
     }
 }
