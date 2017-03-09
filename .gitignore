@@ -9,7 +9,7 @@ target/
 .settings
 .springBeans
 .mvnw
-mvn.cmd
+mvnw.cmd
 
 ### IntelliJ IDEA ###
 .idea
