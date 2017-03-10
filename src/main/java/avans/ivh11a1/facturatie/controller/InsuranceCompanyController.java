@@ -8,7 +8,9 @@ import avans.ivh11a1.facturatie.service.InsuranceCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 
 /**
  * Created by Matthijs Wilhelmus on 13-10-2016.
@@ -75,7 +77,10 @@ public class InsuranceCompanyController {
      * @deprecated There is no need for creating multiple InsuranceCompanies for there is only one.
      */
     @PostMapping(value = "/create")
-    String store(Model model, @ModelAttribute InsuranceCompany insuranceCompany) {
+    String store(@Valid InsuranceCompany insuranceCompany, final BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "insurance_company/edit";
+        }
         insuranceCompanyService.save(insuranceCompany);
 
         model.addAttribute("success", "Insurance Company successfully saved");
