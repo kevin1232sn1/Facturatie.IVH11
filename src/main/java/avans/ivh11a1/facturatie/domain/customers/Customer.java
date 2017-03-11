@@ -1,5 +1,6 @@
 package avans.ivh11a1.facturatie.domain.customers;
 
+import avans.ivh11a1.facturatie.domain.Person;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,9 +17,10 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Customer {
+public class Customer implements Person {
     @Id
     @Column(name = "csn")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int csn;
     @Column(name = "first_name")
     private String firstName;
@@ -40,6 +42,8 @@ public class Customer {
     private String email;
     @Column(name = "iban")
     private String iban;
+
+    private String type = "Customer";
 
     public Customer(int csn, String firstName, String lastName, String streetName, String houseNumber, String zipcode,
                     String city, String dateOfBirth, String phoneNumber, String email, String iban) {
@@ -70,7 +74,18 @@ public class Customer {
         this.iban = iban;
     }
 
+    @Override
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+
+    @Override
+    public int getId() {
+        return getCsn();
+    }
+
+    @Override
+    public String getRole() {
+        return "customer";
     }
 }
