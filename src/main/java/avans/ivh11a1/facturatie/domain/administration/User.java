@@ -1,11 +1,13 @@
 package avans.ivh11a1.facturatie.domain.administration;
 
+import avans.ivh11a1.facturatie.domain.Person;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.persistence.*;
 /**
  * User domain object
@@ -20,7 +22,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User {
+public class User implements Person {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +39,9 @@ public class User {
 
     @Column(name = "role")
     private String role;
+
+    private String type = "User";
+
 
     public User(int id, String email, String name, String role) {
         this.id = id;
@@ -69,4 +74,8 @@ public class User {
         this.password = password;
     }
 
+    @Override
+    public String getFullName() {
+        return getName();
+    }
 }
