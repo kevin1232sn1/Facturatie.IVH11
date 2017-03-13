@@ -3,6 +3,7 @@ package avans.ivh11a1.facturatie.service.imp;
 import avans.ivh11a1.facturatie.service.InvoiceService;
 import com.pdfcrowd.*;
 
+
 import org.springframework.stereotype.Service;
 
 
@@ -21,6 +22,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             FileOutputStream fileStream;
 
             // create an API client instance
+
             Client client = new Client("thomie88", "472b498204ef61dbdce97887999bb90a");
 
             // convert a web page and save the PDF to a file
