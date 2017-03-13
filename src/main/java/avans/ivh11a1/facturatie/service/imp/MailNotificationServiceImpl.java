@@ -10,10 +10,8 @@ import avans.ivh11a1.facturatie.domain.Person;
 import avans.ivh11a1.facturatie.repository.CustomerRepository;
 import avans.ivh11a1.facturatie.repository.UserRepository;
 import avans.ivh11a1.facturatie.service.NotificationService;
-import avans.ivh11a1.facturatie.service.Observer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("MailNotificationService")
 @Repository
 @Transactional(rollbackFor = StateException.class)
-public class MailNotificationServiceImpl implements NotificationService, Observer {
+public class MailNotificationServiceImpl implements NotificationService {
 
     @Autowired
     CustomerRepository customerRepository;
@@ -32,15 +30,11 @@ public class MailNotificationServiceImpl implements NotificationService, Observe
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    private JavaMailSender javaMailSender;
-
-    private Person person;
-    private News news;
-
+    //@Autowired
+    //private JavaMailSender javaMailSender;
 
     @Override
-    public Boolean sendMail() {
+    public Boolean sendMessage(News news, Person person) {
         SimpleMailMessage message = new SimpleMailMessage();
         MailTemplate template;
         if (news.getType() == "Health") {
@@ -53,29 +47,9 @@ public class MailNotificationServiceImpl implements NotificationService, Observe
 
         message = template.generateMessage(news, person, message);
 
-        javaMailSender.send(message);
+        //javaMailSender.send(message);
         return true;
     }
 
-    @Override
-    public void setPerson(Person person) {
-        this.person = person;
-    }
 
-    @Override
-    public void update(News news) {
-        this.news = news;
-        sendMail();
-        System.out.println("Observer : " + person.getFullName() + " news message " + news.getContent() + " news type: " + news.getType() + " Will send to: " + person.getEmail() + " Role: " + person.getRole());
-    }
-
-    @Override
-    public String getType() {
-        return person.getType();
-    }
-
-    @Override
-    public int getId() {
-        return person.getId();
-    }
 }
