@@ -1,5 +1,6 @@
 package avans.ivh11a1.facturatie.service.imp;
 
+import avans.ivh11a1.facturatie.service.InvoiceService;
 import com.pdfcrowd.*;
 
 import org.springframework.stereotype.Service;
@@ -11,9 +12,9 @@ import java.io.*;
  * Created by Thom on 12-3-2017.
  */
 @Service("InvoiceService")
-public class InvoiceServiceImpl {
+public class InvoiceServiceImpl implements InvoiceService {
 
-
+    @Override
     public void generatePdf(int url){
         try
         {
