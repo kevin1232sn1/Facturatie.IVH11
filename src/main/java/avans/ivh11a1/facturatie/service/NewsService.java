@@ -14,6 +14,8 @@ public interface NewsService {
 
     Iterable<News> findAll();
 
+    News findOne(int id);
+
     Boolean save(News news);
 
     Boolean delete(News news);

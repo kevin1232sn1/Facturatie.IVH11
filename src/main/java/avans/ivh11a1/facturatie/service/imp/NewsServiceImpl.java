@@ -6,10 +6,7 @@ import avans.ivh11a1.facturatie.domain.NewsLetter.NewsSubscription;
 import avans.ivh11a1.facturatie.domain.Person;
 import avans.ivh11a1.facturatie.repository.NewsRepository;
 import avans.ivh11a1.facturatie.repository.NewsSubscriptionRepository;
-import avans.ivh11a1.facturatie.service.NewsService;
-import avans.ivh11a1.facturatie.service.Observer;
-import avans.ivh11a1.facturatie.service.PersonFactoryService;
-import avans.ivh11a1.facturatie.service.Subject;
+import avans.ivh11a1.facturatie.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -31,6 +28,9 @@ public class NewsServiceImpl implements NewsService, Subject {
 
     @Autowired
     private PersonFactoryService factoryService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @Override
     public void register(Observer o, String newsType) {
@@ -55,13 +55,18 @@ public class NewsServiceImpl implements NewsService, Subject {
             Person p = factoryService.getPerson(subscription.getObserverType(), subscription.getObserverId());
             NewsObserverImpl observer = new NewsObserverImpl();
             observer.setPerson(p);
-            observer.update(news);
+            observer.update(news, notificationService);
         }
     }
 
     @Override
     public Iterable<News> findAll() {
         return newsRepository.findAll();
+    }
+
+    @Override
+    public News findOne(int id) {
+        return newsRepository.findOne(id);
     }
 
     @Override

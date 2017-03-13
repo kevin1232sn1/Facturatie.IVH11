@@ -7,7 +7,7 @@ import avans.ivh11a1.facturatie.domain.Person;
  * Created by kevin on 10-3-2017.
  */
 public interface Observer {
-    void update(News news);
+    void update(News news, NotificationService service);
 
     String getType();
 

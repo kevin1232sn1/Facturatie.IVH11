@@ -1,5 +1,6 @@
 package avans.ivh11a1.facturatie.domain.NewsLetter;
 
+import avans.ivh11a1.facturatie.domain.MailTemplate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,4 +29,6 @@ public abstract class News {
     private String content;
     @Column
     private String type;
+
+    public abstract MailTemplate getMailTemplate();
 }
