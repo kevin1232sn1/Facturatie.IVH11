@@ -5,9 +5,11 @@ import avans.ivh11a1.facturatie.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 /**
  * Created by Robin on 15-10-16.
@@ -74,9 +76,15 @@ public class UserController {
      * @param password
      * @return user/edit
      */
+
+    //String store(Model model, HttpSession session, @ModelAttribute User user, @RequestParam("password") String password) {
     @PostMapping(value = "/create")
-    String store(Model model, HttpSession session, @ModelAttribute User user, @RequestParam("password") String password) {
+    String store(@Valid User user, final BindingResult bindingResult, Model model, HttpSession session, @RequestParam("password") String password) {
         // reset old password when password field was empty and request came from edit page
+        if (bindingResult.hasErrors()) {
+            return "user/edit";
+        }
+
         if (password.equals("") && session.getAttribute("oldPassword") != null) {
             user.setPasswordWithoutHash(session.getAttribute("oldPassword").toString());
         }

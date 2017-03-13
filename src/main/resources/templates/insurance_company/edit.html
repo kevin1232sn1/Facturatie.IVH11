@@ -32,7 +32,7 @@
                         <input type="hidden" th:field="*{id}"/>
 
                         <div th:if="${#fields.hasErrors('*')}">
-                            <div layout:include="fragments/alert :: alert" th:with="type='danger', header='Fouten in het formulier'" th:remove="tag">
+                            <div layout:include="fragments/alert :: alert" th:with="type='danger', header='There are errors in the form'" th:remove="tag">
                                 <!--/* Implements alert summary fragment with full-blown HTML summary */-->
                                 <th:block layout:fragment="alert-summary">
                                     <p>Niet alle velden in het formulier zijn correct ingevuld. Corrigeer deze en verzend opnieuw.</p>
@@ -124,7 +124,7 @@
                                     <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'member'-->
                                     <!--<input type="text" class="form-control" id="vat" th:field="*{vat}"/>-->
                                     <select name="vat" id="vat" th:field="*{vat}" class="form-control">
-                                        <option th:text="${vat.getPercentage()}" th:value="${vat.id}" th:each="vat: ${vats}"></option>
+                                        <option th:text="${vat.toString()}" th:value="${vat.id}" th:each="vat: ${vats}"></option>
                                     </select>
                                     <p th:if="${#fields.hasErrors('vat')}" th:errors="*{vat}">Name Error</p>
                                 </div>

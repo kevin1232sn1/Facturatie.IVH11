@@ -7,7 +7,8 @@ import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.persistence.*;
 /**
  * User domain object
@@ -29,9 +30,11 @@ public class User implements Person {
     private int id;
 
     @Column(name = "name")
+    @NotNull
     private String name;
 
     @Column(name = "email")
+    @Pattern(regexp = "^([0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$", message = "De waarde van dit veld moet een geldig e-mailadres zijn")
     private String email;
 
     @Column(name = "password")
