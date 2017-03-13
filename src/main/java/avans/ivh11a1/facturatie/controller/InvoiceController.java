@@ -10,6 +10,9 @@ import avans.ivh11a1.facturatie.repository.*;
 import avans.ivh11a1.facturatie.service.BillingService;
 import avans.ivh11a1.facturatie.service.CustomerService;
 import avans.ivh11a1.facturatie.service.InsuranceService;
+import avans.ivh11a1.facturatie.service.InvoiceService;
+import avans.ivh11a1.facturatie.service.imp.InsuranceServiceImpl;
+import avans.ivh11a1.facturatie.service.imp.InvoiceServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +44,9 @@ public class InvoiceController {
 
     @Autowired
     private InsuranceService insuranceService;
+
+    @Autowired
+    private InvoiceService invoiceService;
 
 
     /**
@@ -207,10 +213,24 @@ public class InvoiceController {
         //Add the filled in condition to the domain
         model.addAttribute("PaymentCondition", paymentCondition);
 
+        invoiceService.generatePdf(id);
         //Return the view
         return "invoice/print";
     }
+    /**
+     * Download a certain invoice based on the given id
+     * @param model
+     * @param id Invoice id
+     * @return Page for downloading the invoice
+     */
+    @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
+    public String DownloadInvoice( @PathVariable int id) {
+        //Download  PDF
+        invoiceService.generatePdf(id);
 
+        //Return to view
+        return "invoice/index";
+    }
     /**
      * Generates a new invoice for a given customer
      * @param model
