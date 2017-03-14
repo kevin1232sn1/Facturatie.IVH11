@@ -29,6 +29,9 @@ public class NewsServiceImpl implements NewsService, Subject {
     @Autowired
     private PersonFactoryService factoryService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @Override
     public void register(Observer o, String newsType) {
         NewsSubscription subscription = newsSubscriptionRepository.findByNewsTypeAndObserverTypeAndObserverId(newsType, o.getType(), o.getId());
@@ -50,15 +53,20 @@ public class NewsServiceImpl implements NewsService, Subject {
     public void notifyObserver(News news) {
         for (NewsSubscription subscription : newsSubscriptionRepository.findByNewsType(news.getType())) {
             Person p = factoryService.getPerson(subscription.getObserverType(), subscription.getObserverId());
-            NotificationService notificationService = new MailNotificationServiceImpl();
-            notificationService.setPerson(p);
-            notificationService.update(news);
+            NewsObserverImpl observer = new NewsObserverImpl();
+            observer.setPerson(p);
+            observer.update(news, notificationService);
         }
     }
 
     @Override
     public Iterable<News> findAll() {
         return newsRepository.findAll();
+    }
+
+    @Override
+    public News findOne(int id) {
+        return newsRepository.findOne(id);
     }
 
     @Override

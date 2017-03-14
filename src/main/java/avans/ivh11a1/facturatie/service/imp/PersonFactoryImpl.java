@@ -35,4 +35,16 @@ public class PersonFactoryImpl implements PersonFactoryService {
                 return null;
         }
     }
+
+    @Override
+    public Person getPerson(String type, String email) {
+        switch (type) {
+            case "Customer":
+                return customerRepository.findByEmail(email);
+            case "User":
+                return userRepository.findByEmail(email);
+            default:
+                return null;
+        }
+    }
 }
