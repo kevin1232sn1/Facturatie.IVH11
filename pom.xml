@@ -115,7 +115,7 @@
                     <artifactId>pdfcrowd</artifactId>
                     <version>2.4</version>
                     <packaging>jar</packaging>
-                    <file>pdfcrowd.jar</file>
+                    <file>lib/pdfcrowd.jar</file>
                     <generatePom>false</generatePom>
                 </configuration>
                 <executions>
