@@ -116,7 +116,7 @@
                     <version>2.4</version>
                     <packaging>jar</packaging>
                     <file>lib/pdfcrowd.jar</file>
-                    <generatePom>false</generatePom>
+                    <generatePom>true</generatePom>
                 </configuration>
                 <executions>
                     <execution>
