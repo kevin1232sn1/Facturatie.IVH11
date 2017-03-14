@@ -4,11 +4,11 @@ import avans.ivh11a1.facturatie.domain.NewsLetter.CompanyNews;
 import avans.ivh11a1.facturatie.domain.NewsLetter.HealthNews;
 import avans.ivh11a1.facturatie.domain.NewsLetter.InsuranceNews;
 import avans.ivh11a1.facturatie.domain.NewsLetter.News;
-import avans.ivh11a1.facturatie.service.CustomerService;
-import avans.ivh11a1.facturatie.service.NewsService;
-import avans.ivh11a1.facturatie.service.UserService;
+import avans.ivh11a1.facturatie.domain.Person;
+import avans.ivh11a1.facturatie.domain.customers.Customer;
+import avans.ivh11a1.facturatie.service.*;
+import avans.ivh11a1.facturatie.service.imp.NewsObserverImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by kevin on 11-3-2017.
  */
-@Controller
+@RestController
 @RequestMapping("/news")
 public class NewsController {
     @Autowired
@@ -28,8 +28,19 @@ public class NewsController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private NewsSubscriptionService subscriptionService;
+
+    @Autowired
+    private PersonFactoryService personFactoryService;
 
     public void TestMailing(Model theModel) {
+
+        Customer nC = new Customer();
+        NewsObserverImpl newsObserver = new NewsObserverImpl();
+        newsObserver.setPerson(nC);
+
+        newsService.register(newsObserver, "");
 
         News news = new CompanyNews();
         news.setContent("Test important mailing!2");
@@ -82,6 +93,16 @@ public class NewsController {
 
         return this.listNews(model);
     }
+
+    @PostMapping(value = "/create/{newsType}/{personType}/{email}")
+    String AddSubscription(Model model, @PathVariable String newsType, @PathVariable String personType, @PathVariable String email) {
+        Person person = personFactoryService.getPerson(personType, email);
+        NewsObserverImpl newsObserver = new NewsObserverImpl();
+        newsObserver.setPerson(person);
+        newsService.register(newsObserver, newsType);
+        return this.listNews(model);
+    }
+
 
     @ModelAttribute("page")
     public String module() {

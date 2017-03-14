@@ -13,4 +13,6 @@ import javax.transaction.Transactional;
 @Transactional
 public interface CustomerRepository extends CrudRepository<Customer, Integer> {
     Customer findByCsn(int csn);
+
+    Customer findByEmail(String email);
 }

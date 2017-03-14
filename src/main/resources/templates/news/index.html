@@ -42,7 +42,17 @@
                             <a th:href="@{/news/create}" class="btn btn-app">
                                 <span class="fa fa-plus"></span> Add
                             </a>
+                            <a th:href="@{/news/hSubscription}" class="btn btn-app">
+                                <span class="fa fa-plus"></span> Health Subscription
+                            </a>
+                            <a th:href="@{/news/cSubscription}" class="btn btn-app">
+                                <span class="fa fa-plus"></span> Company Subscription
+                            </a>
+                            <a th:href="@{/news/iSubscription}" class="btn btn-app">
+                                <span class="fa fa-plus"></span> Insurance Subscription
+                            </a>
                         </div>
+
 
                         <div th:if="${success}" style="flex: 1; margin: 0 30px;">
                             <div layout:include="fragments/alert :: alert" th:with="type='success', header='Success!'"
