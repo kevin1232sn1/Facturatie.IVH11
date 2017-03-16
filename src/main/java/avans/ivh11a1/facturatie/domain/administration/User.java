@@ -1,6 +1,7 @@
 package avans.ivh11a1.facturatie.domain.administration;
 
 import avans.ivh11a1.facturatie.domain.Person;
+import avans.ivh11a1.facturatie.domain.validators.EmailAddress;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,8 +34,8 @@ public class User implements Person {
     @NotNull
     private String name;
 
-    @Column(name = "email")
-    @Pattern(regexp = "^([0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$", message = "De waarde van dit veld moet een geldig e-mailadres zijn")
+    @Column(name = "email", unique = true)
+    @EmailAddress
     private String email;
 
     @Column(name = "password")

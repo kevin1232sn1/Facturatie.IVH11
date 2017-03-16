@@ -101,7 +101,7 @@
                                 <div class="form-group">
                                     <label for="phoneNumber">Phone Number</label>
                                     <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'member'-->
-                                    <input type="number" class="form-control" id="phoneNumber" th:field="*{phoneNumber}"/>
+                                    <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}"/>
                                     <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Name Error</p>
                                 </div>
 
