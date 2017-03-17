@@ -31,7 +31,6 @@ public class User implements Person {
     private int id;
 
     @Column(name = "name")
-    @NotNull
     private String name;
 
     @Column(name = "email", unique = true)
@@ -45,7 +44,6 @@ public class User implements Person {
     private String role;
 
     private String type = "User";
-
 
     public User(int id, String email, String name, String role) {
         this.id = id;

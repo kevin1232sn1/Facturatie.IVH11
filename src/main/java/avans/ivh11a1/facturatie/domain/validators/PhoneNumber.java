@@ -14,10 +14,10 @@ import javax.validation.Payload;
 
 @Documented
 @Constraint(validatedBy = PhoneNumberValidator.class)
-@Target( { ElementType.METHOD, ElementType.FIELD })
+@Target( { ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PhoneNumber {
-    String message() default "This value is not a valid (cell)phonenumber";
+    String message() default "{facturatie.customvalidation.PhoneNumber.message}";
 
     Class<?>[] groups() default {};
 

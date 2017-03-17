@@ -9,10 +9,10 @@ import java.lang.annotation.*;
  */
 @Documented
 @Constraint(validatedBy = EmailAddressValidator.class)
-@Target( { ElementType.METHOD, ElementType.FIELD })
+@Target( { ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EmailAddress {
-    String message() default "This value is not a valid email address";
+    String message() default "{facturatie.customvalidation.EmailAddress.message}";
 
     Class<?>[] groups() default {};
 

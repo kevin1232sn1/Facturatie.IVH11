@@ -9,10 +9,10 @@ import java.lang.annotation.*;
  */
 @Documented
 @Constraint(validatedBy = ZipcodeValidator.class)
-@Target( { ElementType.METHOD, ElementType.FIELD })
+@Target( { ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Zipcode {
-    String message() default "This value is not a valid zipcode";
+    String message() default "{facturatie.customvalidation.Zipcode.message}";
 
     Class<?>[] groups() default {};
 

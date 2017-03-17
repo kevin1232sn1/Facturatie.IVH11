@@ -10,10 +10,10 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = HouseNumberValidator.class)
-@Target( { ElementType.METHOD, ElementType.FIELD })
+@Target( { ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface HouseNumber {
-    String message() default "This value is not a valid housenumber";
+    String message() default "{facturatie.customvalidation.HouseNumber.message}";
 
     Class<?>[] groups() default {};
 

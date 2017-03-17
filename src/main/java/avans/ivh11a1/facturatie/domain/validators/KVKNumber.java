@@ -9,10 +9,10 @@ import java.lang.annotation.*;
  */
 @Documented
 @Constraint(validatedBy = KVKNumberValidator.class)
-@Target( { ElementType.METHOD, ElementType.FIELD })
+@Target( { ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface KVKNumber {
-    String message() default "This value is not a valid KVK number";
+    String message() default "{facturatie.customvalidation.KVKNumber.message}";
 
     Class<?>[] groups() default {};
 

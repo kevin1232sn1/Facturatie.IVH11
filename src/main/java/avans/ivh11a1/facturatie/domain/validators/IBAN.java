@@ -10,10 +10,10 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = IBANValidator.class)
-@Target( { ElementType.METHOD, ElementType.FIELD })
+@Target( { ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IBAN {
-    String message() default "This value is not a valid IBAN";
+    String message() default "{facturatie.customvalidation.IBAN.message}";
 
     Class<?>[] groups() default {};
 

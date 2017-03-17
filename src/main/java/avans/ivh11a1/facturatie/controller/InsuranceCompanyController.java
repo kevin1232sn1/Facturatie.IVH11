@@ -1,5 +1,7 @@
 package avans.ivh11a1.facturatie.controller;
 
+import avans.ivh11a1.facturatie.crosscutting.annotations.Logger;
+import avans.ivh11a1.facturatie.crosscutting.annotations.Timer;
 import avans.ivh11a1.facturatie.domain.administration.InsuranceCompany;
 import avans.ivh11a1.facturatie.repository.InsuranceCompanyRepository;
 import avans.ivh11a1.facturatie.repository.VatRepository;
@@ -48,6 +50,7 @@ public class InsuranceCompanyController {
      * @return
      * @deprecated Not in use
      */
+    @Logger
     @GetMapping(value = "")
     String index(Model model) {
         InsuranceCompany insuranceCompany = insuranceCompanyService.getCompany();
@@ -76,6 +79,7 @@ public class InsuranceCompanyController {
      *
      * @deprecated There is no need for creating multiple InsuranceCompanies for there is only one.
      */
+    @Timer
     @PostMapping(value = "/create")
     String store(@Valid InsuranceCompany insuranceCompany, final BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {

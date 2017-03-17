@@ -10,10 +10,10 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = BTWNumberValidator.class)
-@Target( { ElementType.METHOD, ElementType.FIELD })
+@Target( { ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BTWNumber {
-    String message() default "This value is not a valid BTW number";
+    String message() default "{facturatie.customvalidation.BTWNumber.message}";
 
     Class<?>[] groups() default {};
 
