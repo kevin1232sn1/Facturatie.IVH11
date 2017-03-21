@@ -38,19 +38,19 @@ public class User implements Person {
     private String password;
 
     @Column(name = "role")
-    private String role;
+    private Role role;
 
     private String type = "User";
 
 
-    public User(int id, String email, String name, String role) {
+    public User(int id, String email, String name, Role role) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.role = role;
     }
 
-    public User(String email, String name, String role) {
+    public User(String email, String name, Role role) {
         this.email = email;
         this.name = name;
         this.role = role;

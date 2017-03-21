@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional(rollbackFor = StateException.class)
 public class UserServiceImpl implements UserService {
+
+
     @Autowired
     UserRepository userRepository;
 
@@ -41,4 +43,6 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(id);
         return null;
     }
+
+
 }

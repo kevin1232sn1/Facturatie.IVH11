@@ -1,12 +1,13 @@
 package avans.ivh11a1.facturatie.controller;
 
+import avans.ivh11a1.facturatie.aop.SecurityAnnotation;
 import avans.ivh11a1.facturatie.domain.administration.InsuranceCompany;
+import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.domain.billing.Declaration;
 import avans.ivh11a1.facturatie.domain.billing.Invoice;
 import avans.ivh11a1.facturatie.domain.billing.PaymentCondition;
 import avans.ivh11a1.facturatie.domain.customers.Customer;
 import avans.ivh11a1.facturatie.domain.insurances.Policy;
-import avans.ivh11a1.facturatie.repository.*;
 import avans.ivh11a1.facturatie.service.BillingService;
 import avans.ivh11a1.facturatie.service.CustomerService;
 import avans.ivh11a1.facturatie.service.InsuranceService;
@@ -30,6 +31,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/invoice")
+@SecurityAnnotation(allowedRole = { Role.ADMIN })
 public class InvoiceController {
     private final Logger logger = LoggerFactory.getLogger(DeclarationController.class);
 
@@ -41,6 +43,8 @@ public class InvoiceController {
 
     @Autowired
     private InsuranceService insuranceService;
+
+
 
 
     /**

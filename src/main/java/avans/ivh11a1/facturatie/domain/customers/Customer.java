@@ -83,9 +83,4 @@ public class Customer implements Person {
     public int getId() {
         return getCsn();
     }
-
-    @Override
-    public String getRole() {
-        return "customer";
-    }
 }
