@@ -1,21 +1,13 @@
 package avans.ivh11a1.facturatie.domain.administration;
 
 
-import avans.ivh11a1.facturatie.domain.validators.*;
 import avans.ivh11a1.facturatie.domain.billing.Vat;
+import avans.ivh11a1.facturatie.domain.validators.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
-import java.sql.Date;
-import java.util.List;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 
@@ -23,6 +15,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
 public class InsuranceCompany {
     @Id
     @Column(name = "id")
@@ -61,7 +54,7 @@ public class InsuranceCompany {
     @KVKNumber
     private Integer kvkNumber;
 
-    @OneToOne
+    @OneToOne()
     @JoinColumn(name = "vat_id")
     private Vat vat;
 
