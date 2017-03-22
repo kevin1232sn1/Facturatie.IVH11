@@ -29,7 +29,7 @@
                     <form action="#" th:action="@{/vat/new}" th:object="${vat}" method="post">
 
                         <div th:if="${#fields.hasErrors('*')}">
-                            <div layout:include="views/fragments/alert :: alert" th:with="type='danger', header='Fouten in het formulier'" th:remove="tag">
+                            <div layout:include="fragments/alert :: alert" th:with="type='danger', header='There are errors in the form'" th:remove="tag">
                                 <!--/* Implements alert summary fragment with full-blown HTML summary */-->
                                 <th:block layout:fragment="alert-summary">
                                     <p>Niet alle velden in het formulier zijn correct ingevuld. Corrigeer deze en verzend opnieuw.</p>
@@ -44,6 +44,7 @@
                                 <div class="form-group">
                                     <label for="percentage">Vat percentage</label>
                                     <input type="number"  min="1" max="100" class="form-control" id="percentage" name="percentage" value=""/>
+                                    <p th:if="${#fields.hasErrors('percentage')}" th:errors="*{percentage}">Name Error</p>
                                 </div>
                             </div>
                         </div>

@@ -4,7 +4,6 @@ import avans.ivh11a1.facturatie.domain.Person;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity
@@ -19,9 +18,11 @@ public class User implements Person {
     private int id;
 
     @Column(name = "name")
+    @NotNull
     private String name;
 
     @Column(name = "email")
+    @Pattern(regexp = "^([0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$", message = "De waarde van dit veld moet een geldig e-mailadres zijn")
     private String email;
 
     @Column(name = "password")

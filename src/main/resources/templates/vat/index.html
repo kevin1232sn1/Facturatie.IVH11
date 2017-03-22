@@ -62,10 +62,10 @@
 
                         <tr th:each="vat : ${vats}">
                             <td th:text="${vat.id}"></td>
-                            <td th:text="${vat.percentage}"></td>
+                            <td th:text="${vat.toString()}"></td>
                             <td>
                                 <div class="btn-group">
-                                    <a  th:href="@{'/vat/delete/' + ${vat.id}}" class="btn btn-xs btn-danger"><span class="fa fa-trash"></span></a>
+                                    <a th:href="@{'/vat/delete/' + ${vat.id}}" class="btn btn-xs btn-danger"><span class="fa fa-trash"></span></a>
                                 </div>
                             </td>
                         </tr>

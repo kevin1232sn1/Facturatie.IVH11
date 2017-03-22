@@ -18,6 +18,9 @@ public class Vat {
     private int id;
 
     @Column(name = "percentage")
+    @NotNull
+    @DecimalMin(value = "0.1", inclusive = true)
+    @DecimalMax(value = "100.0", inclusive = true)
     private double percentage;
 
     public Vat(int id, double percentage) {
@@ -29,7 +32,11 @@ public class Vat {
         this.percentage = percentage;
     }
 
-    public String getPercentage() {
+    public double getPercentage() {
+        return percentage;
+    }
+
+    public String toString() {
         return percentage + "%";
     }
 

@@ -66,10 +66,14 @@ public class UserController {
      * @param user
      * @return user/edit
      */
+
+    //String store(Model model, HttpSession session, @ModelAttribute User user, @RequestParam("password") String password) {
     @PostMapping(value = "/create")
+  
     String store(@Valid User user,  final BindingResult bindingResult, Model model, @RequestParam("role") String role) {
         // reset old password when password field was empty and request came from edit page
         user.setRole(Role.getRoleByName(role));
+
         userRepository.save(user);
 
         model.addAttribute("success", "User successfully saved");

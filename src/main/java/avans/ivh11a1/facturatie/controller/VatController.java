@@ -5,10 +5,13 @@ import avans.ivh11a1.facturatie.service.BillingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/vat")
@@ -54,9 +57,12 @@ public class VatController {
 
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public String addVat(int percentage, final Model model) {
+    public String addVat(@Valid Vat vat, final BindingResult bindingResult, final Model model) {
+        if (bindingResult.hasErrors()) {
+            return "vat/create";
+        }
+
         try {
-            Vat vat = new  Vat(percentage);
             billingService.saveVat(vat);
 
             model.addAttribute("success", "Vat added to the database");
@@ -70,7 +76,4 @@ public class VatController {
     private Iterable<Vat> getVatList(){
         return  billingService.findAllVat();
     }
-
-
-
 }
