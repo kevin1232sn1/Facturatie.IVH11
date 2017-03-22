@@ -17,8 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = StateException.class)
 public class NewsSubscriptionServiceImpl implements NewsSubscriptionService {
 
+    private final NewsSubscriptionRepository newsSubscriptionRepository;
+
     @Autowired
-    private NewsSubscriptionRepository newsSubscriptionRepository;
+    public NewsSubscriptionServiceImpl(NewsSubscriptionRepository newsSubscriptionRepository) {
+        this.newsSubscriptionRepository = newsSubscriptionRepository;
+    }
 
     @Override
     public Iterable<NewsSubscription> findAll() {

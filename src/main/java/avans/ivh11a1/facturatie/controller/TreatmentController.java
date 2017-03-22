@@ -19,8 +19,12 @@ import java.util.ArrayList;
 @SecurityAnnotation(allowedRole = { Role.ADMIN, Role.ADMINISTRATION })
 public class TreatmentController {
 
+    private final TreatmentRepository treatmentRepository;
+
     @Autowired
-    private TreatmentRepository treatmentRepository;
+    public TreatmentController(TreatmentRepository treatmentRepository) {
+        this.treatmentRepository = treatmentRepository;
+    }
 
     @RequestMapping("")
     public String index(Model model) {

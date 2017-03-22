@@ -23,17 +23,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional(rollbackFor = StateException.class)
 public class BillingServiceImpl implements BillingService {
-    @Autowired
-    private InvoiceRepository invoiceRepository;
+    private final InvoiceRepository invoiceRepository;
+
+    private final PaymentConditionRepository paymentConditionRepository;
+
+    private final DeclarationRepository declarationRepository;
+
+    private final VatRepository vatRepository;
 
     @Autowired
-    private PaymentConditionRepository paymentConditionRepository;
-
-    @Autowired
-    private DeclarationRepository declarationRepository;
-
-    @Autowired
-    private VatRepository vatRepository;
+    public BillingServiceImpl(InvoiceRepository invoiceRepository, PaymentConditionRepository paymentConditionRepository, DeclarationRepository declarationRepository, VatRepository vatRepository) {
+        this.invoiceRepository = invoiceRepository;
+        this.paymentConditionRepository = paymentConditionRepository;
+        this.declarationRepository = declarationRepository;
+        this.vatRepository = vatRepository;
+    }
 
     @Override
     public Iterable<Invoice> findAllInvoices() {

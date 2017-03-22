@@ -19,8 +19,12 @@ import org.springframework.web.bind.annotation.*;
 @SecurityAnnotation(allowedRole = { Role.ADMIN, Role.FINANCE })
 public class PaymentController {
     private final Logger logger = LoggerFactory.getLogger(DeclarationController.class);
+    private final BillingService billingService;
+
     @Autowired
-    private BillingService billingService;
+    public PaymentController(BillingService billingService) {
+        this.billingService = billingService;
+    }
 
     /**
      * Returns list with excising payment condition

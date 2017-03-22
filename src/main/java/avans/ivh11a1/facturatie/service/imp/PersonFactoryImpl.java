@@ -18,11 +18,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = StateException.class)
 public class PersonFactoryImpl implements PersonFactoryService {
 
-    @Autowired
+    final
     CustomerRepository customerRepository;
 
-    @Autowired
+    final
     UserRepository userRepository;
+
+    @Autowired
+    public PersonFactoryImpl(CustomerRepository customerRepository, UserRepository userRepository) {
+        this.customerRepository = customerRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public Person getPerson(String type, int id) {

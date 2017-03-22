@@ -20,11 +20,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = StateException.class)
 public class InsuranceServiceImpl implements InsuranceService {
 
-    @Autowired
+    final
     InsuranceRepository insuranceRepository;
 
-    @Autowired
+    final
     PolicyRepository policyRepository;
+
+    @Autowired
+    public InsuranceServiceImpl(InsuranceRepository insuranceRepository, PolicyRepository policyRepository) {
+        this.insuranceRepository = insuranceRepository;
+        this.policyRepository = policyRepository;
+    }
 
     @Override
     public Iterable<Insurance> findAllInsurances() {

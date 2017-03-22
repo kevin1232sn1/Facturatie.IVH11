@@ -18,8 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = StateException.class)
 public class CustomerServiceImpl implements CustomerService {
 
-    @Autowired
+    final
     CustomerRepository customerRepository;
+
+    @Autowired
+    public CustomerServiceImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
     @Override
     public Customer findByCsn(int CSN) {

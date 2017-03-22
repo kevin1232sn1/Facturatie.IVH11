@@ -20,17 +20,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = StateException.class)
 public class NewsServiceImpl implements NewsService, Subject {
 
-    @Autowired
-    private NewsRepository newsRepository;
+    private final NewsRepository newsRepository;
+
+    private final NewsSubscriptionRepository newsSubscriptionRepository;
+
+    private final PersonFactoryService factoryService;
+
+    private final NotificationService notificationService;
 
     @Autowired
-    private NewsSubscriptionRepository newsSubscriptionRepository;
-
-    @Autowired
-    private PersonFactoryService factoryService;
-
-    @Autowired
-    private NotificationService notificationService;
+    public NewsServiceImpl(NewsRepository newsRepository, NewsSubscriptionRepository newsSubscriptionRepository, PersonFactoryService factoryService, NotificationService notificationService) {
+        this.newsRepository = newsRepository;
+        this.newsSubscriptionRepository = newsSubscriptionRepository;
+        this.factoryService = factoryService;
+        this.notificationService = notificationService;
+    }
 
     @Override
     public void register(Observer o, String newsType) {
