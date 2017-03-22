@@ -33,7 +33,7 @@ public class Customer implements Person {
     private String dateOfBirth;
     @Column(name = "phoneNumber")
     private String phoneNumber;
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
     @Column(name = "iban")
     private String iban;
