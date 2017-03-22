@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/declaration")
 public class DeclarationController {
 
+    private final BillingService billingService;
+
     @Autowired
-    private BillingService billingService;
+    public DeclarationController(BillingService billingService) {
+        this.billingService = billingService;
+    }
 
     /**
      * Defines `module` variable for usage in the sidebar

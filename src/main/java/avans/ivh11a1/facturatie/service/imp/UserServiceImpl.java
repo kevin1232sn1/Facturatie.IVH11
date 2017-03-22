@@ -18,11 +18,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = StateException.class)
 public class UserServiceImpl implements UserService {
 
-    @Autowired
+    final
     UserRepository userRepository;
 
-    @Autowired
+    final
     UserAdministrationService userAdministrationService;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, UserAdministrationService userAdministrationService) {
+        this.userRepository = userRepository;
+        this.userAdministrationService = userAdministrationService;
+    }
 
     @Override
     public Iterable<User> findAll() {

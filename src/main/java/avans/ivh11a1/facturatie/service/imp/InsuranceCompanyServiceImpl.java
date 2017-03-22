@@ -19,8 +19,12 @@ public class InsuranceCompanyServiceImpl implements InsuranceCompanyService {
 
     private static InsuranceCompany company;
 
+    private final InsuranceCompanyRepository insuranceCompanyRepository;
+
     @Autowired
-    private InsuranceCompanyRepository insuranceCompanyRepository;
+    public InsuranceCompanyServiceImpl(InsuranceCompanyRepository insuranceCompanyRepository) {
+        this.insuranceCompanyRepository = insuranceCompanyRepository;
+    }
 
     @Override
     public InsuranceCompany getCompany() {

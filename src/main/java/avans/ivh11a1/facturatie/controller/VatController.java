@@ -17,8 +17,12 @@ import javax.validation.Valid;
 @RequestMapping("/vat")
 public class VatController {
 
+    private final BillingService billingService;
+
     @Autowired
-    private BillingService billingService;
+    public VatController(BillingService billingService) {
+        this.billingService = billingService;
+    }
 
     @ModelAttribute("page")
     public String module() {

@@ -6,7 +6,8 @@ import avans.ivh11a1.facturatie.domain.NewsLetter.InsuranceNews;
 import avans.ivh11a1.facturatie.domain.NewsLetter.News;
 import avans.ivh11a1.facturatie.domain.Person;
 import avans.ivh11a1.facturatie.domain.customers.Customer;
-import avans.ivh11a1.facturatie.service.*;
+import avans.ivh11a1.facturatie.service.NewsService;
+import avans.ivh11a1.facturatie.service.PersonFactoryService;
 import avans.ivh11a1.facturatie.service.imp.NewsObserverImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -19,20 +20,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/news")
 public class NewsController {
-    @Autowired
-    private NewsService newsService;
+    private final NewsService newsService;
+
+    private final PersonFactoryService personFactoryService;
 
     @Autowired
-    private CustomerService customerService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private NewsSubscriptionService subscriptionService;
-
-    @Autowired
-    private PersonFactoryService personFactoryService;
+    public NewsController(NewsService newsService, PersonFactoryService personFactoryService) {
+        this.newsService = newsService;
+        this.personFactoryService = personFactoryService;
+    }
 
     public void TestMailing(Model theModel) {
 

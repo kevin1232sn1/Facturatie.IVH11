@@ -16,8 +16,13 @@ import org.springframework.web.bind.annotation.*;
 @SecurityAnnotation(allowedRole = { Role.ADMIN, Role.ADMINISTRATION })
 public class InsuranceController {
 
-    @Autowired
+    final
     InsuranceService insuranceService;
+
+    @Autowired
+    public InsuranceController(InsuranceService insuranceService) {
+        this.insuranceService = insuranceService;
+    }
 
     @ModelAttribute("page")
     public String module() {

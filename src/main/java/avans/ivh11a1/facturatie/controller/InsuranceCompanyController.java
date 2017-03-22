@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 
@@ -18,10 +19,15 @@ import javax.validation.Valid;
 @SecurityAnnotation(allowedRole = { Role.ADMIN})
 public class InsuranceCompanyController {
 
-    @Autowired
+    final
     BillingService billingService;
+    private final InsuranceCompanyService insuranceCompanyService;
+
     @Autowired
-    private InsuranceCompanyService insuranceCompanyService;
+    public InsuranceCompanyController(BillingService billingService, InsuranceCompanyService insuranceCompanyService) {
+        this.billingService = billingService;
+        this.insuranceCompanyService = insuranceCompanyService;
+    }
 
     @ModelAttribute("page")
     public String module() {

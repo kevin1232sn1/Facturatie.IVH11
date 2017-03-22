@@ -22,14 +22,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = StateException.class)
 public class MailNotificationServiceImpl implements NotificationService {
 
-    @Autowired
+    final
     CustomerRepository customerRepository;
 
-    @Autowired
+    final
     UserRepository userRepository;
 
-    @Autowired
+    final
     JavaMailSender javaMailSender;
+
+    @Autowired
+    public MailNotificationServiceImpl(CustomerRepository customerRepository, UserRepository userRepository, JavaMailSender javaMailSender) {
+        this.customerRepository = customerRepository;
+        this.userRepository = userRepository;
+        this.javaMailSender = javaMailSender;
+    }
 
     @Override
     public Boolean sendMessage(News news, Person person) {

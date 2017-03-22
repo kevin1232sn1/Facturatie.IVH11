@@ -24,13 +24,13 @@ import java.util.List;
 @Component
 public class SecurityInterceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityInterceptor.class);
-
-    public SecurityInterceptor() {
-        LOGGER.debug("Security Interceptor created");
-    }
+    private final UserAdministrationService userService;
 
     @Autowired
-    private UserAdministrationService userService;
+    public SecurityInterceptor(UserAdministrationService userService) {
+        LOGGER.debug("Security Interceptor created");
+        this.userService = userService;
+    }
 
     @Before("((@within(SecurityAnnotation) || @annotation(SecurityAnnotation)) && execution(* avans.ivh11a1.facturatie.controller..*(*)))")
     public void checkSecurity(JoinPoint joinPoint) throws SecurityException {

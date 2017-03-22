@@ -35,17 +35,18 @@ import java.util.Date;
 public class InvoiceController {
     private final Logger logger = LoggerFactory.getLogger(DeclarationController.class);
 
-    @Autowired
-    private BillingService billingService;
+    private final BillingService billingService;
+
+    private final CustomerService customerService;
+
+    private final InsuranceService insuranceService;
 
     @Autowired
-    private CustomerService customerService;
-
-    @Autowired
-    private InsuranceService insuranceService;
-
-
-
+    public InvoiceController(BillingService billingService, CustomerService customerService, InsuranceService insuranceService) {
+        this.billingService = billingService;
+        this.customerService = customerService;
+        this.insuranceService = insuranceService;
+    }
 
     /**
      * Returns page name for displaying invoices in a list

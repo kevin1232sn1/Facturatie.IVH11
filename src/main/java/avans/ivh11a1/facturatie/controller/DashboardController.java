@@ -16,11 +16,17 @@ import javax.servlet.http.HttpSession;
 @Controller
 class DashboardController {
 
-    @Autowired
+    final
     UserService userService;
 
-    @Autowired
+    final
     UserAdministrationService userAdministrationService;
+
+    @Autowired
+    public DashboardController(UserService userService, UserAdministrationService userAdministrationService) {
+        this.userService = userService;
+        this.userAdministrationService = userAdministrationService;
+    }
 
     @ModelAttribute("page")
     public String module() {
