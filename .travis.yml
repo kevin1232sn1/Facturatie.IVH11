@@ -3,8 +3,7 @@ jdk:
  - oraclejdk8
 install: true
 addons:
-  sonarqube:
-    organization: uv0nmk1d4fy3
+  sonarqube:    
     token:
       secure: $SONAR_TOKEN # encrypted value of your token
 script:
