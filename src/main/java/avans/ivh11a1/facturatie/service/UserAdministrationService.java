@@ -14,4 +14,6 @@ public interface UserAdministrationService {
     void logout();
 
     Role getUserRole();
+
+    boolean isLoggedIn();
 }

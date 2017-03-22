@@ -75,7 +75,12 @@
                                 <div class="form-group">
                                     <label for="role">Role</label>
                                     <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'member'-->
-                                    <input type="text" class="form-control" id="role" th:field="*{role}"/>
+                                    <select name="role" class="form-control" id="role">
+                                        <option th:each="role : ${T(avans.ivh11a1.facturatie.domain.administration.Role).values()}"
+                                                th:value="${role}"
+                                                th:text="${role}">
+                                        </option>
+                                    </select>
                                     <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Name Error</p>
                                 </div>
                             </div>

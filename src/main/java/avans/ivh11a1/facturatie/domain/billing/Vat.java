@@ -3,12 +3,9 @@ package avans.ivh11a1.facturatie.domain.billing;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
-/**
- * This is a vat object
- *
- * @author Bob van der Valk
- */
+
 @Entity
 @Table(name ="vat")
 @Getter

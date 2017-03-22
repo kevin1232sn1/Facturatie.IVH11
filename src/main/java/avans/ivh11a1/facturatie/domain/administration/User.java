@@ -4,19 +4,9 @@ import avans.ivh11a1.facturatie.domain.Person;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-/**
- * User domain object
- * Roles can be comma separated.
- *
- * @author Bob van der Valk / Robin Valk
- * @version 1.0
- * @see BCrypt Password hashed in BCrypt.
- */
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -62,12 +52,6 @@ public class User implements Person {
         this.password = user.getPassword();
         this.name = user.getName();
         this.role = user.getRole();
-    }
-
-
-    public void setPassword(String password) {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     public void setPasswordWithoutHash(String password) {

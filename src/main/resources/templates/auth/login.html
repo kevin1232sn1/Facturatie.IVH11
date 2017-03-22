@@ -38,13 +38,13 @@
                     <div th:if="${param.logout}">
                         You have been logged out.
                     </div>
-                    <form \ method="post">
+                    <form th:action="@{/login}" method="post" th:object="${user}">
                         <div class="form-group has-feedback">
-                            <input type="email" class="form-control" name="email" placeholder="Email">
+                            <input type="email" class="form-control" th:field="*{email}" placeholder="Email">
                             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                         </div>
                         <div class="form-group has-feedback">
-                            <input type="password" class="form-control" name="password" placeholder="Password">
+                            <input type="password" class="form-control" th:field="*{password}" placeholder="Password">
                             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
                         <div class="row">

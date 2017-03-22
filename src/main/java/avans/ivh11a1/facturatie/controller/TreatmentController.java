@@ -1,5 +1,7 @@
 package avans.ivh11a1.facturatie.controller;
 
+import avans.ivh11a1.facturatie.aop.SecurityAnnotation;
+import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.domain.billing.Treatment;
 import avans.ivh11a1.facturatie.repository.TreatmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
  */
 @Controller
 @RequestMapping("/treatments")
+@SecurityAnnotation(allowedRole = { Role.ADMIN, Role.ADMINISTRATION })
 public class TreatmentController {
 
     @Autowired

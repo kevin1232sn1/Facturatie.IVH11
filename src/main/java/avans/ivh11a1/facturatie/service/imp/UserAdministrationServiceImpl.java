@@ -4,6 +4,7 @@ import avans.ivh11a1.facturatie.domain.Exception.StateException;
 import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.domain.administration.User;
 import avans.ivh11a1.facturatie.service.UserAdministrationService;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("UserAdministrationService")
 @Repository
 @Transactional(rollbackFor = StateException.class)
+@Scope("singleton")
 public class UserAdministrationServiceImpl implements UserAdministrationService {
     private static User user;
     private final String LOGIN_PAGE = "/login.html";
@@ -36,5 +38,10 @@ public class UserAdministrationServiceImpl implements UserAdministrationService 
     @Override
     public Role getUserRole() {
         return user.getRole();
+    }
+
+    @Override
+    public boolean isLoggedIn(){
+        return user != null;
     }
 }

@@ -8,8 +8,10 @@ import lombok.Getter;
 @Getter
 public class SecurityException extends Exception {
     private String type;
+
     public SecurityException(String msg, String type) {
         super(msg);
         this.type = type;
+
     }
 }

@@ -4,7 +4,7 @@ package avans.ivh11a1.facturatie.domain.administration;
  * Created by kevin on 21-3-2017.
  */
 public enum Role {
-    ADMIN("ADM"), WRITER("WRT"), GUEST("GST");
+    ADMIN("Admin"), FINANCE("Finance"), ADMINISTRATION("Administration");
 
     private String name;
 

@@ -1,5 +1,7 @@
 package avans.ivh11a1.facturatie.controller;
 
+import avans.ivh11a1.facturatie.aop.SecurityAnnotation;
+import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.domain.customers.Customer;
 import avans.ivh11a1.facturatie.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This controls the customer crud and front-end
- *
- * @author Bob van der Valk
- */
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("/customer")@SecurityAnnotation(allowedRole = { Role.ADMIN, Role.ADMINISTRATION, Role.FINANCE })
 public class CustomerController {
 
     @Autowired

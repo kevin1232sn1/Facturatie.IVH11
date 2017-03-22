@@ -31,7 +31,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/invoice")
-@SecurityAnnotation(allowedRole = { Role.ADMIN })
+@SecurityAnnotation(allowedRole = { Role.ADMIN, Role.FINANCE })
 public class InvoiceController {
     private final Logger logger = LoggerFactory.getLogger(DeclarationController.class);
 

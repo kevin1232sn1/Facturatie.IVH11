@@ -1,8 +1,8 @@
 package avans.ivh11a1.facturatie.controller;
 
+import avans.ivh11a1.facturatie.aop.SecurityAnnotation;
 import avans.ivh11a1.facturatie.domain.administration.InsuranceCompany;
-import avans.ivh11a1.facturatie.repository.InsuranceCompanyRepository;
-import avans.ivh11a1.facturatie.repository.VatRepository;
+import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.service.BillingService;
 import avans.ivh11a1.facturatie.service.InsuranceCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,22 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Created by Matthijs Wilhelmus on 13-10-2016.
- *
- * This is a controller for <code>InsuranceCompany</code>.
- * This controller regulates the mapping of the Settings(insuranceCompany) page
- * for viewing the current insurance Company data as well as for updating this data.
- * This controller uses the linked <code>InsuranceCompanyRepository</code> and <code>VatRepository</code>.
- *
- * @author Matthijs Wilhelmus
- * @version 1.0
- * @see InsuranceCompanyRepository
- * @see InsuranceCompany
- * @see VatRepository
- */
+
 @Controller
 @RequestMapping("/insurance_company")
+@SecurityAnnotation(allowedRole = { Role.ADMIN})
 public class InsuranceCompanyController {
 
     @Autowired

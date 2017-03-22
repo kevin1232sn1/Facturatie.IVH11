@@ -7,11 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-/**
- * Object of a customer
- *  TODO: Policy relatie terug zetten - Even verwijderd voor hibernate
- * @author Bob van der Valk
- */
 @Entity
 @Table(name = "customers")
 @Getter

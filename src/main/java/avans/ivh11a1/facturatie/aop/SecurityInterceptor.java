@@ -2,7 +2,6 @@ package avans.ivh11a1.facturatie.aop;
 
 import avans.ivh11a1.facturatie.domain.Exception.SecurityException;
 import avans.ivh11a1.facturatie.domain.administration.Role;
-import avans.ivh11a1.facturatie.domain.administration.User;
 import avans.ivh11a1.facturatie.service.UserAdministrationService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
@@ -40,8 +38,7 @@ public class SecurityInterceptor {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
 
-        User user = userService.getCurrentUser();
-        if (user == null){
+        if (!userService.isLoggedIn()){
             throw new SecurityException("You need to log in to view these components", "NotLoggedIn");
         }
         SecurityAnnotation myAnnotation = joinPoint.getTarget().getClass().getAnnotation(SecurityAnnotation.class);
@@ -60,22 +57,6 @@ public class SecurityInterceptor {
             }
         }
         LOGGER.info("Current user has required permissions for creating a component");
-    }
-
-    /**
-     * Basing on the method's argument check if the class is annotataed with
-     * {@link SecurityAnnotation}
-     *
-     * @param arguments
-     * @return
-     */
-    private Annotation checkTheAnnotation(Object[] arguments) {
-        Object concreteClass = arguments[0];
-        LOGGER.info("Argument's class - [{}]", new Object[] { arguments });
-        AnnotatedElement annotatedElement = (AnnotatedElement) concreteClass;
-        Annotation annotation = annotatedElement.getAnnotation(SecurityAnnotation.class);
-        LOGGER.info("Annotation present - [{}]", new Object[] { annotation });
-        return annotation;
     }
 
     /**
