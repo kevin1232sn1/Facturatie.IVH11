@@ -11,6 +11,4 @@ public interface Person {
     String getFullName();
 
     String getEmail();
-
-    String getRole();
 }

@@ -32,7 +32,7 @@ public class NewsObserverImpl implements Observer {
     public void update(News news, NotificationService notificationService) {
         this.news = news;
         notificationService.sendMessage(news, person);
-        System.out.println("Observer : " + person.getFullName() + " news message " + news.getContent() + " news type: " + news.getType() + " Will send to: " + person.getEmail() + " Role: " + person.getRole());
+        System.out.println("Observer : " + person.getFullName() + " news message " + news.getContent() + " news type: " + news.getType() + " Will send to: " + person.getEmail() + " Type: " + person.getType());
     }
 
     @Override

@@ -1,5 +1,7 @@
 package avans.ivh11a1.facturatie.controller;
 
+import avans.ivh11a1.facturatie.aop.SecurityAnnotation;
+import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.domain.administration.User;
 import avans.ivh11a1.facturatie.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-/**
- * Created by Robin on 15-10-16.
- * Controller for the User domain.
- * This controller regulates the mapping of the user's CRUD pages.
- *
- * @author Robin Valk
- * @version 1.0
- * @see User
- * @see UserRepository
- * @see HttpSession
- */
 @Controller
 @RequestMapping("/user")
+@SecurityAnnotation(allowedRole = { Role.ADMIN, Role.ADMINISTRATION })
 public class UserController {
 
     @Autowired
@@ -70,24 +62,17 @@ public class UserController {
      * Mapping of the store request.
      * Restore old password when no new password is given.
      *
-     * @param model
-     * @param session
+     * @param model     *
      * @param user
-     * @param password
      * @return user/edit
      */
 
     //String store(Model model, HttpSession session, @ModelAttribute User user, @RequestParam("password") String password) {
     @PostMapping(value = "/create")
-    String store(@Valid User user, final BindingResult bindingResult, Model model, HttpSession session, @RequestParam("password") String password) {
+  
+    String store(@Valid User user,  final BindingResult bindingResult, Model model, @RequestParam("role") String role) {
         // reset old password when password field was empty and request came from edit page
-        if (bindingResult.hasErrors()) {
-            return "user/edit";
-        }
-
-        if (password.equals("") && session.getAttribute("oldPassword") != null) {
-            user.setPasswordWithoutHash(session.getAttribute("oldPassword").toString());
-        }
+        user.setRole(Role.getRoleByName(role));
 
         userRepository.save(user);
 

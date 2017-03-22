@@ -1,9 +1,8 @@
 package avans.ivh11a1.facturatie.controller;
 
+import avans.ivh11a1.facturatie.aop.SecurityAnnotation;
+import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.domain.insurances.Policy;
-import avans.ivh11a1.facturatie.repository.CustomerRepository;
-import avans.ivh11a1.facturatie.repository.InsuranceRepository;
-import avans.ivh11a1.facturatie.repository.PolicyRepository;
 import avans.ivh11a1.facturatie.service.CustomerService;
 import avans.ivh11a1.facturatie.service.InsuranceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,23 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Created by Matthijs Wilhelmus on 13-10-2016.
- * This is a controller for <code>Policy</code>.
- * This controller regulates the mapping of the policy pages
- * for viewing all policies as well as creating/updating/deleting a policy using the linked DAO's
- * A policy entity has links to a customer and an insurance.
- * @author Matthijs Wilhelmus
- *
- * @version 1.0
- * @see Policy
- * @see PolicyRepository
- * @see CustomerRepository
- * @see InsuranceRepository
- *
- */
 @Controller
 @RequestMapping("/policy")
+@SecurityAnnotation(allowedRole = { Role.ADMIN, Role.ADMINISTRATION })
 public class PolicyController {
 
     @Autowired

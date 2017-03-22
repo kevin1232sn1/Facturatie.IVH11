@@ -1,11 +1,11 @@
 package avans.ivh11a1.facturatie.domain.billing;
 
+import avans.ivh11a1.facturatie.domain.customers.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import avans.ivh11a1.facturatie.domain.customers.Customer;
-import javax.persistence.*;
 
+import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,11 +13,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
-/**
- * This is the object of a invoice
- *
- * @author Bob van der Valk
- */
+
 @Entity
 @Table(name ="invoices")
 @Getter

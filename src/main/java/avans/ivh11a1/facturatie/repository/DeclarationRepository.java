@@ -10,9 +10,6 @@ import org.springframework.data.repository.query.Param;
 import javax.transaction.Transactional;
 import java.util.List;
 
-/**
- * Created by Robin Valk on 15-10-2016.
- */
 @Transactional
 public interface DeclarationRepository extends CrudRepository<Declaration, Integer> {
     List<Declaration> findByCustomer(Customer customer);
