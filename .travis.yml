@@ -3,7 +3,7 @@ jdk:
  - oraclejdk8
 install: true
 addons:
-  sonarqube:
+  sonarqube:    
     token:
       secure: $SONAR_TOKEN # encrypted value of your token
 script:
@@ -15,3 +15,4 @@ deploy:
  api-key: 
   secure: $HEROKU_API_KEY
  app: proftaak23ivh11a1b
+ 

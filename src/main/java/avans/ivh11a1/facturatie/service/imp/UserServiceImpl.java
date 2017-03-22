@@ -3,6 +3,7 @@ package avans.ivh11a1.facturatie.service.imp;
 import avans.ivh11a1.facturatie.domain.Exception.StateException;
 import avans.ivh11a1.facturatie.domain.administration.User;
 import avans.ivh11a1.facturatie.repository.UserRepository;
+import avans.ivh11a1.facturatie.service.UserAdministrationService;
 import avans.ivh11a1.facturatie.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,8 +17,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional(rollbackFor = StateException.class)
 public class UserServiceImpl implements UserService {
-    @Autowired
+
+    final
     UserRepository userRepository;
+
+    final
+    UserAdministrationService userAdministrationService;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, UserAdministrationService userAdministrationService) {
+        this.userRepository = userRepository;
+        this.userAdministrationService = userAdministrationService;
+    }
 
     @Override
     public Iterable<User> findAll() {
@@ -41,4 +52,21 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(id);
         return null;
     }
+
+    @Override
+    public Boolean loginUser(User user) {
+        User loginUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
+        if (loginUser != null){
+            userAdministrationService.setCurrentUser(loginUser);
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public void logoutUser() {
+        userAdministrationService.setCurrentUser(null);
+    }
+
 }

@@ -4,17 +4,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Min;
-import javax.persistence.*;
-/**
- * This is a vat object
- *
- * @author Bob van der Valk
- */
+
 @Entity
 @Table(name ="vat")
 @Getter

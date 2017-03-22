@@ -1,21 +1,13 @@
 package avans.ivh11a1.facturatie.domain.insurances;
 
+import avans.ivh11a1.facturatie.domain.customers.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import avans.ivh11a1.facturatie.domain.customers.Customer;
+
 import javax.persistence.*;
 
 
-/**
- * This is a object of a policy.
- *
- *
- * @author Bob van der Valk, Matthijs Wilhelmus
- * @version 1.0
- * @see Customer
- * @see Insurance
- */
 @Entity
 @Table(name = "policies")
 @Getter

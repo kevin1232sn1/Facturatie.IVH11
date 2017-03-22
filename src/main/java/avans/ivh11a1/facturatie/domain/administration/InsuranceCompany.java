@@ -1,10 +1,12 @@
 package avans.ivh11a1.facturatie.domain.administration;
 
+
 import avans.ivh11a1.facturatie.domain.validators.*;
+import avans.ivh11a1.facturatie.domain.billing.Vat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import avans.ivh11a1.facturatie.domain.billing.Vat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -16,12 +18,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
-/**
- * This is the object of a insurance company
- *
- * @author Bob van der Valk, Matthijs Wilhelmus
- */
-@Entity
+
 @Table(name = "insurance_company")
 @Getter
 @Setter

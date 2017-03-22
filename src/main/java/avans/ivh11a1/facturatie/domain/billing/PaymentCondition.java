@@ -6,11 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-/**
- * This is a object of a payment condition
- *
- * @author Bob van der Valk
- */
 @Entity
 @Table(name ="payment_conditions")
 @Getter

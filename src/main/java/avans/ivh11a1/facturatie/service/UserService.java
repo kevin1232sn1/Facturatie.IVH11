@@ -13,4 +13,8 @@ public interface UserService {
     Boolean delete(User user);
 
     Boolean deleteById(int id);
+
+    Boolean loginUser(User user);
+
+    void logoutUser();
 }

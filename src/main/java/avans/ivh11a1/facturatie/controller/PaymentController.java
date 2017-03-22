@@ -1,5 +1,7 @@
 package avans.ivh11a1.facturatie.controller;
 
+import avans.ivh11a1.facturatie.aop.SecurityAnnotation;
+import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.domain.billing.PaymentCondition;
 import avans.ivh11a1.facturatie.service.BillingService;
 import org.slf4j.Logger;
@@ -14,10 +16,15 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/payment-condition")
+@SecurityAnnotation(allowedRole = { Role.ADMIN, Role.FINANCE })
 public class PaymentController {
     private final Logger logger = LoggerFactory.getLogger(DeclarationController.class);
+    private final BillingService billingService;
+
     @Autowired
-    private BillingService billingService;
+    public PaymentController(BillingService billingService) {
+        this.billingService = billingService;
+    }
 
     /**
      * Returns list with excising payment condition

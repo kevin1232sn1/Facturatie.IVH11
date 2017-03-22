@@ -1,18 +1,12 @@
 package avans.ivh11a1.facturatie.domain.insurances;
 
+import avans.ivh11a1.facturatie.domain.administration.InsuranceCompany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import avans.ivh11a1.facturatie.domain.administration.InsuranceCompany;
+
 import javax.persistence.*;
 
-/**
- * This is the object of an Insurance.
- *
- * @author Bob van der Valk, Matthijs Wilhelmus
- * @version 1.0
- * @see InsuranceCompany
- */
 @Entity
 @Table(name = "insurances")
 @Getter

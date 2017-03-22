@@ -20,14 +20,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = StateException.class)
 public class NewsServiceImpl implements NewsService, Subject {
 
-    @Autowired
-    private NewsRepository newsRepository;
+    private final NewsRepository newsRepository;
+
+    private final NewsSubscriptionRepository newsSubscriptionRepository;
+
+    private final PersonFactoryService factoryService;
+
+    private final NotificationService notificationService;
 
     @Autowired
-    private NewsSubscriptionRepository newsSubscriptionRepository;
-
-    @Autowired
-    private PersonFactoryService factoryService;
+    public NewsServiceImpl(NewsRepository newsRepository, NewsSubscriptionRepository newsSubscriptionRepository, PersonFactoryService factoryService, NotificationService notificationService) {
+        this.newsRepository = newsRepository;
+        this.newsSubscriptionRepository = newsSubscriptionRepository;
+        this.factoryService = factoryService;
+        this.notificationService = notificationService;
+    }
 
     @Override
     public void register(Observer o, String newsType) {
@@ -50,15 +57,20 @@ public class NewsServiceImpl implements NewsService, Subject {
     public void notifyObserver(News news) {
         for (NewsSubscription subscription : newsSubscriptionRepository.findByNewsType(news.getType())) {
             Person p = factoryService.getPerson(subscription.getObserverType(), subscription.getObserverId());
-            NotificationService notificationService = new MailNotificationServiceImpl();
-            notificationService.setPerson(p);
-            notificationService.update(news);
+            NewsObserverImpl observer = new NewsObserverImpl();
+            observer.setPerson(p);
+            observer.update(news, notificationService);
         }
     }
 
     @Override
     public Iterable<News> findAll() {
         return newsRepository.findAll();
+    }
+
+    @Override
+    public News findOne(int id) {
+        return newsRepository.findOne(id);
     }
 
     @Override

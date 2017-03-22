@@ -14,8 +14,14 @@ public abstract class MailTemplate {
 
     protected String body = "";
 
+    protected void setReceiver() {
+        message.setTo(person.getEmail());
+    }
+
+    protected abstract void fillSubject();
+
     private void salutation() {
-        body += "Hey";
+        body += "Dear %Name%,<br/><br/>";
     }
 
     private void bodyText() {
@@ -25,7 +31,8 @@ public abstract class MailTemplate {
     protected abstract void newsMessage();
 
     private void Closing() {
-        body += " Ending";
+        body += " <br/> With kind regards, <br/><br/>" +
+                "%InsuranceCompanyName%";
     }
 
     private void fillFields() {
@@ -42,30 +49,16 @@ public abstract class MailTemplate {
         message.setFrom("Info@facturatie.com");
 
         fillSubject();
-
         setReceiver();
-
         salutation();
-
         bodyText();
-
         newsMessage();
-
         Closing();
+        fillFields();
 
-        if (mailTagsUsed())
-            fillFields();
-
+        message.setText(body);
         return message;
     }
 
-    protected void setReceiver() {
-        message.setTo(person.getEmail());
-    }
 
-    protected abstract void fillSubject();
-
-    protected boolean mailTagsUsed() {
-        return true;
-    }
 }

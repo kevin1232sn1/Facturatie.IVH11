@@ -7,4 +7,6 @@ import avans.ivh11a1.facturatie.domain.Person;
  */
 public interface PersonFactoryService {
     Person getPerson(String type, int id);
+
+    Person getPerson(String type, String email);
 }
