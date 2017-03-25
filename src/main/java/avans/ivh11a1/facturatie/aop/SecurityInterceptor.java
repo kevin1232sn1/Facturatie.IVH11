@@ -32,7 +32,7 @@ public class SecurityInterceptor {
         this.userService = userService;
     }
 
-    @Before("((@within(SecurityAnnotation) || @annotation(SecurityAnnotation)) && execution(* avans.ivh11a1.facturatie.controller..*(*)))")
+    @Before("((@within(SecurityAnnotation) || @annotation(SecurityAnnotation)))")
     public void checkSecurity(JoinPoint joinPoint) throws SecurityException {
         LOGGER.info("Intercepting creation of a component");
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
