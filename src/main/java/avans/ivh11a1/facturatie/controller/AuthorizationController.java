@@ -21,7 +21,7 @@ public class AuthorizationController {
         }else{
             model = new ModelAndView("dashboard/index");
         }
-        model.addObject("exception", ex);
+        model.addObject("exception", ex.getMessage());
         return model;
     }
 }
