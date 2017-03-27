@@ -17,9 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = StateException.class)
 public class InsuranceCompanyServiceImpl implements InsuranceCompanyService {
 
-    private static InsuranceCompany company;
-
     private final InsuranceCompanyRepository insuranceCompanyRepository;
+    private InsuranceCompany company;
 
     @Autowired
     public InsuranceCompanyServiceImpl(InsuranceCompanyRepository insuranceCompanyRepository) {
@@ -28,10 +27,7 @@ public class InsuranceCompanyServiceImpl implements InsuranceCompanyService {
 
     @Override
     public InsuranceCompany getCompany() {
-        if (company == null){
-            company = insuranceCompanyRepository.findOne(1);
-            return getCompany();
-        }
+        company = insuranceCompanyRepository.findOne(1);
         return company;
     }
 
