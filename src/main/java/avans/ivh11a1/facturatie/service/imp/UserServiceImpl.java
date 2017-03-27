@@ -1,5 +1,6 @@
 package avans.ivh11a1.facturatie.service.imp;
 
+import avans.ivh11a1.facturatie.domain.DashboardModel;
 import avans.ivh11a1.facturatie.domain.Exception.StateException;
 import avans.ivh11a1.facturatie.domain.administration.User;
 import avans.ivh11a1.facturatie.repository.UserRepository;
@@ -13,9 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by kevin on 11-3-2017.
  */
-@Service("UserService")
-@Repository
-@Transactional(rollbackFor = StateException.class)
 public class UserServiceImpl implements UserService {
 
     final
@@ -69,4 +67,8 @@ public class UserServiceImpl implements UserService {
         userAdministrationService.setCurrentUser(null);
     }
 
+    @Override
+    public DashboardModel getDashboardData() {
+        return new DashboardModel(); //default dashboard model
+    }
 }

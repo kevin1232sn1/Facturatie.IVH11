@@ -5,6 +5,9 @@ import avans.ivh11a1.facturatie.domain.administration.User;
 import avans.ivh11a1.facturatie.service.UserAdministrationService;
 import avans.ivh11a1.facturatie.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -43,6 +46,14 @@ class DashboardController {
         boolean succes = userService.loginUser(user);
         if (succes){
             session.setAttribute("User", userAdministrationService.getCurrentUser());
+
+
+
+            model.addAttribute(userService.getDashboardData());
+
+
+
+
             return "dashboard/index";
         }else {
             throw new SecurityException("Sorry, that login was invalid. Please try again.", "LoginWrong");

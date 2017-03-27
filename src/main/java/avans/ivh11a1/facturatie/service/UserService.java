@@ -1,5 +1,6 @@
 package avans.ivh11a1.facturatie.service;
 
+import avans.ivh11a1.facturatie.domain.DashboardModel;
 import avans.ivh11a1.facturatie.domain.administration.User;
 
 /**
@@ -17,4 +18,6 @@ public interface UserService {
     Boolean loginUser(User user);
 
     void logoutUser();
+
+    DashboardModel getDashboardData();
 }
