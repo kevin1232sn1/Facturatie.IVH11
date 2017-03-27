@@ -206,7 +206,7 @@ public class InvoiceController {
         paymentCondition = paymentCondition.replace("%Amount%", formatter.format((subTotal + vatAmount)));
         paymentCondition = paymentCondition.replace("%period_in_days%", Integer.toString(invoice.getPaymentCondition().getPeriodInDays()));
         paymentCondition = paymentCondition.replace("%BankAccount%", company.getIban());
-        paymentCondition = paymentCondition.replace("%Company_Name%", company.getCompanyname());
+        paymentCondition = paymentCondition.replace("%Company_Name%", company.getCompanyName());
         paymentCondition = paymentCondition.replace("%Invoice_Ref%", Integer.toString(invoice.getId()));
 
         //Add the filled in condition to the domain

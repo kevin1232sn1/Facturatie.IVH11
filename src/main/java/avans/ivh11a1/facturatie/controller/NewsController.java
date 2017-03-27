@@ -7,8 +7,8 @@ import avans.ivh11a1.facturatie.domain.NewsLetter.News;
 import avans.ivh11a1.facturatie.domain.Person;
 import avans.ivh11a1.facturatie.domain.customers.Customer;
 import avans.ivh11a1.facturatie.service.NewsService;
+import avans.ivh11a1.facturatie.service.NewsSubscriptionService;
 import avans.ivh11a1.facturatie.service.PersonFactoryService;
-import avans.ivh11a1.facturatie.service.imp.NewsObserverImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,19 +24,18 @@ public class NewsController {
 
     private final PersonFactoryService personFactoryService;
 
+    private final NewsSubscriptionService newsSubscriptionService;
+
     @Autowired
-    public NewsController(NewsService newsService, PersonFactoryService personFactoryService) {
+    public NewsController(NewsService newsService, PersonFactoryService personFactoryService, NewsSubscriptionService newsSubscriptionService) {
         this.newsService = newsService;
         this.personFactoryService = personFactoryService;
+        this.newsSubscriptionService = newsSubscriptionService;
     }
 
     public void TestMailing(Model theModel) {
 
         Customer nC = new Customer();
-        NewsObserverImpl newsObserver = new NewsObserverImpl();
-        newsObserver.setPerson(nC);
-
-        newsService.register(newsObserver, "");
 
         News news = new CompanyNews();
         news.setContent("Test important mailing!2");
@@ -93,9 +92,7 @@ public class NewsController {
     @PostMapping(value = "/create/{newsType}/{personType}/{email}")
     String AddSubscription(Model model, @PathVariable String newsType, @PathVariable String personType, @PathVariable String email) {
         Person person = personFactoryService.getPerson(personType, email);
-        NewsObserverImpl newsObserver = new NewsObserverImpl();
-        newsObserver.setPerson(person);
-        newsService.register(newsObserver, newsType);
+        newsSubscriptionService.saveSubscription(person, newsType);
         return this.listNews(model);
     }
 

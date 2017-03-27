@@ -1,5 +1,6 @@
 package avans.ivh11a1.facturatie.domain.NewsLetter;
 
+import avans.ivh11a1.facturatie.domain.Person;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,5 +34,11 @@ public class NewsSubscription {
         this.newsType = newsType;
         this.observerType = observerType;
         this.observerId = oId;
+    }
+
+    public NewsSubscription(Person p, String newsType) {
+        this.newsType = newsType;
+        this.observerType = p.getType();
+        this.observerId = p.getId();
     }
 }
