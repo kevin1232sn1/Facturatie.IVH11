@@ -16,6 +16,16 @@
         <li class="active">Dashboard</li>
     </ol>
 </section>
+
+<div th:if="${exception}" style="flex: 1; margin: 0 30px;">
+    <div layout:include="fragments/alert :: alert" th:with="type='error', header='exception'" th:remove="tag">
+        <!--/* Implements alert summary fragment with full-blown HTML summary */-->
+        <th:block layout:fragment="alert-content">
+            <p th:text="${exception}">exception</p>
+        </th:block>
+    </div>
+</div>
+
 <div layout:fragment="content">
     <!-- Small boxes (Stat box) -->
     <div class="row">
@@ -23,9 +33,9 @@
             <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3 th:text="${dashboardData.box1.value}"/>
 
-                    <p>New Orders</p>
+                    <p th:text="${dashboardData.box1.key}"/>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
@@ -38,9 +48,9 @@
             <!-- small box -->
             <div class="small-box bg-green">
                 <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+                    <h3 th:text="${dashboardData.box2.value}"/>
 
-                    <p>Bounce Rate</p>
+                    <p th:text="${dashboardData.box2.key}"/>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
@@ -53,9 +63,9 @@
             <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>44</h3>
+                    <h3 th:text="${dashboardData.box3.value}"/>
 
-                    <p>User Registrations</p>
+                    <p th:text="${dashboardData.box3.key}"/>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
@@ -68,9 +78,9 @@
             <!-- small box -->
             <div class="small-box bg-red">
                 <div class="inner">
-                    <h3>65</h3>
+                    <h3 th:text="${dashboardData.box4.value}"/>
 
-                    <p>Unique Visitors</p>
+                    <p th:text="${dashboardData.box4.key}"/>
                 </div>
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>

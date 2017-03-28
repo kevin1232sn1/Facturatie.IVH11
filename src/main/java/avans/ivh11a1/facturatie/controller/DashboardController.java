@@ -1,5 +1,6 @@
 package avans.ivh11a1.facturatie.controller;
 
+import avans.ivh11a1.facturatie.domain.DashboardModel;
 import avans.ivh11a1.facturatie.domain.Exception.SecurityException;
 import avans.ivh11a1.facturatie.domain.administration.User;
 import avans.ivh11a1.facturatie.service.UserAdministrationService;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 
@@ -33,11 +35,12 @@ class DashboardController {
 
     @ModelAttribute("page")
     public String module() {
-        return "dashboard";
+        return "forward:/";
     }
 
-    @RequestMapping("/")
+    @RequestMapping(value = "/")
     String index(Model model) {
+        model.addAttribute("dashboardData", userService.getDashboardData());
         return "dashboard/index";
     }
 
@@ -46,24 +49,16 @@ class DashboardController {
         boolean succes = userService.loginUser(user);
         if (succes){
             session.setAttribute("User", userAdministrationService.getCurrentUser());
-
-
-
-            model.addAttribute(userService.getDashboardData());
-
-
-
-
-            return "dashboard/index";
+            return "forward:/";
         }else {
             throw new SecurityException("Sorry, that login was invalid. Please try again.", "LoginWrong");
         }
     }
 
     @PostMapping(value = "/logout")
-    String Logout(Model model, HttpSession session) {
+    String Logout(Model model, HttpSession session) {;
         userService.logoutUser();
         session.setAttribute("User", null);
-        return "dashboard/index";
+        return "forward:/";
     }
 }
