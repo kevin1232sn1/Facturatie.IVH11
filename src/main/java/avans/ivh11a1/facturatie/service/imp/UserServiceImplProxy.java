@@ -2,21 +2,19 @@ package avans.ivh11a1.facturatie.service.imp;
 
 import avans.ivh11a1.facturatie.domain.DashboardModel;
 import avans.ivh11a1.facturatie.domain.Exception.StateException;
-import avans.ivh11a1.facturatie.domain.administration.User;
 import avans.ivh11a1.facturatie.domain.administration.Role;
+import avans.ivh11a1.facturatie.domain.administration.User;
 import avans.ivh11a1.facturatie.repository.CustomerRepository;
 import avans.ivh11a1.facturatie.repository.InsuranceRepository;
 import avans.ivh11a1.facturatie.repository.TreatmentRepository;
 import avans.ivh11a1.facturatie.repository.UserRepository;
 import avans.ivh11a1.facturatie.service.UserAdministrationService;
 import avans.ivh11a1.facturatie.service.UserService;
+import com.google.common.collect.Iterables;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import javafx.util.Pair;
-import com.google.common.collect.Iterables;
 
 /**
  * Created by Tinne on 27-3-2017.
@@ -25,15 +23,13 @@ import com.google.common.collect.Iterables;
 @Service("UserService")
 @Transactional(rollbackFor = StateException.class)
 public class UserServiceImplProxy implements UserService {
-    private
-    UserRepository userRepository;
+    final
+    UserAdministrationService userAdministrationService;
     CustomerRepository customerRepository;
     InsuranceRepository insuranceRepository;
     TreatmentRepository treatmentRepository;
-
-    final
-    UserAdministrationService userAdministrationService;
-
+    private
+    UserRepository userRepository;
     private UserServiceImpl trueServiceImpl;
 
     @Autowired
@@ -44,12 +40,17 @@ public class UserServiceImplProxy implements UserService {
         this.treatmentRepository = treatmentRepository;
         this.userAdministrationService = userAdministrationService;
 
-        this.trueServiceImpl = new UserServiceImpl(userAdministrationService, userRepository);
+        this.trueServiceImpl = new UserServiceImpl(userRepository, userAdministrationService);
     }
 
     @Override
     public Iterable<User> findAll() {
         return trueServiceImpl.findAll();
+    }
+
+    @Override
+    public User findOne(int id) {
+        return trueServiceImpl.findOne(id);
     }
 
     @Override
