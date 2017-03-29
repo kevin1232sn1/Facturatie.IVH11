@@ -2,7 +2,6 @@ package avans.ivh11a1.facturatie.domain;
 
 import avans.ivh11a1.facturatie.Builders.InsuranceCompanyBuilder;
 import avans.ivh11a1.facturatie.domain.administration.InsuranceCompany;
-import avans.ivh11a1.facturatie.repository.InsuranceCompanyRepository;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -28,9 +27,6 @@ public class InsuranceCompanyTest {
 
      @Autowired
     private TestEntityManager entityManager;
-
-    @Autowired
-    private InsuranceCompanyRepository repository;
 
     @Test
     public void saveCompanyWithoutKvkShouldThrowException() throws Exception {
