@@ -10,7 +10,7 @@ public interface NewsService {
 
     void unRegister(Observer o);
 
-    void notifyObserver(News news);
+    void notifyObserver(Object o);
 
     Iterable<News> findAll();
 

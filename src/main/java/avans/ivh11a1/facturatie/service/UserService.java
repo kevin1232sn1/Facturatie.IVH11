@@ -8,6 +8,7 @@ import avans.ivh11a1.facturatie.domain.administration.User;
 public interface UserService {
     Iterable<User> findAll();
 
+    User findOne(int id);
     Boolean save(User user);
 
     Boolean delete(User user);

@@ -45,9 +45,9 @@ public class NewsServiceImpl implements NewsService, Subject {
     }
 
     @Override
-    public void notifyObserver(News news) {
+    public void notifyObserver(Object object) {
         for (Observer o : observerList) {
-            o.update(news);
+            o.update(object);
         }
     }
 

@@ -37,7 +37,8 @@ public class NewsObserverImpl implements Observer {
     }
 
     @Override
-    public void update(News news) {
+    public void update(Object o) {
+        News news = (News) o;
         for (NewsSubscription subscription : newsSubscriptionRepository.findByNewsType(news.getType())) {
             Person person = factoryService.getPerson(subscription.getObserverType(), subscription.getObserverId());
             notificationService.sendMessage(news, person);
