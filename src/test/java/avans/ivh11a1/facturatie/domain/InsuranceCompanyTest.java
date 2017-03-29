@@ -1,8 +1,7 @@
 package avans.ivh11a1.facturatie.domain;
 
+import avans.ivh11a1.facturatie.Builders.InsuranceCompanyBuilder;
 import avans.ivh11a1.facturatie.domain.administration.InsuranceCompany;
-import avans.ivh11a1.facturatie.domain.billing.Vat;
-import avans.ivh11a1.facturatie.repository.InsuranceCompanyRepository;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -23,20 +22,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 public class InsuranceCompanyTest {
 
-     private InsuranceCompany company = new InsuranceCompany("Test Company", "TestStreet","1","1111AB","Breda"
-            ,"0681131786","test@test.com",12345678, new Vat(21),"NL001234567B01","NL05RABO1234123400");
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
      @Autowired
     private TestEntityManager entityManager;
 
-    @Autowired
-    private InsuranceCompanyRepository repository;
-
     @Test
     public void saveCompanyWithoutKvkShouldThrowException() throws Exception {
-        company.setKvkNumber(0);
+        InsuranceCompany company = InsuranceCompanyBuilder.builder().kvkNumber(0).build();
         this.thrown.expect(ConstraintViolationException.class);
         this.thrown.expectMessage("This value is not a valid KVK number");
         this.entityManager.persistAndFlush(company);
@@ -44,7 +38,7 @@ public class InsuranceCompanyTest {
 
     @Test
     public void saveCompanyWithoutBtwShouldThrowException() throws Exception {
-        company.setBtw("");
+        InsuranceCompany company = InsuranceCompanyBuilder.builder().btw("").build();
         this.thrown.expect(ConstraintViolationException.class);
         this.thrown.expectMessage("This value is not a valid BTW number");
         this.entityManager.persistAndFlush(company);
@@ -52,9 +46,10 @@ public class InsuranceCompanyTest {
 
     @Test
     public void saveShouldPersistData(){
+        InsuranceCompany company = InsuranceCompanyBuilder.builder().build();
         this.entityManager.persistAndFlush(company.getVat());
         InsuranceCompany insuranceCompany = this.entityManager.persistFlushFind(company);
-        assertThat(insuranceCompany.getCompanyname()).isEqualTo(company.getCompanyname());
+        assertThat(insuranceCompany.getCompanyName()).isEqualTo(company.getCompanyName());
         assertThat(insuranceCompany.getVat().getPercentage()).isEqualTo(company.getVat().getPercentage());
     }
 }

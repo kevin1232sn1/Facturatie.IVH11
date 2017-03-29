@@ -48,7 +48,6 @@ class DashboardController {
     String Login(Model model, @ModelAttribute User user, HttpSession session) throws SecurityException {
         boolean succes = userService.loginUser(user);
         if (succes){
-            session.setAttribute("User", userAdministrationService.getCurrentUser());
             return "forward:/";
         }else {
             throw new SecurityException("Sorry, that login was invalid. Please try again.", "LoginWrong");
@@ -58,7 +57,6 @@ class DashboardController {
     @PostMapping(value = "/logout")
     String Logout(Model model, HttpSession session) {;
         userService.logoutUser();
-        session.setAttribute("User", null);
         return "forward:/";
     }
 }

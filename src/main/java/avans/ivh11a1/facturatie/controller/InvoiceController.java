@@ -1,16 +1,13 @@
 package avans.ivh11a1.facturatie.controller;
 
 import avans.ivh11a1.facturatie.aop.SecurityAnnotation;
-import avans.ivh11a1.facturatie.domain.administration.InsuranceCompany;
 import avans.ivh11a1.facturatie.domain.administration.Role;
-import avans.ivh11a1.facturatie.domain.billing.Declaration;
 import avans.ivh11a1.facturatie.domain.billing.Invoice;
-import avans.ivh11a1.facturatie.domain.billing.PaymentCondition;
 import avans.ivh11a1.facturatie.domain.customers.Customer;
-import avans.ivh11a1.facturatie.domain.insurances.Policy;
 import avans.ivh11a1.facturatie.service.BillingService;
 import avans.ivh11a1.facturatie.service.CustomerService;
 import avans.ivh11a1.facturatie.service.InsuranceService;
+import avans.ivh11a1.facturatie.service.InvoiceGeneration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.Date;
 
 /**
@@ -36,17 +27,18 @@ public class InvoiceController {
     private final Logger logger = LoggerFactory.getLogger(DeclarationController.class);
 
     private final BillingService billingService;
-
     private final CustomerService customerService;
-
     private final InsuranceService insuranceService;
+    private final InvoiceGeneration invoiceGeneration;
 
     @Autowired
-    public InvoiceController(BillingService billingService, CustomerService customerService, InsuranceService insuranceService) {
+    public InvoiceController(BillingService billingService, CustomerService customerService, InsuranceService insuranceService, InvoiceGeneration invoiceGeneration) {
         this.billingService = billingService;
         this.customerService = customerService;
         this.insuranceService = insuranceService;
+        this.invoiceGeneration = invoiceGeneration;
     }
+
 
     /**
      * Returns page name for displaying invoices in a list
@@ -170,48 +162,7 @@ public class InvoiceController {
      */
     @RequestMapping(value = "/print/{id}", method = RequestMethod.GET)
     public String PrintInvoice(Model model, @PathVariable int id) {
-        //Find all the needed info to print the invoice
-        Invoice invoice = billingService.findInvoiceById(id);
-        Customer customer = invoice.getCustomer();
-        Policy policy = insuranceService.findPolicyByCustomer(customer);
-        InsuranceCompany company = policy.getInsurance().getInsuranceCompany();
-        Iterable<Declaration> declarations = billingService.findDeclarationByCustomer(customer);
-
-        //Add the general info to the domain
-        model.addAttribute("Invoice", invoice);
-        model.addAttribute("Customer", customer);
-        model.addAttribute("Company", company);
-        model.addAttribute("Declarations", declarations);
-
-        //Loop trough the declarations to get the subtotal
-        double subTotal = 0;
-        for (Declaration d : declarations) {
-            subTotal += (d.getPrice() - d.getCompensated());
-        }
-
-        //Format for the decimal values
-        DecimalFormat formatter = new DecimalFormat("€ #,##0.00");
-
-        //Round up the vat amount
-        double vatAmount = Math.round((subTotal * company.getVat().getPercentageAmount()) * 100.0) / 100.0;
-
-        //Add the payment info to the domain
-        model.addAttribute("SubTotal", formatter.format(subTotal));
-        model.addAttribute("VatAmount", formatter.format(vatAmount));
-        model.addAttribute("Total", formatter.format((subTotal + vatAmount)));
-
-
-        //Replace the temp fill in fields with the data
-        String paymentCondition = invoice.getPaymentCondition().getTemplate();
-        paymentCondition = paymentCondition.replace("%Amount%", formatter.format((subTotal + vatAmount)));
-        paymentCondition = paymentCondition.replace("%period_in_days%", Integer.toString(invoice.getPaymentCondition().getPeriodInDays()));
-        paymentCondition = paymentCondition.replace("%BankAccount%", company.getIban());
-        paymentCondition = paymentCondition.replace("%Company_Name%", company.getCompanyname());
-        paymentCondition = paymentCondition.replace("%Invoice_Ref%", Integer.toString(invoice.getId()));
-
-        //Add the filled in condition to the domain
-        model.addAttribute("PaymentCondition", paymentCondition);
-
+        model = invoiceGeneration.printInvoice(id, model);
         //Return the view
         return "invoice/print";
     }
@@ -222,85 +173,7 @@ public class InvoiceController {
      */
     @PostMapping("/create")
     public String GenerateInvoice(Model model, @ModelAttribute Invoice invoice) {
-        String url = "https://ivh5c1-api.herokuapp.com/import/" + invoice.getCustomer().getCsn();
-
-        try {
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            con.getInputStream();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        //Find the customer given
-        Customer customer = customerService.findByCsn(invoice.getCustomer().getCsn());
-
-        //Find the open decelerations
-        Iterable<Declaration> decelerations = billingService.findOpenDeclarations(customer);
-
-        //Find decelerations count already on invoice
-        int coveredDecelerations = (int) billingService.findClosedDeclarations(customer).spliterator().getExactSizeIfKnown();
-
-        //Find the policy for the customer
-        Policy policy = insuranceService.findPolicyByCustomer(customer);
-
-        if (policy != null) {
-
-            //Find the insurance company of the customer
-            InsuranceCompany company = policy.getInsurance().getInsuranceCompany();
-            //Find the payment condition
-            PaymentCondition paymentCondition = billingService.findPaymentConditionById(invoice.getPaymentCondition().getId());
-
-            int needToCover = policy.getInsurance().getCoveredTreatments() - coveredDecelerations;
-
-            float contributionToPay;
-
-
-            //Create an invoice if there are decelerations
-            if (decelerations.iterator().hasNext()) {
-
-                invoice = new Invoice();
-                invoice.setCustomer(customer);
-                invoice.setPaymentCondition(paymentCondition);
-                invoice.setVat(company.getVat());
-                invoice.setDateCreated(new Date());
-                invoice.setState(1);
-                billingService.saveInvoice(invoice);
-
-                for (Declaration d : decelerations) {
-                    if (needToCover > 0) {
-                        d.setCompensated(d.getPrice());
-                        needToCover -= 1;
-                    }
-                    if (d.getCompensated() <= 0) {
-                        contributionToPay = (policy.getContribution() - policy.getContributionUsed());
-                        if (contributionToPay <= 0) {
-                            d.setCompensated(d.getPrice());
-                        } else {
-                            if ((contributionToPay - d.getPrice()) < 0) {
-                                d.setCompensated(d.getPrice() - contributionToPay);
-                                policy.setContributionUsed(policy.getContributionUsed() + contributionToPay);
-                            } else {
-                                d.setCompensated(0);
-                                policy.setContributionUsed(policy.getContributionUsed() + d.getPrice());
-                            }
-                            insuranceService.savePolicy(policy);
-                        }
-                    }
-                    d.setInvoice(invoice);
-                    billingService.saveDeclaration(d);
-                }
-            } else {
-                model.addAttribute("failure", "No declarations for this customer at this moment");
-            }
-        } else {
-            model.addAttribute("failure", "No policy for this customer at this moment");
-        }
+        model = invoiceGeneration.generateInvoice(invoice, model);
         return listInvoices(model);
     }
 
