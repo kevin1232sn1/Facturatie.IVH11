@@ -3,6 +3,7 @@ package avans.ivh11a1.facturatie.service.imp;
 import avans.ivh11a1.facturatie.domain.Exception.StateException;
 import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.domain.administration.User;
+import avans.ivh11a1.facturatie.service.Observer;
 import avans.ivh11a1.facturatie.service.UserAdministrationService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional(rollbackFor = StateException.class)
 @Scope("singleton")
-public class UserAdministrationServiceImpl implements UserAdministrationService {
+public class UserAdministrationServiceImpl implements UserAdministrationService, Observer {
     private static User user;
     private final String LOGIN_PAGE = "/login.html";
 
@@ -43,5 +44,13 @@ public class UserAdministrationServiceImpl implements UserAdministrationService 
     @Override
     public boolean isLoggedIn(){
         return user != null;
+    }
+
+    @Override
+    public void update(Object o) {
+        User user = (User) o;
+        if (user.getId() == this.getCurrentUser().getId()) {
+            setCurrentUser(user);
+        }
     }
 }

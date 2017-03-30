@@ -24,7 +24,7 @@ public class InsuranceCompany {
 
     @Column(name = "name")
     @Size(min=1, max=255)
-    private String companyname;
+    private String companyName;
 
     @Column(name = "street_name")
     @Size(min=1, max=255)
@@ -54,7 +54,7 @@ public class InsuranceCompany {
     @KVKNumber
     private Integer kvkNumber;
 
-    @OneToOne()
+    @OneToOne
     @JoinColumn(name = "vat_id")
     private Vat vat;
 
@@ -66,48 +66,101 @@ public class InsuranceCompany {
     @IBAN
     private String iban;
 
-    /**
-     * Initializes an InsuranceCompany for Database
-     *
-     * @param id          id of Insurance Company will be used as primary key in Database
-     * @param companyname name of the Insurance Company
-     * @param streetname  street name of the Insurance Company
-     * @param houseNumber house number of the Insurance Company
-     * @param zipcode     Zip Code of the Insurance Company
-     * @param city        name of the city where the Insurance Company is located
-     * @param phoneNumber phone number of the Insurance Company
-     * @param email       email address of the Insurance Company
-     * @param kvkNumber   kvk number of the Insurance Company
-     * @param vat         id of a vat percentage will be used as foreign key in Database.
-     * @param btw         VAT number of the Insurance Company
-     * @param iban        IBAN of the Insurance Company
-     */
-    public InsuranceCompany(int id, String companyname, String streetname, String houseNumber, String zipcode, String city, String phoneNumber, String email, int kvkNumber, Vat vat, String btw, String iban) {
-        this.id = id;
-        this.companyname = companyname;
-        this.streetname = streetname;
-        this.houseNumber = houseNumber;
-        this.zipcode = zipcode;
-        this.city = city;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.kvkNumber = kvkNumber;
-        this.vat = vat;
-        this.btw = btw;
-        this.iban = iban;
+    private InsuranceCompany(Builder builder) {
+        this.id = builder.id;
+        this.companyName = builder.companyName;
+        this.streetname = builder.streetname;
+        this.houseNumber = builder.houseNumber;
+        this.zipcode = builder.zipcode;
+        this.city = builder.city;
+        this.phoneNumber = builder.phoneNumber;
+        this.email = builder.email;
+        this.kvkNumber = builder.kvkNumber;
+        this.vat = builder.vat;
+        this.btw = builder.btw;
+        this.iban = builder.iban;
     }
 
-    public InsuranceCompany(String companyname, String streetname, String houseNumber, String zipcode, String city, String phoneNumber, String email, int kvkNumber, Vat vat, String btw, String iban) {
-        this.companyname = companyname;
-        this.streetname = streetname;
-        this.houseNumber = houseNumber;
-        this.zipcode = zipcode;
-        this.city = city;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.kvkNumber = kvkNumber;
-        this.vat = vat;
-        this.btw = btw;
-        this.iban = iban;
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private int id;
+        private String companyName;
+        private String phoneNumber;
+        private String email;
+        private String streetname;
+        private String houseNumber;
+        private String zipcode;
+        private String city;
+        private Integer kvkNumber;
+        private Vat vat;
+        private String btw;
+        private String iban;
+
+        public Builder id(final int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder companyName(final String companyName) {
+            this.companyName = companyName;
+            return this;
+        }
+
+        public Builder phoneNumber(final String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public Builder email(final String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder streetname(final String streetname) {
+            this.streetname = streetname;
+            return this;
+        }
+
+        public Builder houseNumber(final String houseNumber) {
+            this.houseNumber = houseNumber;
+            return this;
+        }
+
+        public Builder zipcode(final String zipcode) {
+            this.zipcode = zipcode;
+            return this;
+        }
+
+        public Builder city(final String city) {
+            this.city = city;
+            return this;
+        }
+
+        public Builder kvkNumber(final Integer kvkNumber) {
+            this.kvkNumber = kvkNumber;
+            return this;
+        }
+
+        public Builder vat(final Vat vat) {
+            this.vat = vat;
+            return this;
+        }
+
+        public Builder btw(final String btw) {
+            this.btw = btw;
+            return this;
+        }
+
+        public Builder iban(final String iban) {
+            this.iban = iban;
+            return this;
+        }
+
+        public InsuranceCompany build() {
+            return new InsuranceCompany(this);
+        }
     }
 }

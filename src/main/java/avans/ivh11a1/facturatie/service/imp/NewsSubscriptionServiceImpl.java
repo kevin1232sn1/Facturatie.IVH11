@@ -2,6 +2,7 @@ package avans.ivh11a1.facturatie.service.imp;
 
 import avans.ivh11a1.facturatie.domain.Exception.StateException;
 import avans.ivh11a1.facturatie.domain.NewsLetter.NewsSubscription;
+import avans.ivh11a1.facturatie.domain.Person;
 import avans.ivh11a1.facturatie.repository.NewsSubscriptionRepository;
 import avans.ivh11a1.facturatie.service.NewsSubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +56,11 @@ public class NewsSubscriptionServiceImpl implements NewsSubscriptionService {
     public Boolean deleteById(int id) {
         newsSubscriptionRepository.delete(id);
         return true;
+    }
+
+    @Override
+    public void saveSubscription(Person person, String type) {
+        NewsSubscription subscription = new NewsSubscription(person, type);
+        newsSubscriptionRepository.save(subscription);
     }
 }
