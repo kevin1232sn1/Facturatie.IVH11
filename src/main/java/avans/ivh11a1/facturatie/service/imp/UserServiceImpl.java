@@ -20,9 +20,7 @@ import java.util.List;
 /**
  * Created by kevin on 11-3-2017.
  */
-@Service("UserService")
-@Repository
-@Transactional(rollbackFor = StateException.class)
+
 public class UserServiceImpl implements UserService, Subject {
     UserRepository userRepository;
     UserAdministrationService userAdministrationService;
