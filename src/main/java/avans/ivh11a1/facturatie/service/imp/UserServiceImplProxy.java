@@ -12,7 +12,6 @@ import avans.ivh11a1.facturatie.repository.UserRepository;
 import avans.ivh11a1.facturatie.service.UserAdministrationService;
 import avans.ivh11a1.facturatie.service.UserService;
 import com.google.common.collect.Iterables;
-import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
