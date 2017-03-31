@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
       layout:decorate="layout">
 <head>
-    <title>Customers - Add</title>
+    <title th:text="#{customer.index.title} + #{customer.index.header}"/>
 </head>
 <body>
 <section layout:fragment="header">

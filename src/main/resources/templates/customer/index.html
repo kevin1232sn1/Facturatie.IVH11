@@ -3,17 +3,15 @@
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
       layout:decorate="layout">
 <head>
-    <title>Customers - Overview</title>
+    <title th:text="#{customer.index.title} + #{customer.index.header}"/>
 </head>
 <body>
 <section layout:fragment="header">
-    <h1>
-        Customers
-    </h1>
+    <h1 th:text="#{customer.index.title}"/>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-inbox"></i> Home</a></li>
-        <li>Customers</li>
-        <li class="active">Overview</li>
+        <li th:text="#{customer.index.title}"></li>
+        <li class="active" th:text="#{customer.index.header}"/>
     </ol>
 </section>
 <div layout:fragment="content">
@@ -21,7 +19,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Overview</h3>
+                    <h3 class="box-title" th:text="#{customer.index.header}"/>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive">
@@ -29,7 +27,8 @@
                     <div class="flex-wrapper" style="display: flex; align-items: center;">
                         <div class="btn-group" style="margin: 0 50px 0 20px;">
                             <a th:href="@{~/customer/new}" class="btn btn-app">
-                                <span class="fa fa-plus"></span> Add
+                                <span class="fa fa-plus"> <p th:text="#{customer.index.add}" /></span>
+                                <br/>
                             </a>
                         </div>
 
@@ -46,10 +45,10 @@
                     <table class="table table-hover">
                         <tbody><tr>
                             <th>ID</th>
-                            <th>Fullname</th>
-                            <th>E-mail</th>
-                            <th>Phone</th>
-                            <th>City</th>
+                            <th th:text="#{customer.index.fullname}"></th>
+                            <th th:text="#{customer.index.emailaddress}"> E-</th>
+                            <th th:text="#{customer.index.phonenumber}"></th>
+                            <th th:text="#{customer.index.city}"></th>
                             <th width="4%" sec:authorize="hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')">&nbsp;</th>
                         </tr>
                         <!--/*@thymesVar id="customers" type="avans.ivh11a1.facturatie.controller.CustomerController"*/-->
