@@ -12,19 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class AuthorizationController {
 
-    /*@ExceptionHandler(SecurityException.class)
-    public ModelAndView handleCustomException(SecurityException ex) {
-        ModelAndView model;
-        if (ex.getType() == "NotLoggedIn" || ex.getType() == "LoginWrong") {
-            model = new ModelAndView("auth/login");
-            model.addObject("user", new User());
-        }else{
-            model = new ModelAndView("dashboard/index");
-        }
-        model.addObject("exception", ex.getMessage());
-        return model;
-    }*/
-
     @ExceptionHandler(SecurityException.class)
     public ModelAndView handleCustomException(SecurityException ex) {
         ModelAndView model;

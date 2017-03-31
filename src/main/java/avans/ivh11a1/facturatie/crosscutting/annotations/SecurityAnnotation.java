@@ -1,4 +1,4 @@
-package avans.ivh11a1.facturatie.aop;
+package avans.ivh11a1.facturatie.crosscutting.annotations;
 
 import avans.ivh11a1.facturatie.domain.administration.Role;
 

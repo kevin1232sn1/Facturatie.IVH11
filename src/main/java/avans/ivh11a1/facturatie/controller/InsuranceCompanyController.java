@@ -2,8 +2,8 @@ package avans.ivh11a1.facturatie.controller;
 
 
 import avans.ivh11a1.facturatie.crosscutting.annotations.Logger;
+import avans.ivh11a1.facturatie.crosscutting.annotations.SecurityAnnotation;
 import avans.ivh11a1.facturatie.crosscutting.annotations.Timer;
-import avans.ivh11a1.facturatie.aop.SecurityAnnotation;
 import avans.ivh11a1.facturatie.domain.administration.InsuranceCompany;
 import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.service.BillingService;

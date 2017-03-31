@@ -1,5 +1,6 @@
-package avans.ivh11a1.facturatie.aop;
+package avans.ivh11a1.facturatie.crosscutting.aspects;
 
+import avans.ivh11a1.facturatie.crosscutting.annotations.SecurityAnnotation;
 import avans.ivh11a1.facturatie.domain.Exception.SecurityException;
 import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.service.UserAdministrationService;
@@ -32,7 +33,7 @@ public class SecurityInterceptor {
         this.userService = userService;
     }
 
-    @Before("((@within(SecurityAnnotation) || @annotation(SecurityAnnotation)))")
+    @Before("((@within(avans.ivh11a1.facturatie.crosscutting.annotations.SecurityAnnotation) || @annotation(avans.ivh11a1.facturatie.crosscutting.annotations.SecurityAnnotation)))")
     public void checkSecurity(JoinPoint joinPoint) throws SecurityException {
         LOGGER.info("Intercepting creation of a component");
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
