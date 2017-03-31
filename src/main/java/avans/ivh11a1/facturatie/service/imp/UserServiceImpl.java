@@ -15,23 +15,16 @@ import java.util.List;
 /**
  * Created by kevin on 11-3-2017.
  */
-@Service("UserService")
-@Repository
-@Transactional(rollbackFor = StateException.class)
+
 public class UserServiceImpl implements UserService, Subject {
-
-
-public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     UserAdministrationService userAdministrationService;
     private List<Observer> observers;
 
-  @Autowired
     public UserServiceImpl(UserRepository userRepository, UserAdministrationService userAdministrationService) {
         observers = new ArrayList<>();
         this.userRepository = userRepository;
         this.userAdministrationService = userAdministrationService;
-        this.userRepository = userRepository;
     }
 
     @Override
@@ -101,8 +94,8 @@ public class UserServiceImpl implements UserService {
 
         return dashboardModel;
     }
-  
- @Override
+
+    @Override
     public void notifyObserver(Object object) {
         for (Observer o : observers) {
             o.update(object);

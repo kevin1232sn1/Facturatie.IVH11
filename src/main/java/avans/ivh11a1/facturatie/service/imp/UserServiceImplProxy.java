@@ -43,7 +43,7 @@ public class UserServiceImplProxy implements UserService {
         this.treatmentRepository = treatmentRepository;
         this.userAdministrationService = userAdministrationService;
 
-        this.trueServiceImpl = new UserServiceImpl(userAdministrationService, userRepository);
+        this.trueServiceImpl = new UserServiceImpl(userRepository, userAdministrationService);
     }
 
     @Override
@@ -74,6 +74,11 @@ public class UserServiceImplProxy implements UserService {
     @Override
     public void logoutUser() {
         trueServiceImpl.logoutUser();
+    }
+
+    @Override
+    public User findOne(int id) {
+        return userRepository.findOne(id);
     }
 
     @Override
