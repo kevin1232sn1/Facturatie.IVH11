@@ -1,20 +1,15 @@
 package avans.ivh11a1.facturatie.controller;
 
-import avans.ivh11a1.facturatie.domain.DashboardModel;
 import avans.ivh11a1.facturatie.domain.Exception.SecurityException;
 import avans.ivh11a1.facturatie.domain.administration.User;
 import avans.ivh11a1.facturatie.service.UserAdministrationService;
 import avans.ivh11a1.facturatie.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 

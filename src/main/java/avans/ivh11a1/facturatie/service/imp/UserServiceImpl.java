@@ -1,14 +1,16 @@
 package avans.ivh11a1.facturatie.service.imp;
 
-import avans.ivh11a1.facturatie.domain.DashboardModel;
-import avans.ivh11a1.facturatie.domain.Exception.StateException;
+import avans.ivh11a1.facturatie.domain.dashboard.DashboardBox;
+import avans.ivh11a1.facturatie.domain.dashboard.DashboardModel;
 import avans.ivh11a1.facturatie.domain.administration.User;
+import avans.ivh11a1.facturatie.repository.CustomerRepository;
+import avans.ivh11a1.facturatie.repository.InsuranceRepository;
+import avans.ivh11a1.facturatie.repository.TreatmentRepository;
 import avans.ivh11a1.facturatie.repository.UserRepository;
 import avans.ivh11a1.facturatie.service.Observer;
 import avans.ivh11a1.facturatie.service.Subject;
 import avans.ivh11a1.facturatie.service.UserAdministrationService;
 import avans.ivh11a1.facturatie.service.UserService;
-import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -22,16 +24,15 @@ import java.util.List;
  */
 
 public class UserServiceImpl implements UserService, Subject {
+    private
     UserRepository userRepository;
     UserAdministrationService userAdministrationService;
-    private List<Observer> observers;
+    List<Observer> observers;
 
-  @Autowired
     public UserServiceImpl(UserRepository userRepository, UserAdministrationService userAdministrationService) {
         observers = new ArrayList<>();
         this.userRepository = userRepository;
         this.userAdministrationService = userAdministrationService;
-        this.userRepository = userRepository;
     }
 
     @Override
@@ -94,15 +95,15 @@ public class UserServiceImpl implements UserService, Subject {
     @Override
     public DashboardModel getDashboardData() {
         DashboardModel dashboardModel = new DashboardModel();
-        dashboardModel.setBox1(new Pair<String, Integer>("N/A", 0));
-        dashboardModel.setBox2(new Pair<String, Integer>("N/A", 0));
-        dashboardModel.setBox3(new Pair<String, Integer>("N/A", 0));
-        dashboardModel.setBox4(new Pair<String, Integer>("N/A", 0));
+        dashboardModel.setBox1(new DashboardBox("N/A", 0));
+        dashboardModel.setBox2(new DashboardBox("N/A", 0));
+        dashboardModel.setBox3(new DashboardBox("N/A", 0));
+        dashboardModel.setBox4(new DashboardBox("N/A", 0));
 
         return dashboardModel;
     }
-  
- @Override
+
+    @Override
     public void notifyObserver(Object object) {
         for (Observer o : observers) {
             o.update(object);
