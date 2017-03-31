@@ -80,11 +80,6 @@ public class UserServiceImplProxy implements UserService {
     }
 
     @Override
-    public User findOne(int id) {
-        return userRepository.findOne(id);
-    }
-
-    @Override
     public DashboardModel getDashboardData() {
         DashboardModel dashboardModel = trueServiceImpl.getDashboardData();
 
