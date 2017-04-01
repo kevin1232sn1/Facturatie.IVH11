@@ -4,13 +4,18 @@ import avans.ivh11a1.facturatie.crosscutting.annotations.SecurityAnnotation;
 import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.domain.customers.Customer;
 import avans.ivh11a1.facturatie.service.CustomerService;
+import com.google.common.collect.Iterables;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/customer")@SecurityAnnotation(allowedRole = { Role.ADMIN, Role.ADMINISTRATION, Role.FINANCE })
@@ -30,14 +35,29 @@ public class CustomerController {
 
     /**
      * Overview page
+     *
      * @return template/customer/index.html
      */
-    @RequestMapping("")
+    /*@RequestMapping("")
     public String overview(Model model) {
         Iterable<Customer> customers = customerService.findAll();
+
         model.addAttribute("customers", customers);
+        model.addAttribute("currentLocale", LocaleContextHolder.getLocale());
+
+        return "customer/index";
+    }*/
+
+    @RequestMapping("")
+    public String alternativeOverview(Model model, @PageableDefault(value=3, page=0)Pageable pageable) {
+        model.addAttribute("customers", customerService.getCustomersByPage(pageable));
+        model.addAttribute("currentLocale", LocaleContextHolder.getLocale());
+        model.addAttribute("pagingButtons", GeneratePagingButtons(pageable, Iterables.size(customerService.findAll())));
+
         return "customer/index";
     }
+
+
 
     /**
      * Add new customers page
@@ -71,7 +91,8 @@ public class CustomerController {
         customerService.save(customer);
         model.addAttribute("success", "Customer successfully saved");
 
-        return this.overview(model);
+        return "forward:/customer/index";
+        //return this.overview(model);
     }
 
     @RequestMapping(value = "/edit/{csn}", method = RequestMethod.GET)
@@ -88,6 +109,30 @@ public class CustomerController {
 
         model.addAttribute("success", "Customer successfully deleted!");
 
-        return this.overview(model);
+        return "forward:/customer/index";
+        //return this.overview(model);
+    }
+
+    public static String GeneratePagingButtons(Pageable pageable, int totalObjects)
+    {
+        int totalPages = (int)Math.floor((double) totalObjects / pageable.getPageSize()); //Testen met Math.floor en Math.ceil
+        StringBuilder stringBuilder = new StringBuilder(99999); //space for 99999 characters in the builder
+        for (int i = 0; i <= totalPages; i++)
+        {
+            int currentButtonValue = i + 1;
+            if (i == pageable.getPageNumber())
+            {
+                stringBuilder.append("<a href=\"?page=" + i + "\" class=\"btn btn-block btn-primary\">" +
+                        currentButtonValue +
+                        "</a>");
+            }
+            else
+            {
+                stringBuilder.append("<a href=\"?page=" + i + "\" class=\"btn btn-block btn-info\">" +
+                        currentButtonValue +
+                        "</a>");
+            }
+        }
+        return stringBuilder.toString();
     }
 }

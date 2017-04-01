@@ -3,17 +3,15 @@
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
       layout:decorate="layout">
 <head>
-    <title th:text="#{customer.index.title} + #{customer.index.header}"/>
+    <title th:text="#{customer.edit.title} + #{customer.edit.header}"/>
 </head>
 <body>
 <section layout:fragment="header">
-    <h1>
-        Customers
-    </h1>
+    <h1 th:text="#{customer.edit.title}"/>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-inbox"></i> Home</a></li>
-        <li>Customers</li>
-        <li class="active">Edit</li>
+        <li th:text="#{customer.edit.title}"></li>
+        <li class="active" th:text="#{customer.edit.header}"/>
     </ol>
 </section>
 <div layout:fragment="content">
@@ -21,7 +19,11 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Edit</h3>
+                    <h3 class="box-title" th:text="#{customer.edit.header}"/>
+                </div>
+
+                <div style="position: absolute;top: 8px;right: 12px;">
+                    <a href="?lang=en">English</a>|<a href="?lang=nl">Nederlands</a>
                 </div>
 
                 <!-- /.box-header -->
@@ -31,7 +33,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="csn">CSN</label>
+                                    <label for="csn" th:text="#{customer.edit.csn}"></label>
                                     <input type="text" th:value="${customer?.csn}" class="form-control" id="csn" name="csn" value=""/>
                                 </div>
                             </div>
@@ -40,13 +42,13 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="firstName">First name</label>
+                                    <label for="firstName" th:text="#{customer.edit.firstname}"></label>
                                     <input type="text" th:value="${customer?.firstName}" class="form-control" id="firstName" name="firstName"/>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="lastName">Last name</label>
+                                    <label for="lastName" th:text="#{customer.edit.lastname}"></label>
                                     <input type="text" class="form-control" id="lastName" name="lastName" th:value="${customer?.lastName}"/>
                                 </div>
                             </div>
@@ -55,7 +57,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="dateofbirth">Date of Birth</label>
+                                    <label for="dateofbirth" th:text="#{customer.edit.dateofbirth}"></label>
                                     <input type="date" th:value="${customer?.dateOfBirth}" class="form-control" id="dateofbirth" name="dateOfBirth"/>
                                 </div>
                             </div>
@@ -64,13 +66,13 @@
                         <div class="row">
                             <div class="col-sm-9">
                                 <div class="form-group">
-                                    <label for="streetName">Streetname</label>
+                                    <label for="streetName" th:text="#{customer.edit.streetname}"></label>
                                     <input type="text" class="form-control" id="streetName" name="streetName" th:value="${customer?.streetName}"/>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label for="houseNumber">Housenumber</label>
+                                    <label for="houseNumber" th:text="#{customer.edit.housenumber}"></label>
                                     <input type="text" class="form-control" id="houseNumber" name="houseNumber" th:value="${customer?.houseNumber}"/>
                                 </div>
                             </div>
@@ -79,13 +81,13 @@
                         <div class="row">
                             <div class="col-sm-9">
                                 <div class="form-group">
-                                    <label for="city">City</label>
+                                    <label for="city" th:text="#{customer.edit.city}"></label>
                                     <input type="text" class="form-control" id="city" name="city" th:value="${customer?.city}"/>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label for="zipcode">Zipcode</label>
+                                    <label for="zipcode" th:text="#{customer.edit.zipcode}"></label>
                                     <input type="text" class="form-control" id="zipcode" name="zipcode" th:value="${customer?.zipcode}"/>
                                 </div>
                             </div>
@@ -94,7 +96,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="phoneNumber">Phone number</label>
+                                    <label for="phoneNumber" th:text="#{customer.edit.phonenumber}"></label>
                                     <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:value="${customer?.phoneNumber}"/>
                                 </div>
                             </div>
@@ -103,7 +105,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="email">E-mail</label>
+                                    <label for="email" th:text="#{customer.edit.emailaddress}"></label>
                                     <input type="email" class="form-control" id="email" name="email" th:value="${customer?.email}"/>
                                 </div>
                             </div>
@@ -112,7 +114,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="iban" class="control-label">IBAN</label>
+                                    <label for="iban" class="control-label" th:text="#{customer.edit.iban}"></label>
                                     <input type="text" class="form-control" id="iban" name="iban" th:value="${customer?.iban}"/>
                                 </div>
                             </div>
@@ -120,7 +122,7 @@
 
                         <div class="row">
                             <div class="col-sm-12">
-                                <input type="submit" class="btn btn-primary" id="save" value="Save customer" name="save" />
+                                <input type="submit" class="btn btn-primary" id="save" th:value="#{customer.edit.save}" name="save" />
                             </div>
                         </div>
                     </form>

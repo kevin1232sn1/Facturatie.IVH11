@@ -4,6 +4,12 @@
       layout:decorate="layout">
 <head>
     <title th:text="#{customer.index.title} + #{customer.index.header}"/>
+
+    <style>
+        .pagination {
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
 <section layout:fragment="header">
@@ -24,9 +30,13 @@
                 <!-- /.box-header -->
                 <div class="box-body table-responsive">
 
+                    <div style="position: absolute;top: 8px;right: 12px;">
+                        <a href="?lang=en">English</a>|<a href="?lang=nl">Nederlands</a>
+                    </div>
+
                     <div class="flex-wrapper" style="display: flex; align-items: center;">
                         <div class="btn-group" style="margin: 0 50px 0 20px;">
-                            <a th:href="@{~/customer/new}" class="btn btn-app">
+                            <a th:href="@{~/customer/new/(lang=${currentLocale})}" class="btn btn-app">
                                 <span class="fa fa-plus"> <p th:text="#{customer.index.add}" /></span>
                                 <br/>
                             </a>
@@ -58,7 +68,7 @@
                                 <a th:href="@{~/invoice/show/} + ${customer.csn}" sec:authorize="hasAnyRole('ROLE_FINANCIAL', 'ROLE_INSURANCE', 'ROLE_ADMIN')">
                                     <span th:text="${customer.fullName}"/>
                                 </a>
-                                <span th:text="${customer.fullName}" sec:authorize="hasAnyRole('ROLE_CUSTOMER')"/>
+                                <!--<span th:text="${customer.fullName}" sec:authorize="hasAnyRole('ROLE_CUSTOMER')"/> duplicate names-->
                             </td>
                             <td th:text="${customer.email}"></td>
                             <td th:text="${customer.phoneNumber}"></td>
@@ -74,6 +84,9 @@
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->
+            <div class="pagination">
+                <div th:remove="tag" th:utext="${pagingButtons}"></div>
+            </div>
         </div>
     </div>
 </div>

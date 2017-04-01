@@ -5,6 +5,7 @@ import avans.ivh11a1.facturatie.domain.customers.Customer;
 import avans.ivh11a1.facturatie.repository.CustomerRepository;
 import avans.ivh11a1.facturatie.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,5 +53,10 @@ public class CustomerServiceImpl implements CustomerService {
     public Boolean deleteById(int id) {
         customerRepository.delete(id);
         return null;
+    }
+
+    @Override
+    public Iterable<Customer> getCustomersByPage(Pageable pageable) {
+        return customerRepository.findAll(pageable);
     }
 }
