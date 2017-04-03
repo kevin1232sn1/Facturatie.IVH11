@@ -135,7 +135,7 @@ public class InvoiceGenerationImpl implements InvoiceGeneration {
         }
 
         //Format for the decimal values
-        DecimalFormat formatter = new DecimalFormat("€ #,##0.00");
+        DecimalFormat formatter = new DecimalFormat("€ #.00");
 
         //Round up the vat amount
         double vatAmount = Math.round((subTotal * company.getVat().getPercentageAmount()) * 100.0) / 100.0;
