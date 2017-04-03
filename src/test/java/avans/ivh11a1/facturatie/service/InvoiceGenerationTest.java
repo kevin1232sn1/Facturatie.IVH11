@@ -51,6 +51,7 @@ public class InvoiceGenerationTest {
 
         Mockito.when(billingService.findOpenDeclarations(any(Customer.class))).thenReturn(declarations);
         Mockito.when(billingService.findClosedDeclarations(any(Customer.class))).thenReturn(declarations);
+        Mockito.when(billingService.findDeclarationByCustomer(any(Customer.class))).thenReturn(declarations);
 
         this.service = new InvoiceGenerationImpl(this.billingService, this.insuranceService, this.customerService);
         model = new HashedMap();
