@@ -63,7 +63,11 @@
                 <i class="fa fa-newspaper-o"></i> <span>News</span>
             </a>
         </li>
-
+        <li th:class="${page == 'article'} ? 'active' : ''">
+            <a th:href="@{~/article}">
+                <i class="fa fa-newspaper-o"></i> <span>Articles</span>
+            </a>
+        </li>
 
     </ul>
 </section>
