@@ -1,9 +1,7 @@
 package avans.ivh11a1.facturatie.domain.billing;
 
 import avans.ivh11a1.facturatie.domain.customers.Customer;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,6 +11,8 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Declaration {
     @Id
     @Column(name="id")
@@ -34,23 +34,4 @@ public class Declaration {
     private float price;
     @Column(name = "compensated")
     private float compensated;
-
-    public Declaration(int id, Customer customer, Treatment treatment, Invoice invoice, Date declaredAt, float price, float compensated) {
-        this.id = id;
-        this.customer = customer;
-        this.treatment = treatment;
-        this.invoice = invoice;
-        this.declaredAt = declaredAt;
-        this.price = price;
-        this.compensated = compensated;
-    }
-
-    public Declaration(Customer customer, Treatment treatment, Invoice invoice, Date declaredAt, float price, float compensated) {
-        this.customer = customer;
-        this.treatment = treatment;
-        this.invoice = invoice;
-        this.declaredAt = declaredAt;
-        this.price = price;
-        this.compensated = compensated;
-    }
 }

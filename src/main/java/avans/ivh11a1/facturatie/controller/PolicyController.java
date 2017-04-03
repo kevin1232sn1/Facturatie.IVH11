@@ -8,7 +8,10 @@ import avans.ivh11a1.facturatie.service.InsuranceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/policy")
@@ -28,8 +31,6 @@ public class PolicyController {
     public String module() {
         return "policies";
     }
-
-
     // index
 
     /**
@@ -43,7 +44,6 @@ public class PolicyController {
 
         return "policy/index";
     }
-
 
     // create
 
@@ -68,7 +68,7 @@ public class PolicyController {
      * @return index with success message
      */
     @PostMapping(value = "/create")
-    String store(Model model, @ModelAttribute Policy policy) {
+    String store(@Valid Policy policy, final BindingResult bindingResult, Model model) {
         insuranceService.savePolicy(policy);
 
         model.addAttribute("success", "Policy successfully saved");

@@ -90,14 +90,15 @@
                                         <div class="col-sm-6">
                                             <label for="dateStart">Date Start</label>
                                             <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'member'-->
-                                            <input type="date" class="form-control" id="dateStart" th:field="*{dateStart}"/>
+                                            <input type="text" class="form-control" id="dateStart"
+                                                   th:field="*{dateStart}"/>
                                             <p th:if="${#fields.hasErrors('dateStart')}" th:errors="*{dateStart}">Name Error</p>
                                         </div>
 
                                         <div class="col-sm-6">
                                             <label for="dateEnd">Date End</label>
                                             <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'member'-->
-                                            <input type="date" class="form-control" id="dateEnd" th:field="*{dateEnd}"/>
+                                            <input type="text" class="form-control" id="dateEnd" th:field="*{dateEnd}"/>
                                             <p th:if="${#fields.hasErrors('dateEnd')}" th:errors="*{dateEnd}">Name Error</p>
                                         </div>
                                     </div>

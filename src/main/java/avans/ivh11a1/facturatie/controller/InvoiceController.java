@@ -162,7 +162,7 @@ public class InvoiceController {
      */
     @RequestMapping(value = "/print/{id}", method = RequestMethod.GET)
     public String PrintInvoice(Model model, @PathVariable int id) {
-        model = invoiceGeneration.printInvoice(id, model);
+        model.addAllAttributes(invoiceGeneration.printInvoice(id, model.asMap()));
         //Return the view
         return "invoice/print";
     }
@@ -173,7 +173,7 @@ public class InvoiceController {
      */
     @PostMapping("/create")
     public String GenerateInvoice(Model model, @ModelAttribute Invoice invoice) {
-        model = invoiceGeneration.generateInvoice(invoice, model);
+        model.addAllAttributes(invoiceGeneration.generateInvoice(invoice, model.asMap()));
         return listInvoices(model);
     }
 

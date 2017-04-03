@@ -7,7 +7,7 @@
 </head>
 <body>
 <section layout:fragment="header">
-    <h1 th:text="${insuranceCompany.companyname}">
+    <h1 th:text="${insuranceCompany.companyName}">
         Insurance Company
     </h1>
     <ol class="breadcrumb">
@@ -64,7 +64,7 @@
                                 <div class="form-group">
                                     <label for="companyName">Company Name</label>
                                     <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'member'-->
-                                    <input type="text" class="form-control" id="companyname" th:field="*{companyName}"/>
+                                    <input type="text" class="form-control" id="companyName" th:field="*{companyName}"/>
                                     <p th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">Name
                                         Error</p>
                                 </div>

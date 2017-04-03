@@ -87,7 +87,7 @@ public class TreatmentController {
                 model.addAttribute("message", "Treatment aangepast");
             } else {
                 //add
-                Treatment treatment = new Treatment(name, duration, price);
+                Treatment treatment = new Treatment(0, name, duration, price);
                 treatmentRepository.save(treatment);
 
                 model.addAttribute("message", "Treatment added to the database");
