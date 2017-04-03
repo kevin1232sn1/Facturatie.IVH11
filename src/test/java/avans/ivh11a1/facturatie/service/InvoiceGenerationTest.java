@@ -69,8 +69,8 @@ public class InvoiceGenerationTest {
     public void printInvoiceWhenDeclarationsExists() throws Exception {
         model = this.service.printInvoice(1, model);
         assertThat(model.containsKey("Message")).isEqualTo(false);
-        assertThat(model.get("SubTotal")).isEqualTo("€ 150,00");
-        assertThat(model.get("VatAmount")).isEqualTo("€ 31,50");
+        assertThat(model.get("SubTotal")).isEqualTo("€ 150.00");
+        assertThat(model.get("VatAmount")).isEqualTo("€ 31.50");
     }
 
     @Test
