@@ -15,10 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by kevin on 28-3-2017.
@@ -40,7 +40,7 @@ public class InvoiceGenerationImpl implements InvoiceGeneration {
     }
 
     @Override
-    public Model generateInvoice(Invoice invoice, Model model) {
+    public Map<String, Object> generateInvoice(Invoice invoice, Map<String, Object> model) {
         //Find the customer given
         Customer customer = customerService.findByCsn(invoice.getCustomer().getCsn());
 
@@ -100,31 +100,36 @@ public class InvoiceGenerationImpl implements InvoiceGeneration {
                     billingService.saveDeclaration(d);
                 }
             } else {
-                model.addAttribute("failure", "No declarations for this customer at this moment");
+                model.put("failure", "No declarations for this customer at this moment");
             }
         } else {
-            model.addAttribute("failure", "No policy for this customer at this moment");
+            model.put("failure", "No policy for this customer at this moment");
         }
         return model;
     }
 
     @Override
-    public Model printInvoice(int invoiceId, Model model) {
+    public Map<String, Object> printInvoice(int invoiceId, Map<String, Object> model) {
         //Find all the needed info to print the invoice
         Invoice invoice = billingService.findInvoiceById(invoiceId);
         Customer customer = invoice.getCustomer();
         Policy policy = insuranceService.findPolicyByCustomer(customer);
         InsuranceCompany company = policy.getInsurance().getInsuranceCompany();
         Iterable<Declaration> declarations = billingService.findDeclarationByCustomer(customer);
+        if (declarations == null) {
+            model.put("Message", "There was an error printing the invoice");
+            return model;
+        }
 
         //Add the general info to the domain
-        model.addAttribute("Invoice", invoice);
-        model.addAttribute("Customer", customer);
-        model.addAttribute("Company", company);
-        model.addAttribute("Declarations", declarations);
+        model.put("Invoice", invoice);
+        model.put("Customer", customer);
+        model.put("Company", company);
+        model.put("Declarations", declarations);
 
         //Loop trough the declarations to get the subtotal
         double subTotal = 0;
+
         for (Declaration d : declarations) {
             subTotal += (d.getPrice() - d.getCompensated());
         }
@@ -136,9 +141,9 @@ public class InvoiceGenerationImpl implements InvoiceGeneration {
         double vatAmount = Math.round((subTotal * company.getVat().getPercentageAmount()) * 100.0) / 100.0;
 
         //Add the payment info to the domain
-        model.addAttribute("SubTotal", formatter.format(subTotal));
-        model.addAttribute("VatAmount", formatter.format(vatAmount));
-        model.addAttribute("Total", formatter.format((subTotal + vatAmount)));
+        model.put("SubTotal", formatter.format(subTotal));
+        model.put("VatAmount", formatter.format(vatAmount));
+        model.put("Total", formatter.format((subTotal + vatAmount)));
 
 
         //Replace the temp fill in fields with the data
@@ -150,7 +155,7 @@ public class InvoiceGenerationImpl implements InvoiceGeneration {
         paymentCondition = paymentCondition.replace("%Invoice_Ref%", Integer.toString(invoice.getId()));
 
         //Add the filled in condition to the domain
-        model.addAttribute("PaymentCondition", paymentCondition);
+        model.put("PaymentCondition", paymentCondition);
         return model;
     }
 

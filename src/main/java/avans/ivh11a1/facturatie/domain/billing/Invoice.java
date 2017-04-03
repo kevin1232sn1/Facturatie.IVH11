@@ -1,6 +1,7 @@
 package avans.ivh11a1.facturatie.domain.billing;
 
 import avans.ivh11a1.facturatie.domain.customers.Customer;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
 public class Invoice {
     @Id
     @Column(name="id")
