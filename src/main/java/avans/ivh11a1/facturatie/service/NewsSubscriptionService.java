@@ -20,4 +20,6 @@ public interface NewsSubscriptionService {
     Boolean deleteById(int id);
 
     void saveSubscription(Person person, String type);
+
+    void saveUnsubscription(int observerId, String type);
 }
