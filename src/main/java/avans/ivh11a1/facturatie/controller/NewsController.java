@@ -10,6 +10,7 @@ import avans.ivh11a1.facturatie.service.NewsService;
 import avans.ivh11a1.facturatie.service.NewsSubscriptionService;
 import avans.ivh11a1.facturatie.service.PersonFactoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by kevin on 11-3-2017.
  */
-@RestController
 @RequestMapping("/news")
+@Controller
 public class NewsController {
     private final NewsService newsService;
 
