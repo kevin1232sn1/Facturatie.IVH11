@@ -21,5 +21,5 @@ public interface NewsSubscriptionService {
 
     void saveSubscription(Person person, String type);
 
-    void saveUnsubscription(int observerId, String type);
+    void saveUnsubscription(Person person, String type);
 }

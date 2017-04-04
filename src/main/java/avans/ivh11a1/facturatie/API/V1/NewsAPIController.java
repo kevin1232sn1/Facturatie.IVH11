@@ -54,7 +54,7 @@ public class NewsAPIController {
         System.out.println("Email: " + email + " Type: " + type);
         Person person = personFactoryService.getPerson(type,email);
 
-        newsSubscriptionService.saveUnsubscription(person.getId(), subscribetype);
+        newsSubscriptionService.saveUnsubscription(person, subscribetype);
 
         return person;
     }
