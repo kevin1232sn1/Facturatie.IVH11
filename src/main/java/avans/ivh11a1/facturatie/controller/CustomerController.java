@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 public class CustomerController {
 
     private final CustomerService customerService;
-    private final Logger logger;
+    private final Logger logger; 
 
 
     @Autowired
