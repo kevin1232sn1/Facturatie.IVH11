@@ -14,6 +14,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+
 /**
  * Created by kevin on 13-3-2017.
  */
@@ -39,10 +41,13 @@ public class NewsObserverImpl implements Observer {
     @Override
     public void update(Object o) {
         News news = (News) o;
-        for (NewsSubscription subscription : newsSubscriptionRepository.findByNewsType(news.getType())) {
-            Person person = factoryService.getPerson(subscription.getObserverType(), subscription.getObserverId());
-            notificationService.sendMessage(news, person);
-            System.out.println("Observer : " + person.getFullName() + " news message " + news.getContent() + " news type: " + news.getType() + " Will send to: " + person.getEmail() + " Type: " + person.getType());
+        ArrayList<NewsSubscription> subscriptions = (ArrayList<NewsSubscription>) newsSubscriptionRepository.findByNewsType(news.getType());
+        if (subscriptions != null) {
+            for (NewsSubscription subscription : subscriptions) {
+                Person person = factoryService.getPerson(subscription.getObserverType(), subscription.getObserverId());
+                notificationService.sendMessage(news, person);
+                System.out.println("Observer : " + person.getFullName() + " news message " + news.getContent() + " news type: " + news.getType() + " Will send to: " + person.getEmail() + " Type: " + person.getType());
+            }
         }
     }
 }

@@ -3,9 +3,8 @@ package avans.ivh11a1.facturatie.service.imp;
 import avans.ivh11a1.facturatie.domain.Exception.StateException;
 import avans.ivh11a1.facturatie.domain.NewsLetter.News;
 import avans.ivh11a1.facturatie.repository.NewsRepository;
-import avans.ivh11a1.facturatie.service.NewsService;
-import avans.ivh11a1.facturatie.service.Observer;
-import avans.ivh11a1.facturatie.service.Subject;
+import avans.ivh11a1.facturatie.repository.NewsSubscriptionRepository;
+import avans.ivh11a1.facturatie.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -25,13 +24,19 @@ import java.util.List;
 public class NewsServiceImpl implements NewsService, Subject {
 
     private final NewsRepository newsRepository;
-    List<Observer> observerList;
+    private NewsSubscriptionRepository newsSubscriptionRepository;
+    private PersonFactoryService factoryService;
+    private NotificationService notificationService;
+    private List<Observer> observerList;
 
     @Autowired
-    public NewsServiceImpl(NewsRepository newsRepository) {
+    public NewsServiceImpl(NewsRepository newsRepository, NewsSubscriptionRepository newsSubscriptionRepository, PersonFactoryService factoryService, NotificationService notificationService) {
+        this.newsSubscriptionRepository = newsSubscriptionRepository;
+        this.factoryService = factoryService;
+        this.notificationService = notificationService;
         this.newsRepository = newsRepository;
         observerList = new ArrayList<>();
-        register(new NewsObserverImpl());
+        register(new NewsObserverImpl(newsSubscriptionRepository, factoryService, notificationService));
     }
 
     @Override
