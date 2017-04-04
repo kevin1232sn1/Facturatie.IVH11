@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DecimalFormat;
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -72,9 +71,7 @@ public class InvoiceGenerationImpl implements InvoiceGeneration {
                 invoice.setCustomer(customer);
                 invoice.setPaymentCondition(paymentCondition);
                 invoice.setVat(company.getVat());
-                invoice.setDateCreated(new Date());
-                invoice.setState(1);
-                billingService.saveInvoice(invoice);
+                billingService.saveInvoice(invoice, true);
 
                 for (Declaration d : decelerations) {
                     if (needToCover > 0) {

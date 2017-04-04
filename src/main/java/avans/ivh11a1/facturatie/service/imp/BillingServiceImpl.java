@@ -1,9 +1,12 @@
 package avans.ivh11a1.facturatie.service.imp;
 
 import avans.ivh11a1.facturatie.domain.Exception.StateException;
+import avans.ivh11a1.facturatie.domain.billing.AprovingChain.Chain;
+import avans.ivh11a1.facturatie.domain.billing.AprovingChain.FinanceHandler;
 import avans.ivh11a1.facturatie.domain.billing.Declaration;
 import avans.ivh11a1.facturatie.domain.billing.Invoice;
 import avans.ivh11a1.facturatie.domain.billing.PaymentCondition;
+import avans.ivh11a1.facturatie.domain.billing.State.InvoiceState;
 import avans.ivh11a1.facturatie.domain.billing.Vat;
 import avans.ivh11a1.facturatie.domain.customers.Customer;
 import avans.ivh11a1.facturatie.repository.DeclarationRepository;
@@ -11,6 +14,7 @@ import avans.ivh11a1.facturatie.repository.InvoiceRepository;
 import avans.ivh11a1.facturatie.repository.PaymentConditionRepository;
 import avans.ivh11a1.facturatie.repository.VatRepository;
 import avans.ivh11a1.facturatie.service.BillingService;
+import avans.ivh11a1.facturatie.service.UserAdministrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -30,13 +34,18 @@ public class BillingServiceImpl implements BillingService {
     private final DeclarationRepository declarationRepository;
 
     private final VatRepository vatRepository;
+    private final UserAdministrationService userAdministrationService;
+    private Chain handler;
 
     @Autowired
-    public BillingServiceImpl(InvoiceRepository invoiceRepository, PaymentConditionRepository paymentConditionRepository, DeclarationRepository declarationRepository, VatRepository vatRepository) {
+    public BillingServiceImpl(InvoiceRepository invoiceRepository, PaymentConditionRepository paymentConditionRepository, DeclarationRepository declarationRepository, VatRepository vatRepository, UserAdministrationService userAdministrationService) {
         this.invoiceRepository = invoiceRepository;
         this.paymentConditionRepository = paymentConditionRepository;
         this.declarationRepository = declarationRepository;
         this.vatRepository = vatRepository;
+        this.userAdministrationService = userAdministrationService;
+        handler = new Chain();
+        handler.Add(new FinanceHandler());
     }
 
     @Override
@@ -50,7 +59,17 @@ public class BillingServiceImpl implements BillingService {
     }
 
     @Override
-    public Boolean saveInvoice(Invoice invoice) {
+    public Boolean saveInvoice(Invoice invoice, boolean updateState) {
+        if (updateState) {
+            if (invoice.getState() == null) {
+                invoice.setState(InvoiceState.CREATED);
+            } else {
+                if (invoice.getState() == InvoiceState.APPROVING) {
+                    handler.Handle(invoice, userAdministrationService.getUserRole().getName());
+                }
+                invoice.getState().getState().doAction(invoice);
+            }
+        }
         invoiceRepository.save(invoice);
         return true;
     }
