@@ -18,11 +18,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = StateException.class)
 public class PersonFactoryImpl implements PersonFactoryService {
 
-    @Autowired
+    final
     CustomerRepository customerRepository;
 
-    @Autowired
+    final
     UserRepository userRepository;
+
+    @Autowired
+    public PersonFactoryImpl(CustomerRepository customerRepository, UserRepository userRepository) {
+        this.customerRepository = customerRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public Person getPerson(String type, int id) {
@@ -31,6 +37,18 @@ public class PersonFactoryImpl implements PersonFactoryService {
                 return customerRepository.findByCsn(id);
             case "User":
                 return userRepository.findOne(id);
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public Person getPerson(String type, String email) {
+        switch (type) {
+            case "Customer":
+                return customerRepository.findByEmail(email);
+            case "User":
+                return userRepository.findByEmail(email);
             default:
                 return null;
         }

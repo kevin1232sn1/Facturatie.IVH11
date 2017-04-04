@@ -1,22 +1,17 @@
 package avans.ivh11a1.facturatie.domain.customers;
 
 import avans.ivh11a1.facturatie.domain.Person;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
-/**
- * Object of a customer
- *  TODO: Policy relatie terug zetten - Even verwijderd voor hibernate
- * @author Bob van der Valk
- */
 @Entity
 @Table(name = "customers")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Customer implements Person {
     @Id
     @Column(name = "csn")
@@ -38,41 +33,12 @@ public class Customer implements Person {
     private String dateOfBirth;
     @Column(name = "phoneNumber")
     private String phoneNumber;
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
     @Column(name = "iban")
     private String iban;
 
     private String type = "Customer";
-
-    public Customer(int csn, String firstName, String lastName, String streetName, String houseNumber, String zipcode,
-                    String city, String dateOfBirth, String phoneNumber, String email, String iban) {
-        this.csn = csn;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.streetName = streetName;
-        this.houseNumber = houseNumber;
-        this.zipcode = zipcode;
-        this.city = city;
-        this.dateOfBirth = dateOfBirth;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.iban = iban;
-    }
-
-    public Customer(String firstName, String lastName, String streetName, String houseNumber, String zipcode,
-                    String city, String dateOfBirth, String phoneNumber, String email, String iban) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.streetName = streetName;
-        this.houseNumber = houseNumber;
-        this.zipcode = zipcode;
-        this.city = city;
-        this.dateOfBirth = dateOfBirth;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.iban = iban;
-    }
 
     @Override
     public String getFullName() {
@@ -82,10 +48,5 @@ public class Customer implements Person {
     @Override
     public int getId() {
         return getCsn();
-    }
-
-    @Override
-    public String getRole() {
-        return "customer";
     }
 }

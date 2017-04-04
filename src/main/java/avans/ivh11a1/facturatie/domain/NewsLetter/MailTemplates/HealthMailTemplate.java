@@ -9,12 +9,13 @@ public class HealthMailTemplate extends MailTemplate {
 
     @Override
     protected void newsMessage() {
-
+        body += "This is a news message about an important Health Issue. Please read the message carefully ";
+        body += news.getContent();
     }
 
     @Override
     protected void fillSubject() {
-
+        message.setSubject("Health news: " + news.getTitle());
     }
 }
 

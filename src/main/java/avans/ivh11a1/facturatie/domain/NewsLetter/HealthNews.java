@@ -1,5 +1,7 @@
 package avans.ivh11a1.facturatie.domain.NewsLetter;
 
+import avans.ivh11a1.facturatie.domain.MailTemplate;
+import avans.ivh11a1.facturatie.domain.NewsLetter.MailTemplates.HealthMailTemplate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,5 +19,17 @@ public class HealthNews extends News {
 
     public HealthNews() {
         super.setType("Health");
+    }
+
+    public HealthNews(News news) {
+        super.setType("Health");
+        super.setTitle(news.getTitle());
+        super.setDatePublished(news.getDatePublished());
+        super.setContent(news.getContent());
+    }
+
+    @Override
+    public MailTemplate getMailTemplate() {
+        return new HealthMailTemplate();
     }
 }

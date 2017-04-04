@@ -24,19 +24,27 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+                    <div th:if="${exception}" style="flex: 1; margin: 0 30px;">
+                        <div layout:include="fragments/alert :: alert" th:with="type='error', header='exception'" th:remove="tag">
+                            <!--/* Implements alert summary fragment with full-blown HTML summary */-->
+                            <th:block layout:fragment="alert-content">
+                                <p th:text="${exception}">exception</p>
+                            </th:block>
+                        </div>
+                    </div>
                     <div th:if="${param.error}">
                         Invalid username and password.
                     </div>
                     <div th:if="${param.logout}">
                         You have been logged out.
                     </div>
-                    <form \ method="post">
+                    <form th:action="@{/login}" method="post" th:object="${user}">
                         <div class="form-group has-feedback">
-                            <input type="email" class="form-control" name="email" placeholder="Email">
+                            <input type="email" class="form-control" th:field="*{email}" placeholder="Email">
                             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                         </div>
                         <div class="form-group has-feedback">
-                            <input type="password" class="form-control" name="password" placeholder="Password">
+                            <input type="password" class="form-control" th:field="*{password}" placeholder="Password">
                             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
                         <div class="row">

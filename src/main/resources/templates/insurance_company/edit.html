@@ -7,7 +7,7 @@
 </head>
 <body>
 <section layout:fragment="header">
-    <h1 th:text="${insuranceCompany.companyname}">
+    <h1 th:text="${insuranceCompany.companyName}">
         Insurance Company
     </h1>
     <ol class="breadcrumb">
@@ -32,7 +32,7 @@
                         <input type="hidden" th:field="*{id}"/>
 
                         <div th:if="${#fields.hasErrors('*')}">
-                            <div layout:include="fragments/alert :: alert" th:with="type='danger', header='Fouten in het formulier'" th:remove="tag">
+                            <div layout:include="fragments/alert :: alert" th:with="type='danger', header='There are errors in the form'" th:remove="tag">
                                 <!--/* Implements alert summary fragment with full-blown HTML summary */-->
                                 <th:block layout:fragment="alert-summary">
                                     <p>Niet alle velden in het formulier zijn correct ingevuld. Corrigeer deze en verzend opnieuw.</p>
@@ -62,10 +62,11 @@
                         <div class="row">
                             <div class="col-sm-3"> <!--was: -4"-->
                                 <div class="form-group">
-                                    <label for="companyname">Company Name</label>
+                                    <label for="companyName">Company Name</label>
                                     <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'member'-->
-                                    <input type="text" class="form-control" id="companyname" th:field="*{companyname}"/>
-                                    <p th:if="${#fields.hasErrors('companyname')}" th:errors="*{companyname}">Name Error</p>
+                                    <input type="text" class="form-control" id="companyName" th:field="*{companyName}"/>
+                                    <p th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">Name
+                                        Error</p>
                                 </div>
                                 <div class="form-group">
                                     <label for="streetname">Street Name</label>
@@ -101,7 +102,7 @@
                                 <div class="form-group">
                                     <label for="phoneNumber">Phone Number</label>
                                     <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'member'-->
-                                    <input type="number" class="form-control" id="phoneNumber" th:field="*{phoneNumber}"/>
+                                    <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}"/>
                                     <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Name Error</p>
                                 </div>
 
@@ -124,7 +125,7 @@
                                     <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'member'-->
                                     <!--<input type="text" class="form-control" id="vat" th:field="*{vat}"/>-->
                                     <select name="vat" id="vat" th:field="*{vat}" class="form-control">
-                                        <option th:text="${vat.getPercentage()}" th:value="${vat.id}" th:each="vat: ${vats}"></option>
+                                        <option th:text="${vat.toString()}" th:value="${vat.id}" th:each="vat: ${vats}"></option>
                                     </select>
                                     <p th:if="${#fields.hasErrors('vat')}" th:errors="*{vat}">Name Error</p>
                                 </div>

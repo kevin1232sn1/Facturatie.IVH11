@@ -1,98 +1,166 @@
 package avans.ivh11a1.facturatie.domain.administration;
 
+
+import avans.ivh11a1.facturatie.domain.billing.Vat;
+import avans.ivh11a1.facturatie.domain.validators.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import avans.ivh11a1.facturatie.domain.billing.Vat;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
-/**
- * This is the object of a insurance company
- *
- * @author Bob van der Valk, Matthijs Wilhelmus
- */
-@Entity
+import javax.persistence.*;
+import javax.validation.constraints.Size;
+
+
 @Table(name = "insurance_company")
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
 public class InsuranceCompany {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(name = "name")
-    private String companyname;
+    @Size(min=1, max=255)
+    private String companyName;
+
     @Column(name = "street_name")
+    @Size(min=1, max=255)
     private String streetname;
+
     @Column(name = "house_number")
-    @NotNull
+    @HouseNumber
     private String houseNumber;
+
     @Column(name = "zipcode")
-    @Pattern(regexp = "^[1-9][0-9]{3}\\s?[a-zA-Z]{2}$", message = "De waarde van dit veld moet een geldige postcode zijn")
+    @Zipcode
     private String zipcode;
+
     @Column(name = "city")
+    @Size(min=1, max=255)
     private String city;
+
     @Column(name = "phonenumber")
-    private int phoneNumber;
+    @PhoneNumber
+    private String phoneNumber;
+
     @Column(name = "email")
-    @Pattern(regexp = "^([0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$", message = "De waarde van dit veld moet een geldig e-mailadres zijn")
+    @EmailAddress
     private String email;
+
     @Column(name = "kvk_number")
-    private int kvkNumber;
+    @KVKNumber
+    private Integer kvkNumber;
+
     @OneToOne
     @JoinColumn(name = "vat_id")
     private Vat vat;
+
     @Column(name = "btw_number")
+    @BTWNumber
     private String btw;
+
     @Column(name = "iban")
-    @Pattern(regexp = "^((NO)[0-9A-Z]{2}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{3}|(NO)[0-9A-Z]{13}|(BE)[0-9A-Z]{2}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}|(BE)[0-9A-Z]{14}|(DK|FO|FI|GL|NL)[0-9A-Z]{2}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{2}|(DK|FO|FI|GL|NL)[0-9A-Z]{16}|(MK|SI)[0-9A-Z]{2}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{3}|(MK|SI)[0-9A-Z]{17}|(BA|EE|KZ|LT|LU|AT)[0-9A-Z]{2}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}|(BA|EE|KZ|LT|LU|AT)[0-9A-Z]{18}|(HR|LI|LV|CH)[0-9A-Z]{2}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{1}|(HR|LI|LV|CH)[0-9A-Z]{19}|(BG|DE|IE|ME|RS|GB)[0-9A-Z]{2}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{2}|(BG|DE|IE|ME|RS|GB)[0-9A-Z]{20}|(GI|IL)[0-9A-Z]{2}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{3}|(GI|IL)[0-9A-Z]{21}|(AD|CZ|SA|RO|SK|ES|SE|TN)[0-9A-Z]{2}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}|(AD|CZ|SA|RO|SK|ES|SE|TN)[0-9A-Z]{22}|(PT)[0-9A-Z]{2}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{1}|(PT)[0-9A-Z]{23}|(IS|TR)[0-9A-Z]{2}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{2}|(IS|TR)[0-9A-Z]{24}|(FR|GR|IT|MC|SM)[0-9A-Z]{2}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{3}|(FR|GR|IT|MC|SM)[0-9A-Z]{25}|(AL|CY|HU|LB|PL)[0-9A-Z]{2}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}|(AL|CY|HU|LB|PL)[0-9A-Z]{26}|(MU)[0-9A-Z]{2}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{2}|(MU)[0-9A-Z]{28}|(MT)[0-9A-Z]{2}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{4}[ ][0-9A-Z]{3}|(MT)[0-9A-Z]{29})$", message = "De waarde van dit veld moet een geldige IBAN zijn")
+    @IBAN
     private String iban;
 
-    /**
-     * Initializes an InsuranceCompany for Database
-     *
-     * @param id          id of Insurance Company will be used as primary key in Database
-     * @param companyname name of the Insurance Company
-     * @param streetname  street name of the Insurance Company
-     * @param houseNumber house number of the Insurance Company
-     * @param zipcode     Zip Code of the Insurance Company
-     * @param city        name of the city where the Insurance Company is located
-     * @param phoneNumber phone number of the Insurance Company
-     * @param email       email address of the Insurance Company
-     * @param kvkNumber   kvk number of the Insurance Company
-     * @param vat         id of a vat percentage will be used as foreign key in Database.
-     * @param btw         VAT number of the Insurance Company
-     * @param iban        IBAN of the Insurance Company
-     */
-    public InsuranceCompany(int id, String companyname, String streetname, String houseNumber, String zipcode, String city, int phoneNumber, String email, int kvkNumber, Vat vat, String btw, String iban) {
-        this.id = id;
-        this.companyname = companyname;
-        this.streetname = streetname;
-        this.houseNumber = houseNumber;
-        this.zipcode = zipcode;
-        this.city = city;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.kvkNumber = kvkNumber;
-        this.vat = vat;
-        this.btw = btw;
-        this.iban = iban;
+    private InsuranceCompany(Builder builder) {
+        this.id = builder.id;
+        this.companyName = builder.companyName;
+        this.streetname = builder.streetname;
+        this.houseNumber = builder.houseNumber;
+        this.zipcode = builder.zipcode;
+        this.city = builder.city;
+        this.phoneNumber = builder.phoneNumber;
+        this.email = builder.email;
+        this.kvkNumber = builder.kvkNumber;
+        this.vat = builder.vat;
+        this.btw = builder.btw;
+        this.iban = builder.iban;
     }
 
-    public InsuranceCompany(String companyname, String streetname, String houseNumber, String zipcode, String city, int phoneNumber, String email, int kvkNumber, Vat vat, String btw, String iban) {
-        this.companyname = companyname;
-        this.streetname = streetname;
-        this.houseNumber = houseNumber;
-        this.zipcode = zipcode;
-        this.city = city;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.kvkNumber = kvkNumber;
-        this.vat = vat;
-        this.btw = btw;
-        this.iban = iban;
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private int id;
+        private String companyName;
+        private String phoneNumber;
+        private String email;
+        private String streetname;
+        private String houseNumber;
+        private String zipcode;
+        private String city;
+        private Integer kvkNumber;
+        private Vat vat;
+        private String btw;
+        private String iban;
+
+        public Builder id(final int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder companyName(final String companyName) {
+            this.companyName = companyName;
+            return this;
+        }
+
+        public Builder phoneNumber(final String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public Builder email(final String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder streetname(final String streetname) {
+            this.streetname = streetname;
+            return this;
+        }
+
+        public Builder houseNumber(final String houseNumber) {
+            this.houseNumber = houseNumber;
+            return this;
+        }
+
+        public Builder zipcode(final String zipcode) {
+            this.zipcode = zipcode;
+            return this;
+        }
+
+        public Builder city(final String city) {
+            this.city = city;
+            return this;
+        }
+
+        public Builder kvkNumber(final Integer kvkNumber) {
+            this.kvkNumber = kvkNumber;
+            return this;
+        }
+
+        public Builder vat(final Vat vat) {
+            this.vat = vat;
+            return this;
+        }
+
+        public Builder btw(final String btw) {
+            this.btw = btw;
+            return this;
+        }
+
+        public Builder iban(final String iban) {
+            this.iban = iban;
+            return this;
+        }
+
+        public InsuranceCompany build() {
+            return new InsuranceCompany(this);
+        }
     }
 }

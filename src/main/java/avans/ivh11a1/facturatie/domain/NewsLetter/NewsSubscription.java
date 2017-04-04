@@ -1,8 +1,10 @@
 package avans.ivh11a1.facturatie.domain.NewsLetter;
 
+import avans.ivh11a1.facturatie.domain.Person;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 
@@ -17,6 +19,7 @@ import javax.persistence.*;
 public class NewsSubscription {
 
     @Column
+    @NotEmpty
     String newsType;
     @Column
     String observerType;
@@ -31,5 +34,11 @@ public class NewsSubscription {
         this.newsType = newsType;
         this.observerType = observerType;
         this.observerId = oId;
+    }
+
+    public NewsSubscription(Person p, String newsType) {
+        this.newsType = newsType;
+        this.observerType = p.getType();
+        this.observerId = p.getId();
     }
 }

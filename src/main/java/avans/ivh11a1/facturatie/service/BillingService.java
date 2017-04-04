@@ -13,7 +13,8 @@ public interface BillingService {
 
     Iterable<Invoice> findAllInvoices();
     Invoice findInvoiceById(int id);
-    Boolean saveInvoice(Invoice invoice);
+
+    Boolean saveInvoice(Invoice invoice, boolean updateState);
     Boolean deleteInvoiceById(int id);
     Iterable<Invoice> findInvoicesByCustomer(Customer customer);
 

@@ -3,12 +3,12 @@ package avans.ivh11a1.facturatie.domain.billing;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
-/**
- * This is a vat object
- *
- * @author Bob van der Valk
- */
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+
 @Entity
 @Table(name ="vat")
 @Getter
@@ -21,6 +21,9 @@ public class Vat {
     private int id;
 
     @Column(name = "percentage")
+    @NotNull
+    @DecimalMin(value = "0.1", inclusive = true)
+    @DecimalMax(value = "100.0", inclusive = true)
     private double percentage;
 
     public Vat(int id, double percentage) {
@@ -32,7 +35,11 @@ public class Vat {
         this.percentage = percentage;
     }
 
-    public String getPercentage() {
+    public double getPercentage() {
+        return percentage;
+    }
+
+    public String toString() {
         return percentage + "%";
     }
 

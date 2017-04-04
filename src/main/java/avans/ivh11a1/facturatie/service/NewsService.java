@@ -6,13 +6,15 @@ import avans.ivh11a1.facturatie.domain.NewsLetter.News;
  * Created by kevin on 10-3-2017.
  */
 public interface NewsService {
-    void register(Observer o, String newsType);
+    void register(Observer o);
 
-    void unRegister(Observer o, String newsType);
+    void unRegister(Observer o);
 
-    void notifyObserver(News news);
+    void notifyObserver(Object o);
 
     Iterable<News> findAll();
+
+    News findOne(int id);
 
     Boolean save(News news);
 

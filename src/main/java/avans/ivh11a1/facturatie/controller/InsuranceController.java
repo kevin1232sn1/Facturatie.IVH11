@@ -1,7 +1,8 @@
 package avans.ivh11a1.facturatie.controller;
 
+import avans.ivh11a1.facturatie.crosscutting.annotations.SecurityAnnotation;
+import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.domain.insurances.Insurance;
-import avans.ivh11a1.facturatie.repository.InsuranceRepository;
 import avans.ivh11a1.facturatie.service.InsuranceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.WebMvcProperties;
@@ -18,25 +19,19 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import java.util.Locale;
 
 
-/**
- * Created by Matthijs Wilhelmus on 13-10-2016.
- *
- * This is a controller for <code>Insurance</code>.
- * This controller regulates the mapping of the insurance pages
- * for viewing all insurances as well as creating/updating/deleting an insurance
- * using the linked <code>InsuranceRepository</code>.
- *
- * @author Matthijs Wilhelmus
- * @version 1.0
- * @see InsuranceRepository
- * @see  Insurance
- */
+
 @Controller
 @RequestMapping("/insurance")
+@SecurityAnnotation(allowedRole = { Role.ADMIN, Role.ADMINISTRATION })
 public class InsuranceController extends WebMvcConfigurerAdapter {
 
-    @Autowired
+    final
     InsuranceService insuranceService;
+
+    @Autowired
+    public InsuranceController(InsuranceService insuranceService) {
+        this.insuranceService = insuranceService;
+    }
 
     @ModelAttribute("page")
     public String module() {

@@ -38,6 +38,34 @@
     <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
             <!-- User Account: style can be found in dropdown.less -->
+            <li class="dropdown user user-menu" th:if="${@UserAdministrationService.getCurrentUser() != null}">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img  th:src="@{~/vendor/AdminLTE/dist/img/user2-160x160.jpg}" class="user-image" alt="User Image" />
+                    <span class="hidden-xs" th:text="${@UserAdministrationService.getCurrentUser().name}">User</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <!-- User image -->
+                    <li class="user-header">
+                        <img th:src="@{~/vendor/AdminLTE/dist/img/user2-160x160.jpg}" class="img-circle" alt="User Image"/>
+
+                        <p th:text="${@UserAdministrationService.getCurrentUser().name}">
+                            User
+                        </p>
+                    </li>
+
+                    <!-- Menu Footer-->
+                    <li class="user-footer">
+                        <div class="pull-left">
+                            <!--<a href="#" class="btn btn-default btn-flat">Profile</a>-->
+                        </div>
+                        <div class="pull-right">
+                            <form th:action="@{/logout}" method="post">
+                                <input type="submit" class="btn btn-default btn-flat" value="Sign out"></a>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
     <div class="cc-selector">
