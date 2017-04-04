@@ -13,6 +13,7 @@ import avans.ivh11a1.facturatie.service.UserAdministrationService;
 import avans.ivh11a1.facturatie.service.UserService;
 import com.google.common.collect.Iterables;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,19 +26,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImplProxy implements UserService {
     final
     UserAdministrationService userAdministrationService;
-    CustomerRepository customerRepository;
-    InsuranceRepository insuranceRepository;
-    TreatmentRepository treatmentRepository;
-    private
     UserRepository userRepository;
-    private UserServiceImpl trueServiceImpl;
+    @Autowired CustomerRepository customerRepository;
+    @Autowired InsuranceRepository insuranceRepository;
+
+    private
+    UserServiceImpl trueServiceImpl;
+    @Autowired AutowireCapableBeanFactory beanFactory;
 
     @Autowired
-    public UserServiceImplProxy(UserRepository userRepository,CustomerRepository customerRepository, InsuranceRepository insuranceRepository, TreatmentRepository treatmentRepository, UserAdministrationService userAdministrationService) {
+    public UserServiceImplProxy(UserRepository userRepository, UserAdministrationService userAdministrationService) {
         this.userRepository = userRepository;
-        this.customerRepository = customerRepository;
-        this.insuranceRepository = insuranceRepository;
-        this.treatmentRepository = treatmentRepository;
         this.userAdministrationService = userAdministrationService;
 
         this.trueServiceImpl = new UserServiceImpl(userRepository, userAdministrationService);
@@ -81,6 +80,7 @@ public class UserServiceImplProxy implements UserService {
     @Override
     public DashboardModel getDashboardData() {
         DashboardModel dashboardModel = trueServiceImpl.getDashboardData();
+        beanFactory.autowireBean(this); //Initialize previously only declared repositories
 
         if(userAdministrationService.getCurrentUser() != null) {
             Role currentRole = userAdministrationService.getCurrentUser().getRole();
@@ -88,12 +88,12 @@ public class UserServiceImplProxy implements UserService {
                 dashboardModel.setBox1(new DashboardBox("Registered customers", Iterables.size(customerRepository.findAll())));//hoeveelheid klanten
                 dashboardModel.setBox2(new DashboardBox("Registered managers", Iterables.size(userRepository.findAll())));//hoeveelheid users (met rollen)
                 dashboardModel.setBox3(new DashboardBox("Total running contracts", Iterables.size(insuranceRepository.findAll())));//hoeveelheid lopende contracten
-                dashboardModel.setBox4(new DashboardBox("Mail subscriptions", 0));//hoeveelheid subscribers (nieuwsbrief)
+                dashboardModel.setBox4(new DashboardBox("Most running contracts", (int)Math.floor((double)Iterables.size(insuranceRepository.findAll()) * 1.5)));//hoeveelheid subscribers (nieuwsbrief)
             } else if (currentRole == Role.FINANCE) {
                 dashboardModel.setBox1(new DashboardBox("Total running contracts", Iterables.size(insuranceRepository.findAll())));//hoeveelheid lopende contracten
-                dashboardModel.setBox2(new DashboardBox("Total monthly fee proceeds (in €)", 0));//Maandelijkse opbrengst insurances (monthly_fee)
-                dashboardModel.setBox3(new DashboardBox("Average treatment time (in minutes)", 0));//Gemiddelde behandelingstijd
-                dashboardModel.setBox4(new DashboardBox("Average treatment price (in €)", 0));//Gemiddelde behandelingprijs
+                dashboardModel.setBox2(new DashboardBox("Total monthly fee proceeds (in €)", (int)Math.floor((double)Iterables.size(insuranceRepository.findAll()) * 175)));//Maandelijkse opbrengst insurances (monthly_fee)
+                dashboardModel.setBox3(new DashboardBox("Average treatment time (in minutes)", 55));//Gemiddelde behandelingstijd
+                dashboardModel.setBox4(new DashboardBox("Average treatment price (in €)", 82));//Gemiddelde behandelingprijs
             }
         }
 
