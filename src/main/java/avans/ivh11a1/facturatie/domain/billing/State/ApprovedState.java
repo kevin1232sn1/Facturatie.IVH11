@@ -10,7 +10,7 @@ public class ApprovedState implements State {
 
     @Override
     public void doAction(Invoice i) {
-        if (i.isApproved())
+        if (i.getApproved())
             i.setState(InvoiceState.PENDING);
     }
 

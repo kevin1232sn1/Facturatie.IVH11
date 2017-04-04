@@ -43,7 +43,7 @@ public class Invoice {
     @JoinColumn(name = "payment_condition_id")
     private PaymentCondition paymentCondition;
     @Column
-    private boolean approved;
+    private Boolean approved;
 
     public String getUserFriendlyDatePayed() {
         if (this.datePayed == null) {
