@@ -28,12 +28,13 @@ public class UserServiceImplProxy implements UserService {
     CustomerRepository customerRepository;
     InsuranceRepository insuranceRepository;
     TreatmentRepository treatmentRepository;
-    private
     UserRepository userRepository;
-    private UserServiceImpl trueServiceImpl;
+
+    private
+    UserServiceImpl trueServiceImpl;
 
     @Autowired
-    public UserServiceImplProxy(UserRepository userRepository,CustomerRepository customerRepository, InsuranceRepository insuranceRepository, TreatmentRepository treatmentRepository, UserAdministrationService userAdministrationService) {
+    public UserServiceImplProxy(UserRepository userRepository, CustomerRepository customerRepository, InsuranceRepository insuranceRepository, TreatmentRepository treatmentRepository, UserAdministrationService userAdministrationService) {
         this.userRepository = userRepository;
         this.customerRepository = customerRepository;
         this.insuranceRepository = insuranceRepository;

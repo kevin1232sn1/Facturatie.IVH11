@@ -1,5 +1,6 @@
 package avans.ivh11a1.facturatie.service.imp;
 
+import avans.ivh11a1.facturatie.domain.Exception.CustomerNotFoundException;
 import avans.ivh11a1.facturatie.domain.Exception.StateException;
 import avans.ivh11a1.facturatie.domain.administration.InsuranceCompany;
 import avans.ivh11a1.facturatie.domain.billing.Declaration;
@@ -42,7 +43,12 @@ public class InvoiceGenerationImpl implements InvoiceGeneration {
     @Override
     public Model generateInvoice(Invoice invoice, Model model) {
         //Find the customer given
-        Customer customer = customerService.findByCsn(invoice.getCustomer().getCsn());
+        Customer customer = null;
+        try {
+            customer = customerService.findByCsn(invoice.getCustomer().getCsn());
+        } catch(CustomerNotFoundException ex){
+            //System.out.println(ex.getMessage());
+        };
 
         //Find the open decelerations
         Iterable<Declaration> decelerations = billingService.findOpenDeclarations(customer);

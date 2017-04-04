@@ -1,6 +1,7 @@
 package avans.ivh11a1.facturatie.controller;
 
 import avans.ivh11a1.facturatie.crosscutting.annotations.SecurityAnnotation;
+import avans.ivh11a1.facturatie.domain.Exception.CustomerNotFoundException;
 import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.domain.customers.Customer;
 import avans.ivh11a1.facturatie.service.CustomerService;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 @Controller
@@ -22,10 +25,16 @@ import java.util.List;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final Logger logger;
+
 
     @Autowired
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
+
+        logger = Logger.getLogger("Customers");
+
+        logger.setLevel(Level.SEVERE);
     }
 
     @ModelAttribute("page")
@@ -39,7 +48,7 @@ public class CustomerController {
      * @return template/customer/index.html
      */
     /*@RequestMapping("")
-    public String overview(Model model) {
+    public String overview(Model model) { //old overview
         Iterable<Customer> customers = customerService.findAll();
 
         model.addAttribute("customers", customers);
@@ -49,15 +58,13 @@ public class CustomerController {
     }*/
 
     @RequestMapping("")
-    public String alternativeOverview(Model model, @PageableDefault(value=3, page=0)Pageable pageable) {
+    public String alternativeOverview(Model model, @PageableDefault(value=3, page=0)Pageable pageable) { //pageable overview
         model.addAttribute("customers", customerService.getCustomersByPage(pageable));
         model.addAttribute("currentLocale", LocaleContextHolder.getLocale());
-        model.addAttribute("pagingButtons", GeneratePagingButtons(pageable, Iterables.size(customerService.findAll())));
+        model.addAttribute("pagingButtons", GeneratePagination(pageable, Iterables.size(customerService.findAll())));
 
         return "customer/index";
     }
-
-
 
     /**
      * Add new customers page
@@ -75,7 +82,12 @@ public class CustomerController {
     @RequestMapping(value = "/show/{csn}")
     public String show(Model model, @PathVariable int csn) {
         List<Customer> customers = new ArrayList<Customer>();
-        customers.add(customerService.findByCsn(csn));
+        try {
+            customers.add(customerService.findByCsn(csn));
+        } catch(CustomerNotFoundException ex){
+            model.addAttribute("error", ex.getMessage());
+            logger.severe(ex.getMessage());
+        };
 
         model.addAttribute("customers", customers);
 
@@ -91,29 +103,39 @@ public class CustomerController {
         customerService.save(customer);
         model.addAttribute("success", "Customer successfully saved");
 
-        return "forward:/customer/index";
-        //return this.overview(model);
+        return "forward:/customer";
     }
 
     @RequestMapping(value = "/edit/{csn}", method = RequestMethod.GET)
     public String editCustomer(Model model, @PathVariable int csn) {
-        Customer customer = customerService.findByCsn(csn);
+        Customer customer = null;
+        try {
+            customer = customerService.findByCsn(csn);
+        } catch(CustomerNotFoundException ex){
+            model.addAttribute("error", ex.getMessage());
+            logger.severe(ex.getMessage());
+        };
         model.addAttribute("customer", customer);
         return "customer/edit";
     }
 
     @RequestMapping(value = "/delete/{csn}")
-    public String deleteCustomer(Model model, @PathVariable int csn) {
-        Customer customer = customerService.findByCsn(csn);
-        customerService.delete(customer);
+    public String deleteCustomer(Model model, @PathVariable int csn) throws CustomerNotFoundException {
+        Customer customer;
+        try {
+            customer = customerService.findByCsn(csn);
+            customerService.delete(customer);
+            model.addAttribute("success", "Customer successfully deleted!");
+        } catch(CustomerNotFoundException ex){
+            model.addAttribute("error", ex.getMessage());
+            logger.severe(ex.getMessage());
+        }
 
-        model.addAttribute("success", "Customer successfully deleted!");
 
-        return "forward:/customer/index";
-        //return this.overview(model);
+        return "forward:/customer";
     }
 
-    public static String GeneratePagingButtons(Pageable pageable, int totalObjects)
+    public static String GeneratePagination(Pageable pageable, int totalObjects)
     {
         int totalPages = (int)Math.floor((double) totalObjects / pageable.getPageSize()); //Testen met Math.floor en Math.ceil
         StringBuilder stringBuilder = new StringBuilder(99999); //space for 99999 characters in the builder

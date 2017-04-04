@@ -50,6 +50,15 @@
                                 </th:block>
                             </div>
                         </div>
+
+                        <div th:if="${error}" style="flex: 1; margin: 0 30px;">
+                            <div layout:include="fragments/alert :: alert" th:with="type='error', header='Error'" th:remove="tag">
+                                <!--/* Implements alert summary fragment with full-blown HTML summary */-->
+                                <th:block layout:fragment="alert-content">
+                                    <p th:text="${error}">Message</p>
+                                </th:block>
+                            </div>
+                        </div>
                     </div>
 
                     <table class="table table-hover">
