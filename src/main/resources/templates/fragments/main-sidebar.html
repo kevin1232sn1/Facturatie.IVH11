@@ -4,38 +4,38 @@
     <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
-        <li class="header">MAIN NAVIGATION</li>
+        <li class="header"><span th:text="#{navigation}"></span></li>
 
         <li th:class="${page == 'customers'} ? 'active' : ''">
             <a th:href="@{~/customer}">
-                <i class="fa fa-user"></i> <span>Customers</span>
+                <i class="fa fa-user"></i>  <span th:text="#{customers}"></span>
             </a>
         </li>
 
         <li th:class="${page == 'invoices'} ? 'active' : ''">
             <a th:href="@{~/invoice}">
-                <i class="fa fa-file-text"></i> <span>Invoices</span>
+                <i class="fa fa-file-text"></i> <span th:text="#{invoices}"></span>
             </a>
         </li>
         <li th:class="${page == 'declarations'} ? 'active' : ''">
             <a th:href="@{~/declaration}">
-                <i class="fa fa-inbox"></i> <span>Declarations</span>
+                <i class="fa fa-inbox"></i> <span th:text="#{declarations}"></span>
             </a>
         </li>
         <li th:class="${page == 'policies'} ? 'active' : ''">
             <a th:href="@{~/policy}">
-                <i class="fa fa-archive"></i> <span>Policies</span>
+                <i class="fa fa-archive"></i> <span th:text="#{policies}"></span>
             </a>
         </li>
         <li th:class="${page == 'insurances'} ? 'active' : ''">
             <a th:href="@{~/insurance}">
-                <i class="fa fa-heartbeat"></i> <span>Insurances</span>
+                <i class="fa fa-heartbeat"></i> <span th:text="#{insurances}"></span>
             </a>
         </li>
-        <li class="header">ADMINISTRATION</li>
+        <li class="header"><span th:text="#{administration}"></span></li>
         <li th:class="${page == 'treatments'} ? 'active' : ''">
             <a th:href="@{~/treatments}">
-                <i class="fa fa-cubes"></i> <span>Treatments</span>
+                <i class="fa fa-cubes"></i> <span th:text="#{treatments}"></span>
             </a>
         </li>
         <li th:class="${page == 'vat'} ? 'active' : ''">
@@ -45,17 +45,17 @@
         </li>
         <li th:class="${page == 'payment-conditions'} ? 'active' : ''">
             <a th:href="@{~/payment-condition}">
-                <i class="fa fa-bell"></i> <span>Payment Conditions</span>
+                <i class="fa fa-bell"></i> <span th:text="#{conditions}"></span>
             </a>
         </li>
         <li th:class="${page == 'users'} ? 'active' : '' ">
             <a th:href="@{~/user}">
-                <i class="fa fa-users"></i> <span>Users</span>
+                <i class="fa fa-users"></i> <span th:text="#{users}"></span>
             </a>
         </li>
         <li th:class="${page == 'insurance-companies'} ? 'active' : ''">
             <a th:href="@{~/insurance_company}">
-                <i class="fa fa-gear"></i> <span>Settings</span>
+                <i class="fa fa-gear"></i> <span th:text="#{settings}"></span>
             </a>
         </li>
 

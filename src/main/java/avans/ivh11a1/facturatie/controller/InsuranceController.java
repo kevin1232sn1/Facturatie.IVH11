@@ -4,9 +4,18 @@ import avans.ivh11a1.facturatie.domain.insurances.Insurance;
 import avans.ivh11a1.facturatie.repository.InsuranceRepository;
 import avans.ivh11a1.facturatie.service.InsuranceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.WebMvcProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+
+import java.util.Locale;
 
 
 /**
@@ -24,7 +33,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/insurance")
-public class InsuranceController {
+public class InsuranceController extends WebMvcConfigurerAdapter {
 
     @Autowired
     InsuranceService insuranceService;
@@ -34,6 +43,22 @@ public class InsuranceController {
         return "insurances";
     }
 
+    @Bean
+    public LocaleResolver localeResolver() {
+        SessionLocaleResolver slr = new SessionLocaleResolver();
+        slr.setDefaultLocale(Locale.ENGLISH);
+        return slr;
+    }
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+        lci.setParamName("lang");
+        return lci;
+    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
+    }
 
     // index
 
@@ -130,4 +155,5 @@ public class InsuranceController {
         }
         return this.index(model);
     }
+
 }

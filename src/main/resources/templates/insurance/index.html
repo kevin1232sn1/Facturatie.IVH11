@@ -7,9 +7,7 @@
 </head>
 <body>
 <section layout:fragment="header">
-    <h1>
-        Insurances
-    </h1>
+    <h1 th:text="#{insurances}"></h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-inbox"></i> Home</a></li>
         <li>Insurances</li>
@@ -21,7 +19,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Overview</h3>
+                    <h3 class="box-title"><span th:text="#{overview}"></span></h3>
 
                     <div class="box-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
@@ -40,7 +38,7 @@
                     <div class="flex-wrapper" style="display: flex; align-items: center;">
                         <div class="btn-group" style="margin: 0 50px 0 20px;">
                             <a th:href="@{/insurance/create}" class="btn btn-app">
-                                <span class="fa fa-plus"></span> Add
+                                <span class="fa fa-plus"></span> <span th:text="#{add}"></span>
                             </a>
                         </div>
 
@@ -68,9 +66,9 @@
                         <tr>
                             <th>ID</th>
                             <!--<th>Insurance Company</th>-->
-                            <th>Name</th>
-                            <th>Monthly Fee</th>
-                            <th>Covered Treatments</th>
+                            <th><span th:text="#{name}"></span></th>
+                            <th><span th:text="#{fee}"></span></th>
+                            <th><span th:text="#{coveredTreatments}"></span></th>
                             <th width="4%">&nbsp;</th>
                         </tr>
                         <tr th:each="insurance : ${insurances}">
@@ -97,7 +95,10 @@
             </div>
             <!-- /.box -->
         </div>
+
     </div>
 </div>
 </body>
+
 </html>
+

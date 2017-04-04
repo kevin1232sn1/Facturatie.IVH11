@@ -1,11 +1,34 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#locales").change(function () {
+            var urlPath = window.location.pathname
+            var selectedOption = $('#locales').val();
+            if (selectedOption != ''){
+                window.location.replace(urlPath+'?lang=' + selectedOption);
+            }
+        });
+        $("#locales2").change(function () {
+            var urlPath = window.location.pathname
+/*            if (urlPath.length > 1) {
+                var first_part = urlPath[1];
+                urlPath = first_part;
+            }*/
+            var selectedOption = $('#locales2').val();
+            if (selectedOption != ''){
+                window.location.replace(urlPath+'?lang=' + selectedOption);
+            }
+        });
+    });
+</script>
 <!-- Logo -->
 <a href="/" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><b>C</b>1</span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><b>Facturatie</b></span>
+    <span class="logo-lg"><b th:text="#{insurances}"></b></span>
 </a>
-<!-- Header Navbar: style can be found in header.less -->
 <nav class="navbar navbar-static-top">
     <!-- Sidebar toggle button-->
     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -17,4 +40,53 @@
             <!-- User Account: style can be found in dropdown.less -->
         </ul>
     </div>
+    <div class="cc-selector">
+        <input id="locales" type="radio" name="EN" value="EN" />
+        <label class="drinkcard-cc EN" for="locales"></label>
+        <input id="locales2" type="radio" name="NL" value="NL" />
+        <label class="drinkcard-cc NL"for="locales2"></label>
+    </div>
 </nav>
+
+<style type="text/css">
+    .cc-selector input{
+        margin:0;padding:0;
+        -webkit-appearance:none;
+        -moz-appearance:none;
+        appearance:none;
+    }
+    .NL{background-image:url(https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_Netherlands.png);}
+    .EN{background-image:url(https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_United_Kingdom.png);}
+
+    .cc-selector input:active +.drinkcard-cc{opacity: .9;}
+    .cc-selector input:checked +.drinkcard-cc{
+        -webkit-filter: none;
+        -moz-filter: none;
+        filter: none;
+    }
+    .drinkcard-cc{
+        cursor:pointer;
+        background-size:contain;
+        background-repeat:no-repeat;
+        display:inline-block;
+        width:40px;height:40px;
+        -webkit-transition: all 100ms ease-in;
+        -moz-transition: all 100ms ease-in;
+        transition: all 100ms ease-in;
+        -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+        -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+        filter: brightness(1.8) grayscale(1) opacity(.7);
+    }
+    .drinkcard-cc:hover{
+        -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+        -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+        filter: brightness(1.2) grayscale(.5) opacity(.9);
+    }
+
+    /* Extras */
+    a:visited{color:#888}
+    a{color:#444;text-decoration:none;}
+    p{margin-bottom:.3em;}
+</style>
+<!--<input type="radio" name="checktype" id="locales" onclick="onClick()" value="EN">
+<input type="radio" name="checktype" id="locales2" onclick="onClick()" value="NL">-->
