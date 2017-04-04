@@ -131,13 +131,12 @@ public class CustomerController {
             logger.severe(ex.getMessage());
         }
 
-
         return "forward:/customer";
     }
 
     public static String GeneratePagination(Pageable pageable, int totalObjects)
     {
-        int totalPages = (int)Math.floor((double) totalObjects / pageable.getPageSize()); //Testen met Math.floor en Math.ceil
+        int totalPages = (int)Math.floor((double) (totalObjects - 1) / pageable.getPageSize());
         StringBuilder stringBuilder = new StringBuilder(99999); //space for 99999 characters in the builder
         for (int i = 0; i <= totalPages; i++)
         {

@@ -13,6 +13,7 @@ import avans.ivh11a1.facturatie.service.UserAdministrationService;
 import avans.ivh11a1.facturatie.service.UserService;
 import com.google.common.collect.Iterables;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,18 +26,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImplProxy implements UserService {
     final
     UserAdministrationService userAdministrationService;
-    CustomerRepository customerRepository;
-    InsuranceRepository insuranceRepository;
     UserRepository userRepository;
+    @Autowired CustomerRepository customerRepository;
+    @Autowired InsuranceRepository insuranceRepository;
 
     private
     UserServiceImpl trueServiceImpl;
+    @Autowired AutowireCapableBeanFactory beanFactory;
 
     @Autowired
-    public UserServiceImplProxy(UserRepository userRepository, CustomerRepository customerRepository, InsuranceRepository insuranceRepository, UserAdministrationService userAdministrationService) {
+    public UserServiceImplProxy(UserRepository userRepository, UserAdministrationService userAdministrationService) {
         this.userRepository = userRepository;
-        this.customerRepository = customerRepository;
-        this.insuranceRepository = insuranceRepository;
         this.userAdministrationService = userAdministrationService;
 
         this.trueServiceImpl = new UserServiceImpl(userRepository, userAdministrationService);
@@ -80,6 +80,7 @@ public class UserServiceImplProxy implements UserService {
     @Override
     public DashboardModel getDashboardData() {
         DashboardModel dashboardModel = trueServiceImpl.getDashboardData();
+        beanFactory.autowireBean(this); //Initialize previously only declared repositories
 
         if(userAdministrationService.getCurrentUser() != null) {
             Role currentRole = userAdministrationService.getCurrentUser().getRole();
