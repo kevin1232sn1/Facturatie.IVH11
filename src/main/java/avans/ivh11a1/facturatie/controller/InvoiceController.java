@@ -3,6 +3,7 @@ package avans.ivh11a1.facturatie.controller;
 import avans.ivh11a1.facturatie.crosscutting.annotations.SecurityAnnotation;
 import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.domain.billing.Invoice;
+import avans.ivh11a1.facturatie.domain.billing.State.InvoiceState;
 import avans.ivh11a1.facturatie.domain.customers.Customer;
 import avans.ivh11a1.facturatie.service.BillingService;
 import avans.ivh11a1.facturatie.service.CustomerService;
@@ -14,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 
 /**
  * Created by kevin on 11-10-2016.
@@ -110,20 +109,19 @@ public class InvoiceController {
      * @param id Invoice id
      * @return Page name
      */
-    @RequestMapping(value = "/pay/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public String payDeclaration(Model model, @PathVariable int id) {
         //Find invoice with given id
         Invoice invoice = billingService.findInvoiceById(id);
 
-        //Set the date payed to today and set the state to paid
-        invoice.setDatePayed(new Date());
-        invoice.setState(1);
-
         //Save invoice
-        billingService.saveInvoice(invoice);
+        billingService.saveInvoice(invoice, true);
 
         //Add successful message to the domain
-        model.addAttribute("success", "Invoice marked as paid!");
+        String key = "success";
+        if (invoice.getState() == InvoiceState.APPROVING)
+            key = "failure";
+        model.addAttribute(key, invoice.getState().getState().currentState());
 
         // Open view
         return this.listInvoices(model);
@@ -145,7 +143,7 @@ public class InvoiceController {
         invoice.setPaymentCondition(billingService.findPaymentConditionById(paymentConditionId));
 
         //Save invoice
-        billingService.saveInvoice(invoice);
+        billingService.saveInvoice(invoice, false);
 
         //Add successful message to the domain
         model.addAttribute("success", "Payment Condition updated!");

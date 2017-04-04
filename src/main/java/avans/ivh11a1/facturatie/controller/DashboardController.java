@@ -50,7 +50,7 @@ class DashboardController {
     }
 
     @PostMapping(value = "/logout")
-    String Logout(Model model, HttpSession session) {;
+    String Logout(Model model, HttpSession session) {
         userService.logoutUser();
         return "forward:/";
     }

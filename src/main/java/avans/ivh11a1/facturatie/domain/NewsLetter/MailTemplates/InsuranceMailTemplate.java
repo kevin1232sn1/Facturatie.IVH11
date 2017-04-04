@@ -9,11 +9,11 @@ public class InsuranceMailTemplate extends MailTemplate {
 
     @Override
     protected void newsMessage() {
-
+        body += news.getContent();
     }
 
     @Override
     protected void fillSubject() {
-
+        message.setSubject("Insurance news: " + news.getTitle());
     }
 }

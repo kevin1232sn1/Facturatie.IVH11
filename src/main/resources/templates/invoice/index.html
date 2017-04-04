@@ -99,8 +99,7 @@
                                 <!--Mark as paid-->
                                 <a th:href="@{'/invoice/pay/' + ${invoice.id}}" class="btn btn-xs btn-default" th:if="${invoice.state} == 0"><span class="fa fa-check"></span> Mark as paid</a>
                             </td>
-                            <td>
-                                <!--Status-->
+                            <!-- <td>
                                 <span th:switch="${invoice.isOverdue()}">
                                     <span th:case="true">
                                         <span class="label label-danger" th:if="${invoice.datePayed}">Paid overdue</span>
@@ -111,6 +110,11 @@
                                         <span class="label label-info" th:unless="${invoice.datePayed}">Pending</span>
                                     </span>
                                 </span>
+                            </td>-->
+                            <td>
+                                <span class="label label-danger" th:text="${invoice.state.name}"></span>
+                                <a th:href="@{'/invoice/update/' + ${invoice.id}}" class="btn btn-xs btn-default"><span
+                                        class="fa fa-check"></span>Update state</a>
                             </td>
                             <!--<span class="label fa" th:text="' ' + ${invoice.getStateInText()}" th:classappend="${invoice.state} == 1 ? 'label-success fa-check' : 'label-danger fa-times'"></span></td>-->
                             <td th:text="${invoice.vat.percentage}">%</td>

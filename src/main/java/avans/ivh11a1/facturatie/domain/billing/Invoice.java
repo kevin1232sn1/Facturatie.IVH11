@@ -1,10 +1,8 @@
 package avans.ivh11a1.facturatie.domain.billing;
 
+import avans.ivh11a1.facturatie.domain.billing.State.InvoiceState;
 import avans.ivh11a1.facturatie.domain.customers.Customer;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.text.DateFormat;
@@ -20,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Invoice {
     @Id
@@ -39,39 +38,12 @@ public class Invoice {
     @Column(name = "date_payed")
     private Date datePayed;
     @Column(name = "state")
-    private int state;
+    private InvoiceState state;
     @OneToOne
     @JoinColumn(name = "payment_condition_id")
     private PaymentCondition paymentCondition;
-
-    public Invoice(int id, Customer customer, Vat vat, Date dateCreated, Date datePayed, int state, PaymentCondition paymentCondition) {
-        this.id = id;
-        this.customer = customer;
-        this.vat = vat;
-        this.dateCreated = dateCreated;
-        this.datePayed = datePayed;
-        this.state = state;
-        this.paymentCondition = paymentCondition;
-    }
-
-    public Invoice(Customer customer, Vat vat, Date dateCreated, Date datePayed, int state, PaymentCondition paymentCondition) {
-        this.customer = customer;
-        this.vat = vat;
-        this.dateCreated = dateCreated;
-        this.datePayed = datePayed;
-        this.state = state;
-        this.paymentCondition = paymentCondition;
-    }
-
-    public String getStateInText() {
-        switch (this.state) {
-            case 1:
-                return "Paid";
-            case 0:
-            default:
-                return "Not payed";
-        }
-    }
+    @Column
+    private boolean approved;
 
     public String getUserFriendlyDatePayed() {
         if (this.datePayed == null) {
