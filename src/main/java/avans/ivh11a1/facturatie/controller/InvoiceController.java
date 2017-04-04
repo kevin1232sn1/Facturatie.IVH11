@@ -1,7 +1,6 @@
 package avans.ivh11a1.facturatie.controller;
 
 import avans.ivh11a1.facturatie.crosscutting.annotations.SecurityAnnotation;
-import avans.ivh11a1.facturatie.domain.Exception.CustomerNotFoundException;
 import avans.ivh11a1.facturatie.domain.administration.Role;
 import avans.ivh11a1.facturatie.domain.billing.Invoice;
 import avans.ivh11a1.facturatie.domain.billing.State.InvoiceState;
@@ -62,12 +61,7 @@ public class InvoiceController {
     @RequestMapping(value = "/show/{csn}", method = RequestMethod.GET)
     public String showInvoiceByCsn(Model theModel, @PathVariable int csn) {
         //Get Customer by csn
-        Customer customer = null;
-        try {
-            customer = customerService.findByCsn(csn);
-        } catch(CustomerNotFoundException ex){
-            //System.out.println(ex.getMessage());
-        };
+        Customer customer = customerService.findByCsn(csn);
 
         //Get invoices from DAO
         Iterable<Invoice> invoiceList = billingService.findInvoicesByCustomer(customer);

@@ -1,18 +1,13 @@
 package avans.ivh11a1.facturatie.service.imp;
 
-import avans.ivh11a1.facturatie.domain.Exception.CustomerNotFoundException;
 import avans.ivh11a1.facturatie.domain.Exception.StateException;
 import avans.ivh11a1.facturatie.domain.customers.Customer;
 import avans.ivh11a1.facturatie.repository.CustomerRepository;
 import avans.ivh11a1.facturatie.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by kevin on 7-3-2017.
@@ -32,13 +27,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer findByCsn(int CSN) throws CustomerNotFoundException {
-        Customer tempCustomer = customerRepository.findByCsn(CSN);
-        if(tempCustomer == null) {
-            throw new CustomerNotFoundException("No customer has been found with this ID.");
-        } else {
-            return tempCustomer;
-        }
+    public Customer findByCsn(int CSN) {
+        return customerRepository.findByCsn(CSN);
     }
 
     @Override
@@ -62,10 +52,5 @@ public class CustomerServiceImpl implements CustomerService {
     public Boolean deleteById(int id) {
         customerRepository.delete(id);
         return null;
-    }
-
-    @Override
-    public Iterable<Customer> getCustomersByPage(Pageable pageable) {
-        return customerRepository.findAll(pageable);
     }
 }
