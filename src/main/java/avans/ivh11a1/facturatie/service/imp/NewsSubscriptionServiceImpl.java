@@ -63,4 +63,14 @@ public class NewsSubscriptionServiceImpl implements NewsSubscriptionService {
         NewsSubscription subscription = new NewsSubscription(person, type);
         newsSubscriptionRepository.save(subscription);
     }
+
+    public void saveUnsubscription(Person person, String type){
+        System.out.println("getId: " + person.getId() + "getType: " + person.getType() + " Type: " + type);
+
+        NewsSubscription newsSubscription = newsSubscriptionRepository.findByNewsTypeAndObserverId(person.getId(), type);
+        System.out.println(newsSubscription.toString());
+        newsSubscriptionRepository.delete(newsSubscription);
+
+    }
+
 }
